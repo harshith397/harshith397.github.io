@@ -25,7 +25,7 @@ const charVariant = {
     filter: "blur(0px)",
     letterSpacing: "0em",
     transition: {
-      duration: 1.1,
+      duration: 0.6,
       ease: [0.33, 1, 0.68, 1],
     },
   },
@@ -73,13 +73,67 @@ const SplitText = ({ text, className, style, delay=0 , tag = "p" }) => {
   );
 };
 
-const PolaroidPhoto = ({ src, alt }) => {
+// ── Polaroid Animation Configuration (Manageable Timing Parameters) ──
+const POLAROID_CONFIG = {
+  delay: 0.2,       // Delay before animation begins on page load (in seconds)
+  duration: 0.85,   // Total transition time for succession keyframe sequence (in seconds)
+  rotateEnd: -3,    // Resting rotation angle (in degrees)
+  initialScale: 0.8, // Starting scale at center (0.8 = starts at 80% size and expands smoothly)
+};
+
+const PolaroidPhoto = ({
+  src,
+  alt,
+  delay = POLAROID_CONFIG.delay,
+  duration = POLAROID_CONFIG.duration,
+  rotateEnd = POLAROID_CONFIG.rotateEnd,
+  initialScale = POLAROID_CONFIG.initialScale,
+}) => {
+  const [hasEntered, setHasEntered] = useState(false);
+
   return (
-    <div
-      className="relative shrink-0 w-56 md:w-72"
-      style={{ transform: "rotate(-3deg)" }}
+    <motion.div
+      style={{ transformOrigin: "center center" }}
+      initial={{
+        opacity: 0,
+        scale: initialScale,
+        rotate: rotateEnd,
+      }}
+      animate={
+        hasEntered
+          ? {
+              opacity: 1,
+              scale: 1,
+              rotate: rotateEnd,
+            }
+          : {
+              opacity: [0, 1, 1, 1],
+              scale: [initialScale, 1.05, 0.99, 1],
+              rotate: rotateEnd,
+            }
+      }
+      transition={
+        hasEntered
+          ? {
+              duration: 0.35,
+              ease: [0.33, 1, 0.68, 1],
+            }
+          : {
+              duration: duration,
+              delay: delay,
+              times: [0, 0.6, 0.85, 1],
+              ease: [0.22, 1, 0.36, 1],
+            }
+      }
+      onAnimationComplete={() => setHasEntered(true)}
+      whileHover={{
+        rotate: 0,
+        scale: 1.03,
+        transition: { duration: 0.3, ease: [0.33, 1, 0.68, 1] },
+      }}
+      className="relative shrink-0 w-56 md:w-72 cursor-pointer select-none origin-center"
     >
-      <div className="bg-white p-3 pb-10 shadow-[0_8px_30px_rgba(0,0,0,0.15)]">
+      <div className="bg-white p-3 pb-10 shadow-[0_8px_30px_rgba(0,0,0,0.15)] rounded-[2px] transition-shadow duration-300 hover:shadow-[0_16px_40px_rgba(0,0,0,0.2)]">
         <div className="w-full aspect-[3/4] overflow-hidden bg-gray-100">
           <img
             src={src}
@@ -94,7 +148,7 @@ const PolaroidPhoto = ({ src, alt }) => {
           me.jpeg
         </p>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
@@ -134,16 +188,25 @@ const Hero = ({ id }) => {
     >
       <GridBackground color="#000" opacity={0.07} size={60} />
 
-      <motion.div
+      <div
         ref={sectionRef}
-        initial={{ opacity: 0, y: 20 }}
-        animate={isInView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.35, ease: [0.33, 1, 0.68, 1] }}
         className="relative z-10 flex flex-col md:flex-row items-center md:items-center gap-12 md:gap-20 max-w-6xl mx-auto w-full"
       >
-        <PolaroidPhoto src={profileImage} alt={name} />
+        <PolaroidPhoto
+          src={profileImage}
+          alt={name}
+          delay={POLAROID_CONFIG.delay}
+          duration={POLAROID_CONFIG.duration}
+          rotateEnd={POLAROID_CONFIG.rotateEnd}
+          initialScale={POLAROID_CONFIG.initialScale}
+        />
 
-        <div className="flex flex-col items-start min-w-0 w-full">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.35, ease: [0.33, 1, 0.68, 1] }}
+          className="flex flex-col items-start min-w-0 w-full"
+        >
           {/* Cycling greeting — untouched */}
           <div
             className="overflow-hidden mb-1 text-3xl md:text-4xl lg:text-5xl text-gray-800 h-[1.2em]"
@@ -189,8 +252,8 @@ const Hero = ({ id }) => {
               className="text-base md:text-lg lg:text-2xl text-zinc-600 font-normal max-w-sm md:max-w-xl lg:max-w-2xl leading-relaxed mb-8 pt-2"
             />
           )}
-        </div>
-      </motion.div>
+        </motion.div>
+      </div>
     </section>
   );
 };

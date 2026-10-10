@@ -8,6 +8,7 @@ export default defineConfig({
     react(),
     tailwindcss(), // <--- Add this plugin function
   ],
+  base: '/',
   server: {
     allowedHosts: [
       'took-oops-volumes-americans.trycloudflare.com'
