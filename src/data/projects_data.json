@@ -1,5 +1,46 @@
 [
   {
+    "id": "vce-companion",
+    "title": "VCE Companion",
+    "tagline": "Mobile companion for Vasavi students with automated SGPA grade simulation, smart attendance predictor, and real-time ERP sync.",
+    "type": "Mobile App",
+    "image": "/vce-app.png",
+    "banner": null,
+    "tag": "Completed",
+    "featured": true,
+    "duration": "3 Weeks",
+    "role": "Solo Developer",
+    "previewType": "mobile",
+    "previews": [
+      "/vce-screen-1.png",
+      "/vce-screen-2.png",
+      "/vce-screen-3.png"
+    ],
+    "highlight": {
+      "title": "Engineering highlight",
+      "description": "Embedded WebView ERP session bridge with client-side DOM injection parsers and an automated CI syllabus pipeline that keeps course credits up to date."
+    },
+    "problem": "Checking attendance and planning semester grades on the college ERP portal was painful on mobile — frequent session timeouts, pinch-zooming tiny web tables, and doing manual math to calculate whether you can bunk a class or reach your target SGPA. When the previous web proxy broke due to Cloudflare & reCAPTCHA, college peers were left with no convenient mobile solution.",
+    "solution": "Built a cross-platform React Native (Expo) mobile app that handles ERP authentication securely on-device through an in-app WebView session bridge. Injected JavaScript parsers scrape period-by-period timetables, attendance percentages, and internal marks directly into native React Native state. Integrated a smart bunk/recovery attendance predictor and an SGPA calculator pre-populated with courses and credits from an automated syllabus pipeline — eliminating manual grade math completely.",
+    "results": [
+      "Bypassed server-side captcha blocks by shifting session management to a secure on-device WebView bridge, keeping students authenticated without repeated logins",
+      "Smart Bunk Predictor calculates exact class margins (safe skips vs classes needed to recover above 75%) with zero manual effort",
+      "Instant SGPA simulation with pre-populated courses and credits, backed by an automated syllabus pipeline that updates schemes every academic year"
+    ],
+    "architecture_url": null,
+    "demo_url": null,
+    "repo_url": "https://github.com/harshith397/vce-app.git",
+    "tech_stack": [
+      "React Native",
+      "Expo",
+      "JavaScript",
+      "React Native WebView",
+      "React Native SVG"
+    ],
+    "architecture_hotspots": null,
+    "project_journal": "After my original VCE proxy portal broke when the college introduced reCAPTCHA and Cloudflare challenges, the problem didn't go away. Students were still opening the clunky ERP site on their phones between classes, getting logged out every two minutes, pinching to zoom on desktop tables, and doing rough mental math on paper.\n\nAround end-semesters, almost every peer of mine asks the same question: 'What grades do I need in each subject to hit my target SGPA?' They were stuck between two options — either make rough guesses based on vague intuitions, or pull out a calculator and punch in credit formulas by hand for every possible combination. With 7 to 9 subjects, manual recalculation gets frustrating fast.\n\nSo I thought, why shouldn't I make it simple for them? That thought led me to build **===VCE Companion===** as a native mobile app in React Native and Expo.\n\nThere are two specific things that make this special:\n\nThe first is the UI — courses and their credits are already provided, so ===no manual entry is needed===. Students just drag or tap their expected grades, and the target SGPA calculates instantly in real-time, making it effortless to test multiple grade scenarios.\n\nThe second is the **===automated syllabus pipeline===** — and this is my favourite part. College course schemes change across regulations and years. Rather than hardcoding subjects or updating JSONs by hand, the pipeline scrapes the portal, extracts syllabus PDFs, parses course schemes, and keeps the courses and credits updated every year automatically.\n\nThe biggest technical hurdle was authentication. Moving the scraper from a FastAPI backend to an **===in-app WebView session bridge===** solved the captcha problem cleanly: the student logs in once securely on-device, and client-side injected parser scripts extract day-wise periods (Periods 1 to 7), attendance percentages, and internal marks directly into native React Native cards. Sessions stay persistent, so opening the app between classes takes two seconds instead of re-entering credentials every time.\n\nWhat started as a broken proxy script turned into a complete mobile companion built by a student, exclusively for students."
+  },
+  {
     "id": "sgpa-calculator",
     "title": "SGPA Calculator",
     "tagline": "GPA calculator built for VCE students with semester-wise grade tracking",

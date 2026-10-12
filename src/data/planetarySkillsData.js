@@ -16,10 +16,10 @@ export const PALETTE_EARTHY = {
     bgLight: "#fffbeb",
   },
   frontend: {
-    accent: "#b45309", // warm honey ochre
-    glow: "rgba(180, 83, 9, 0.22)",
-    border: "#fcd34d",
-    bgLight: "#fffdf5",
+    accent: "#0284c7", // clear sky cyan / royal blue
+    glow: "rgba(2, 132, 199, 0.24)",
+    border: "#7dd3fc",
+    bgLight: "#f0f9ff",
   },
   backend: {
     accent: "#4d7c0f", // organic sage / matcha olive

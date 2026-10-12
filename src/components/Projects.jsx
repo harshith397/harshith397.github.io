@@ -38,6 +38,9 @@ const FeaturedProjectCard = ({ project, index }) => {
             alt={project.title}
             className="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.03]"
             loading="lazy"
+            onError={(e) => {
+              e.target.src = "https://placehold.co/800x500?text=Project";
+            }}
           />
         </Link>
       </div>

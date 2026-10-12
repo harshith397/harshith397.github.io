@@ -186,6 +186,9 @@ const ProjectPage = () => {
             src={project.banner}
             alt={project.title}
             className="w-full h-full object-cover"
+            onError={(e) => {
+              e.target.src = "https://placehold.co/1200x300?text=" + encodeURIComponent(project.title);
+            }}
           />
         ) : (
           <div className="w-full h-full bg-zinc-100 flex items-center justify-center text-zinc-300 text-5xl font-bold">
