@@ -135,16 +135,29 @@ const ProjectRow = ({ project, index }) => {
 
 // ── Page ───────────────────────────────────────────────────────
 const AllProjects = () => (
-  <div className="w-full min-h-screen bg-white px-8 md:px-20 lg:px-32 pt-32 pb-24">
+  <div className="w-full min-h-screen bg-white px-6 sm:px-10 md:px-16 lg:px-24 pt-24 pb-24 font-sans">
     <div className="max-w-6xl mx-auto">
+      {/* Back button */}
+      <div className="mb-8">
+        <Link
+          to="/#Work"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-zinc-50 hover:bg-zinc-100 border border-zinc-200 text-xs font-semibold text-zinc-700 hover:text-black transition-all hover:-translate-x-0.5 shadow-sm"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width={13} height={13}>
+            <path d="M19 12H5M12 19l-7-7 7-7" />
+          </svg>
+          <span>Back to overview</span>
+        </Link>
+      </div>
+
       {/* Header */}
       <div className="mb-4">
         <RevealHeading text="All Projects" />
         <div className="mt-2 w-10 h-[1.5px] bg-zinc-200" />
       </div>
 
-      <p className="text-zinc-400 text-sm font-light mb-2">
-        {projectsData.length} projects
+      <p className="text-zinc-500 text-sm font-normal mb-6">
+        Archive of {projectsData.length} personal, hackathon, and production tools
       </p>
 
       {/* Project rows */}

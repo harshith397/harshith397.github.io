@@ -1,35 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion, AnimatePresence, useInView } from "framer-motion";
 import GridBackground from "./GridBackground";
 import heroData from "../data/hero.json";
-
-const charContainer = {
-  initial: {},
-  animate: {
-    transition: {
-      staggerChildren: 0.04,
-    },
-  },
-};
-
-const charVariant = {
-  initial: {
-    opacity: 0,
-    y: 14,
-    filter: "blur(8px)",
-    letterSpacing: "0.08em",
-  },
-  animate: {
-    opacity: 1,
-    y: 0,
-    filter: "blur(0px)",
-    letterSpacing: "0em",
-    transition: {
-      duration: 0.6,
-      ease: [0.33, 1, 0.68, 1],
-    },
-  },
-};
+import TypewriterResume from "./TypewriterResume";
+import { FileText, Sparkles } from "lucide-react";
 
 const calculateAge = (dob) => {
   const birth = new Date(dob);
@@ -41,218 +15,171 @@ const calculateAge = (dob) => {
   return hasHadBirthdayThisYear ? age : age - 1;
 };
 
-const SplitText = ({ text, className, style, delay=0 , tag = "p" }) => {
-  const MotionTag = motion[tag];
-  const words = text.split(" ");
+// ── Realistic Draggable Polaroid (Gowtham Style) ──────────────────────
+const PolaroidCard = ({ src, alt }) => {
+  const [flashing, setFlashing] = useState(false);
+  const [photoFilter, setPhotoFilter] = useState("grayscale");
 
-  return (
-    <MotionTag
-      className={className}
-      style={{ ...style, display: "flex", flexWrap: "wrap", columnGap: "0.25em" }}
-      variants={charContainer}
-      initial="initial"
-      animate="animate"
-      transition={{ delayChildren: delay }}
-    >
-      {words.map((word, wordIndex) => (
-        <React.Fragment key={wordIndex}>
-          <span style={{ display: "inline-flex", whiteSpace: "nowrap" }}>
-            {word.split("").map((char, charIndex) => (
-              <motion.span
-                key={`${wordIndex}-${charIndex}`}
-                variants={charVariant}
-                style={{ display: "inline-block", whiteSpace: "pre" }}
-              >
-                {char}
-              </motion.span>
-            ))}
-          </span>
-        </React.Fragment>
-      ))}
-    </MotionTag>
-  );
-};
-
-// ── Polaroid Animation Configuration (Manageable Timing Parameters) ──
-const POLAROID_CONFIG = {
-  delay: 0.2,       // Delay before animation begins on page load (in seconds)
-  duration: 0.85,   // Total transition time for succession keyframe sequence (in seconds)
-  rotateEnd: -3,    // Resting rotation angle (in degrees)
-  initialScale: 0.8, // Starting scale at center (0.8 = starts at 80% size and expands smoothly)
-};
-
-const PolaroidPhoto = ({
-  src,
-  alt,
-  delay = POLAROID_CONFIG.delay,
-  duration = POLAROID_CONFIG.duration,
-  rotateEnd = POLAROID_CONFIG.rotateEnd,
-  initialScale = POLAROID_CONFIG.initialScale,
-}) => {
-  const [hasEntered, setHasEntered] = useState(false);
+  const handleSnap = () => {
+    setFlashing(true);
+    setPhotoFilter((prev) => (prev === "grayscale" ? "color" : "grayscale"));
+    setTimeout(() => setFlashing(false), 380);
+  };
 
   return (
     <motion.div
-      style={{ transformOrigin: "center center" }}
-      initial={{
-        opacity: 0,
-        scale: initialScale,
-        rotate: rotateEnd,
+      initial={{ opacity: 0, scale: 0.88, rotate: 4, y: 15 }}
+      animate={{ opacity: 1, scale: 1, rotate: 3, y: 0 }}
+      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
+      drag
+      dragConstraints={{ left: -40, right: 40, top: -40, bottom: 40 }}
+      whileHover={{ y: -6, rotate: 1, scale: 1.02 }}
+      whileTap={{ scale: 0.98 }}
+      whileDrag={{ scale: 1.06, rotate: 5, zIndex: 100, cursor: "grabbing" }}
+      onClick={handleSnap}
+      className="relative shrink-0 w-[250px] xs:w-64 sm:w-72 md:w-80 cursor-grab select-none origin-center mx-auto md:mx-0"
+      style={{
+        transformOrigin: "center center",
+        touchAction: "none",
       }}
-      animate={
-        hasEntered
-          ? {
-              opacity: 1,
-              scale: 1,
-              rotate: rotateEnd,
-            }
-          : {
-              opacity: [0, 1, 1, 1],
-              scale: [initialScale, 1.05, 0.99, 1],
-              rotate: rotateEnd,
-            }
-      }
-      transition={
-        hasEntered
-          ? {
-              duration: 0.35,
-              ease: [0.33, 1, 0.68, 1],
-            }
-          : {
-              duration: duration,
-              delay: delay,
-              times: [0, 0.6, 0.85, 1],
-              ease: [0.22, 1, 0.36, 1],
-            }
-      }
-      onAnimationComplete={() => setHasEntered(true)}
-      whileHover={{
-        rotate: 0,
-        scale: 1.03,
-        transition: { duration: 0.3, ease: [0.33, 1, 0.68, 1] },
-      }}
-      className="relative shrink-0 w-56 md:w-72 cursor-pointer select-none origin-center"
     >
-      <div className="bg-white p-3 pb-10 shadow-[0_8px_30px_rgba(0,0,0,0.15)] rounded-[2px] transition-shadow duration-300 hover:shadow-[0_16px_40px_rgba(0,0,0,0.2)]">
-        <div className="w-full aspect-[3/4] overflow-hidden bg-gray-100">
+      <div className="relative bg-white p-3.5 pb-12 shadow-[0_4px_12px_rgba(0,0,0,0.06),0_20px_40px_rgba(0,0,0,0.12)] border border-black/[0.05] rounded-[2px] transition-all duration-300 hover:shadow-[0_24px_50px_rgba(0,0,0,0.16)] paper-grain">
+        {/* Photo frame */}
+        <div className="relative w-full aspect-[4/4.5] overflow-hidden bg-zinc-200 rounded-[2px] shadow-[inset_0_2px_8px_rgba(0,0,0,0.15)]">
           <img
             src={src}
             alt={alt}
-            className="w-full h-full object-cover grayscale"
+            draggable={false}
+            className={`w-full h-full object-cover transition-all duration-500 ${
+              photoFilter === "grayscale" ? "grayscale contrast-[1.05]" : "grayscale-0"
+            }`}
           />
+
+          {/* Flash animation */}
+          <AnimatePresence>
+            {flashing && (
+              <motion.div
+                initial={{ opacity: 0.8 }}
+                animate={{ opacity: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.38, ease: "easeOut" }}
+                className="absolute inset-0 bg-white pointer-events-none z-20"
+              />
+            )}
+          </AnimatePresence>
         </div>
-        <p
-          className="absolute bottom-2.5 left-0 right-0 text-center text-xs text-gray-400"
-          style={{ fontFamily: "cursive" }}
-        >
-          me.jpeg
-        </p>
+
+        {/* Handwritten caption */}
+        <div className="absolute bottom-2.5 left-0 right-0 flex items-center justify-center gap-1.5 px-4">
+          <p
+            className="text-base sm:text-lg text-zinc-600 tracking-wide font-handwriting select-none"
+            style={{ fontFamily: "'Caveat', cursive" }}
+          >
+            harshith.jpeg
+          </p>
+          <span
+            className="text-xs text-zinc-400 font-handwriting opacity-80"
+            style={{ fontFamily: "'Caveat', cursive" }}
+          >
+            (click me)
+          </span>
+        </div>
       </div>
     </motion.div>
   );
 };
 
+// ── Hero Section ────────────────────────────────────────────────────────
 const Hero = ({ id }) => {
-  const { name, role, about, dob, profileImage, resumeUrl, greetings } = heroData;
+  const { name, role, dob, profileImage, resumeUrl, greetings } = heroData;
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-10% 0px" });
 
   const [currentGreetingIndex, setCurrentGreetingIndex] = useState(0);
-  const [loaded, setLoaded] = useState(false);
-
   const age = calculateAge(dob);
-  const resolvedAbout = about
-    .replace("{age}", age)
-    .replace("{role}", role);
-
-  useEffect(() => {
-    setLoaded(true);
-  }, []);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
       setCurrentGreetingIndex((prev) => (prev + 1) % greetings.length);
-    }, 2500);
+    }, 2800);
     return () => clearInterval(intervalId);
   }, [greetings.length]);
-
-  const scrollToNext = () => {
-    const aboutSection = document.getElementById("about");
-    if (aboutSection) aboutSection.scrollIntoView({ behavior: "smooth" });
-  };
 
   return (
     <section
       id={id}
-      className="relative overflow-hidden min-h-screen w-full bg-white flex flex-col justify-center px-8 md:px-20 lg:px-32"
+      className="relative min-h-[92vh] md:min-h-screen w-full bg-white flex flex-col justify-start px-4 sm:px-10 md:px-16 lg:px-24 pt-24 sm:pt-32 pb-16 overflow-hidden"
     >
-      <GridBackground color="#000" opacity={0.07} size={60} />
+      <GridBackground color="#000" opacity={0.05} size={54} />
 
       <div
         ref={sectionRef}
-        className="relative z-10 flex flex-col md:flex-row items-center md:items-center gap-12 md:gap-20 max-w-6xl mx-auto w-full"
+        className="relative z-10 max-w-6xl mx-auto w-full flex flex-col-reverse md:flex-row items-center md:items-start justify-between gap-10 md:gap-16 lg:gap-20"
       >
-        <PolaroidPhoto
-          src={profileImage}
-          alt={name}
-          delay={POLAROID_CONFIG.delay}
-          duration={POLAROID_CONFIG.duration}
-          rotateEnd={POLAROID_CONFIG.rotateEnd}
-          initialScale={POLAROID_CONFIG.initialScale}
-        />
-
+        {/* Left Side: Hero Text Side (Gowtham structure) */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 22 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.35, ease: [0.33, 1, 0.68, 1] }}
-          className="flex flex-col items-start min-w-0 w-full"
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="flex-1 flex flex-col items-start max-w-2xl text-left w-full"
         >
-          {/* Cycling greeting — untouched */}
-          <div
-            className="overflow-hidden mb-1 text-3xl md:text-4xl lg:text-5xl text-gray-800 h-[1.2em]"
-            style={{
-              fontFamily: "Georgia, serif",
-              fontStyle: "italic",
-              fontWeight: 300,
-            }}
-          >
-            <div
-              className="transition-transform duration-450 ease-in-out"
-              style={{
-                transform: `translateY(-${currentGreetingIndex * 1.2}em)`,
-              }}
-            >
-              {greetings.map((greeting, i) => (
-                <div
-                  key={i}
-                  className="h-[1.2em] leading-[1.2em] whitespace-nowrap"
-                >
-                  {greeting}
-                </div>
-              ))}
-            </div>
+          {/* Greeting in Newsreader / Instrument Serif italic */}
+          <div className="h-[2.2rem] md:h-[2.6rem] overflow-hidden mb-1">
+            <AnimatePresence mode="wait">
+              <motion.span
+                key={currentGreetingIndex}
+                initial={{ opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -14 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+                className="block text-2xl md:text-3xl lg:text-4xl text-zinc-700/90 font-serif-italic"
+                style={{
+                  fontFamily: "'Instrument Serif', 'Newsreader', Georgia, serif",
+                  fontStyle: "italic",
+                }}
+              >
+                {greetings[currentGreetingIndex]}
+              </motion.span>
+            </AnimatePresence>
           </div>
 
-          {/* Name — char by char, no delay */}
-          {loaded && (
-            <SplitText
-              text={`I'm ${name}.`}
-              tag="h1"
-              delay={0}
-              className="text-4xl md:text-6xl lg:text-6xl font-semibold text-black leading-none tracking-tight mb-4"
-            />
-          )}
+          {/* Name heading with wave */}
+          <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-[4.25rem] font-semibold tracking-[-0.03em] text-zinc-950 leading-[1.08] mb-4">
+            I'm {name}.{" "}
+            <span
+              className="inline-block origin-[70%_70%] hover:animate-bounce cursor-pointer select-none"
+              title="Hello!"
+            >
+              👋
+            </span>
+          </h1>
 
-          {/* About — char by char, starts after name */}
-          {loaded && (
-            <SplitText
-              text={resolvedAbout}
-              tag="p"
-              delay={0}
-              className="text-base md:text-lg lg:text-2xl text-zinc-600 font-normal max-w-sm md:max-w-xl lg:max-w-2xl leading-relaxed mb-8 pt-2"
-            />
-          )}
+          {/* Role line with inline badges */}
+          <div className="flex flex-wrap items-center gap-2 text-sm sm:text-base md:text-lg text-zinc-800 font-medium mb-3">
+            <span>{age} y/o</span>
+            <span className="text-zinc-400">•</span>
+            <span>{role}</span>
+            <span className="text-zinc-400">•</span>
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-zinc-100 border border-zinc-200/70 text-xs font-medium text-zinc-700">
+              <span className="h-1.5 w-1.5 rounded-full bg-blue-500" />
+              Vasavi College of Engg.
+            </span>
+          </div>
+
+          {/* Bio summary paragraph */}
+          <p className="text-sm sm:text-base md:text-lg text-zinc-600 font-normal leading-relaxed max-w-xl mb-8">
+            Based in Hyderabad, building practical software to solve problems. Passionate about
+            high-throughput backend systems, full-stack web experiences, and developer automation.
+          </p>
+
+          {/* Action Row: Inline Gowtham-style Typewriter Resume & Say Hi */}
+          <TypewriterResume resumeUrl={resumeUrl} />
         </motion.div>
+
+        {/* Right Side: Draggable Polaroid Photo (Centered on mobile, top-right on desktop) */}
+        <div className="w-full md:w-auto flex justify-center items-center py-4 md:py-0 self-center md:self-start">
+          <PolaroidCard src={profileImage} alt={name} />
+        </div>
       </div>
     </section>
   );

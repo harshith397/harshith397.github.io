@@ -1,284 +1,239 @@
-import React, { useState, useRef } from "react";
+import React, { useRef } from "react";
 import { Link } from "react-router-dom";
 import { motion, useInView } from "framer-motion";
 import projectsData from "../data/projects_data.json";
 import RevealHeading from "./RevealHeading";
 import { SiGithub } from "@icons-pack/react-simple-icons";
+import { ExternalLink, ArrowUpRight, Sparkles } from "lucide-react";
+
 const featured = projectsData.filter((p) => p.featured);
 
-// ── Desktop Card ──────────────────────────────────────────────
-const DesktopCard = ({ project, index }) => {
+// ── Featured Project Card (Gowtham Work Showcase Style) ──────────────
+const FeaturedProjectCard = ({ project, index }) => {
   const cardRef = useRef(null);
-  const isCardInView = useInView(cardRef, { once: true, margin: "-10% 0px" });
+  const isInView = useInView(cardRef, { once: true, margin: "-10% 0px" });
+
+  const isEven = index % 2 === 0;
 
   return (
-  <motion.div
-    ref={cardRef}
-    initial={{ opacity: 0, y: 20 }}
-    animate={isCardInView ? { opacity: 1, y: 0 } : {}}
-    transition={{
-      duration: 0.35,
-      ease: [0.33, 1, 0.68, 1],
-      delay: index * 0.08,
-    }}
-    className="group flex flex-col rounded-2xl border border-zinc-200 bg-white overflow-hidden shadow-sm hover:-translate-y-1 hover:shadow-md transition-all duration-300"
-  >
-    {/* Image */}
-    <div className="h-64 w-full overflow-hidden bg-zinc-100">
-      <img
-        src={project.image || "https://placehold.co/600x400?text=Project"}
-        alt={project.title}
-        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-      />
-    </div>
-
-    {/* Content */}
-    <div className="flex flex-1 flex-col p-5 gap-3">
-      <h3 className="text-lg font-semibold text-zinc-900">{project.title}</h3>
-      <p className="text-sm text-zinc-500 line-clamp-2">{project.tagline}</p>
-
-      {/* Actions */}
-      <div className="mt-auto flex items-center gap-4 pt-4 border-t border-zinc-100">
-        {project.repo_url && (
-          <a
-            href={project.repo_url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-zinc-600 hover:text-black transition-colors"
-          >
-            <SiGithub size={22} />
-          </a>
-        )}
-        {project.demo_url && (
-          <a
-            href={project.demo_url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-1 text-sm font-medium text-zinc-600 hover:text-black transition-colors"
-          >
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              width={22}
-              height={22}
-            >
-              <circle cx="12" cy="12" r="10" />
-              <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-            </svg>
-  
-          </a>
-        )}
+    <motion.article
+      ref={cardRef}
+      initial={{ opacity: 0, y: 28 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{
+        duration: 0.55,
+        ease: [0.22, 1, 0.36, 1],
+        delay: index * 0.12,
+      }}
+      className="group relative flex flex-col lg:flex-row gap-8 lg:gap-12 items-stretch p-6 sm:p-8 md:p-10 rounded-3xl bg-white border border-black/[0.07] shadow-[0_2px_10px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_45px_rgba(0,0,0,0.08)] hover:border-black/[0.12] transition-all duration-400"
+    >
+      {/* Visual / Screenshot Side */}
+      <div className="w-full lg:w-[48%] shrink-0 flex flex-col justify-center">
         <Link
           to={`/project/${project.id}`}
-          className="ml-auto flex items-center gap-1 text-sm font-semibold text-black underline underline-offset-2 hover:opacity-60 transition-opacity"
+          className="relative block w-full aspect-[16/10] overflow-hidden rounded-2xl bg-zinc-100 border border-black/[0.05] shadow-inner cursor-pointer"
         >
-          View
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            width={13}
-            height={13}
-          >
-            <path d="M7 17L17 7M17 7H7M17 7v10" />
-          </svg>
+          <img
+            src={project.image || "https://placehold.co/800x500?text=Project"}
+            alt={project.title}
+            className="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+            loading="lazy"
+          />
+          {/* Subtle gradient vignette on preview */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
         </Link>
       </div>
-    </div>
-  </motion.div>
-  );
-};
 
-// ── Mobile Squircle Card ───────────────────────────────────────
-const SquircleCard = ({ project }) => (
-  <div className="relative w-full flex flex-col items-center px-6 py-8 rounded-3xl bg-white border border-zinc-200 shadow-md">
-    {/* Squircle image */}
-    <div
-      className="w-full overflow-hidden bg-zinc-100 mb-6"
-      style={{ borderRadius: "36px", aspectRatio: "4/3" }}
-    >
-      <img
-        src={project.image || "https://placehold.co/600x400?text=Project"}
-        alt={project.title}
-        className="w-full h-full object-cover"
-      />
-    </div>
-    {/* Title + tagline */}
-    <h3 className="self-start text-xl font-semibold text-zinc-900 mb-1">
-      {project.title}
-    </h3>
-    <p className="self-start text-sm text-zinc-500 line-clamp-2 mb-6">
-      {project.tagline}
-    </p>
+      {/* Narrative & Details Side */}
+      <div className="flex-1 flex flex-col justify-between gap-4">
+        <div>
+          {/* Top meta tags */}
+          <div className="flex flex-wrap items-center gap-2.5 mb-2.5">
+            <span className="text-xs font-semibold tracking-wider uppercase text-zinc-400">
+              {project.type}
+            </span>
+            <span className="text-zinc-300">•</span>
+            <span className="text-xs font-medium text-zinc-500">
+              {project.duration}
+            </span>
+            <span className="text-zinc-300">•</span>
+            <span
+              className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold border ${
+                project.tag === "Completed"
+                  ? "bg-emerald-50 text-emerald-700 border-emerald-200"
+                  : project.tag === "Discontinued"
+                  ? "bg-zinc-100 text-zinc-600 border-zinc-200"
+                  : "bg-amber-50 text-amber-700 border-amber-200"
+              }`}
+            >
+              <span
+                className={`h-1.5 w-1.5 rounded-full ${
+                  project.tag === "Completed"
+                    ? "bg-emerald-500"
+                    : project.tag === "Discontinued"
+                    ? "bg-zinc-400"
+                    : "bg-amber-500"
+                }`}
+              />
+              {project.tag}
+            </span>
+          </div>
 
-    {/* Actions */}
-    <div className="self-stretch flex items-center gap-4 pt-4 border-t border-zinc-100">
-      {project.repo_url && (
-        <a
-          href={project.repo_url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-zinc-600 hover:text-black transition-colors"
-        >
-          <SiGithub size={24} />
-        </a>
-      )}
-      {project.demo_url && (
-        <a
-          href={project.demo_url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-1 text-sm font-medium text-zinc-600 hover:text-black transition-colors"
-        >
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            width={22}
-            height={22}
+          {/* Title */}
+          <h3 className="text-2xl sm:text-3xl font-semibold tracking-tight text-zinc-950 mb-2 group-hover:text-black">
+            <Link
+              to={`/project/${project.id}`}
+              className="hover:underline underline-offset-4 decoration-zinc-300"
+            >
+              {project.title}
+            </Link>
+          </h3>
+
+          {/* Tagline */}
+          <p className="text-sm sm:text-base text-zinc-600 font-normal leading-relaxed mb-4">
+            {project.tagline}
+          </p>
+
+          {/* Gowtham-style "Behind the build" notebook note */}
+          {project.id === "sgpa-calculator" && (
+            <div className="p-3.5 rounded-xl lined-notebook mb-4 text-xs sm:text-sm text-zinc-700 leading-relaxed">
+              <div className="flex items-center gap-1.5 font-semibold text-zinc-900 mb-1">
+                <Sparkles size={14} className="text-amber-500" />
+                <span style={{ fontFamily: "'Caveat', cursive" }} className="text-base text-zinc-800">
+                  Engineering highlight
+                </span>
+              </div>
+              <p className="text-zinc-600 font-normal text-xs">
+                Zero backend overhead. Automated daily GitHub Actions pipeline extracts syllabus PDFs,
+                slices scheme pages, and parses grades with a Groq vision model to keep data current.
+              </p>
+            </div>
+          )}
+
+          {project.id === "attendance-portal" && (
+            <div className="p-3.5 rounded-xl lined-notebook mb-4 text-xs sm:text-sm text-zinc-700 leading-relaxed">
+              <div className="flex items-center gap-1.5 font-semibold text-zinc-900 mb-1">
+                <Sparkles size={14} className="text-amber-500" />
+                <span style={{ fontFamily: "'Caveat', cursive" }} className="text-base text-zinc-800">
+                  Engineering highlight
+                </span>
+              </div>
+              <p className="text-zinc-600 font-normal text-xs">
+                Reverse-engineered college ERP login flow via a FastAPI proxy service to compute live
+                attendance calculations and structured syllabus data for peers.
+              </p>
+            </div>
+          )}
+
+          {/* Tech stack pills */}
+          <div className="flex flex-wrap gap-1.5 mb-6">
+            {project.tech_stack?.map((tech) => (
+              <span
+                key={tech}
+                className="px-2.5 py-1 rounded-md bg-zinc-100/80 border border-zinc-200/60 text-xs font-medium text-zinc-600 select-none"
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        {/* Action Row */}
+        <div className="flex flex-wrap items-center gap-4 pt-4 border-t border-zinc-100">
+          {project.demo_url && (
+            <a
+              href={project.demo_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-zinc-900 hover:bg-black text-white text-xs font-semibold shadow-sm transition-all hover:-translate-y-0.5"
+            >
+              <span>Live Site</span>
+              <ExternalLink size={12} />
+            </a>
+          )}
+
+          {project.repo_url && (
+            <a
+              href={project.repo_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-zinc-100 hover:bg-zinc-200/80 text-zinc-800 text-xs font-medium transition-colors"
+            >
+              <SiGithub size={13} />
+              <span>Source</span>
+            </a>
+          )}
+
+          <Link
+            to={`/project/${project.id}`}
+            className="ml-auto inline-flex items-center gap-1 text-xs font-semibold text-zinc-900 hover:text-black underline underline-offset-4 decoration-zinc-400 hover:decoration-black transition-all group/link"
           >
-            <circle cx="12" cy="12" r="10" />
-            <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-          </svg>
-        
-        </a>
-      )}
-
-      <Link
-        to={`/project/${project.id}`}
-        className="ml-auto flex items-center gap-1 text-sm font-semibold text-black underline underline-offset-2 hover:opacity-60 transition-opacity"
-      >
-        View
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          width={13}
-          height={13}
-        >
-          <path d="M7 17L17 7M17 7H7M17 7v10" />
-        </svg>
-      </Link>
-    </div>
-  </div>
-);
-
-// ── Mobile Swiper ──────────────────────────────────────────────
-const MobileSwiper = ({ projects }) => {
-  const [current, setCurrent] = useState(0);
-  const touchStartX = useRef(null);
-
-  const onTouchStart = (e) => {
-    touchStartX.current = e.touches[0].clientX;
-  };
-
-  const onTouchEnd = (e) => {
-    if (touchStartX.current === null) return;
-    const delta = touchStartX.current - e.changedTouches[0].clientX;
-    if (delta > 50 && current < projects.length - 1) setCurrent((p) => p + 1);
-    if (delta < -50 && current > 0) setCurrent((p) => p - 1);
-    touchStartX.current = null;
-  };
-
-  return (
-    <div className="flex flex-col items-center gap-5">
-      <div
-        className="w-full"
-        onTouchStart={onTouchStart}
-        onTouchEnd={onTouchEnd}
-      >
-        <motion.div
-          key={current}
-          initial={{ opacity: 0, x: 40 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -40 }}
-          transition={{ duration: 0.3, ease: "easeOut" }}
-        >
-          <SquircleCard project={projects[current]} />
-        </motion.div>
+            <span>Read Case Study</span>
+            <ArrowUpRight
+              size={14}
+              className="transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"
+            />
+          </Link>
+        </div>
       </div>
-
-      {/* Dots */}
-      <div className="flex items-center gap-2">
-        {projects.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => setCurrent(i)}
-            className={`rounded-full transition-all duration-300 ${
-              i === current ? "w-5 h-2 bg-zinc-800" : "w-2 h-2 bg-zinc-300"
-            }`}
-          />
-        ))}
-      </div>
-    </div>
+    </motion.article>
   );
 };
 
-// ── Reveal heading (same as About + Skills) ────────────────────
-
-// ── Main Projects Section ──────────────────────────────────────
+// ── Main Projects Section ─────────────────────────────────────────────
 const Projects = ({ id }) => {
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-10% 0px" });
 
   return (
-    <section id={id} className="w-full px-8 md:px-20 lg:px-32 py-24 bg-white">
+    <section
+      id={id}
+      className="w-full px-6 sm:px-10 md:px-16 lg:px-24 py-24 bg-white border-t border-black/[0.05]"
+    >
       <div ref={sectionRef} className="max-w-6xl mx-auto">
-        {/* Section label */}
+        {/* Section Header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 18 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.35, ease: [0.33, 1, 0.68, 1] }}
-          className="mb-10"
+          className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-12"
         >
-          <RevealHeading text="Featured Projects" />
-          <div className="mt-2 w-10 h-[1.5px] bg-zinc-200" />
+          <div>
+            <RevealHeading text="Featured Work" />
+            <div className="mt-2 w-10 h-[1.5px] bg-zinc-200" />
+          </div>
+          <p className="text-xs sm:text-sm text-zinc-400 font-normal">
+            Highlighted software solutions & interactive tools
+          </p>
         </motion.div>
 
-        {/* Mobile swiper */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.35, ease: [0.33, 1, 0.68, 1], delay: 0.06 }}
-          className="md:hidden"
-        >
-          <MobileSwiper projects={featured} />
-        </motion.div>
-
-        {/* Desktop grid */}
-        <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-2 gap-6">
+        {/* Featured Projects List */}
+        <div className="flex flex-col gap-10">
           {featured.map((project, index) => (
-            <DesktopCard key={project.id} project={project} index={index} />
+            <FeaturedProjectCard
+              key={project.id}
+              project={project}
+              index={index}
+            />
           ))}
         </div>
 
-        {/* View all link */}
+        {/* View All Projects Pill Link */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.35, ease: [0.33, 1, 0.68, 1], delay: 0.16 }}
-          className="mt-12 flex justify-center"
+          transition={{ duration: 0.35, ease: [0.33, 1, 0.68, 1], delay: 0.2 }}
+          className="mt-14 flex justify-center"
         >
           <Link
             to="/projects"
-            className="flex items-center gap-1 text-sm font-medium text-zinc-500 hover:text-black transition-colors underline underline-offset-4"
+            className="group inline-flex items-center gap-2 px-6 py-3 rounded-full bg-zinc-50 hover:bg-zinc-100 border border-zinc-200 text-xs sm:text-sm font-semibold text-zinc-800 transition-all duration-200 hover:-translate-y-0.5 shadow-sm"
           >
-            View all projects
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              width={13}
-              height={13}
-            >
-              <path d="M7 17L17 7M17 7H7M17 7v10" />
-            </svg>
+            <span>View all projects ({projectsData.length})</span>
+            <ArrowUpRight
+              size={15}
+              className="text-zinc-500 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+            />
           </Link>
         </motion.div>
       </div>

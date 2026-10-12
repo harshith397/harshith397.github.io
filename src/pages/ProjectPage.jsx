@@ -161,7 +161,19 @@ const ProjectPage = () => {
       </div>
 
       {/* ── Content ────────────────────────────────────────── */}
-      <main className="max-w-5xl mx-auto px-8 md:px-12 pb-32">
+      <main className="max-w-5xl mx-auto px-6 sm:px-8 md:px-12 pb-32">
+        {/* Back navigation */}
+        <div className="pt-8 pb-6">
+          <Link
+            to="/projects"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-zinc-50 hover:bg-zinc-100 border border-zinc-200 text-xs font-semibold text-zinc-700 hover:text-black transition-all hover:-translate-x-0.5 shadow-sm"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width={13} height={13}>
+              <path d="M19 12H5M12 19l-7-7 7-7" />
+            </svg>
+            <span>Back to projects</span>
+          </Link>
+        </div>
 
         {/* Hero text */}
         <div className="mb-16">

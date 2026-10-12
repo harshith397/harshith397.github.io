@@ -3,286 +3,134 @@ import React, { useState, useEffect } from "react";
 const MAILTO =
   "mailto:medichelmeharshith6@gmail.com?subject=Hey%20Harshith!&body=Hi%20Harshith%2C%20I%20came%20across%20your%20portfolio%20and...";
 
-const BrutalistButton = () => {
-  const [pressed, setPressed] = useState(false);
-  const [hovered, setHovered] = useState(false);
-  return (
-    <a
-      href={MAILTO}
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        width: "100%",
-        height: "100%",
-      }}
-    >
-      <div
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => {
-          setHovered(false);
-          setPressed(false);
-        }}
-        onMouseDown={() => setPressed(true)}
-        onMouseUp={() => setPressed(false)}
-        style={{
-          backgroundColor: "#FFE600",
-          color: "#000000",
-          border: "3px solid #000000",
-          borderRadius: "0px",
-          padding: "16px 32px",
-          boxShadow: pressed
-            ? "0px 0px 0px #000"
-            : hovered
-              ? "4px 4px 0px #000"
-              : "6px 6px 0px #000",
-          transform: pressed
-            ? "translate(6px,6px)"
-            : hovered
-              ? "translate(2px,2px)"
-              : "translate(0,0)",
-          transition: "transform 0.1s ease, box-shadow 0.1s ease",
-          cursor: "pointer",
-          fontFamily: "'Inter', sans-serif",
-          fontWeight: 900,
-          fontSize: "15px",
-          textTransform: "uppercase",
-          letterSpacing: "2px",
-          whiteSpace: "nowrap",
-        }}
-      >
-        CONNECT_NOW
-      </div>
-    </a>
-  );
-};
-
-const GlassButton = () => {
-  const [hovered, setHovered] = useState(false);
-  const [pressed, setPressed] = useState(false);
-  return (
-    <a
-      href={MAILTO}
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        width: "100%",
-        height: "100%",
-      }}
-    >
-      <div
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => {
-          setHovered(false);
-          setPressed(false);
-        }}
-        onMouseDown={() => setPressed(true)}
-        onMouseUp={() => setPressed(false)}
-        style={{
-          backgroundColor: hovered
-            ? "rgba(255,255,255,0.8)"
-            : "rgba(255,255,255,0.6)",
-          backdropFilter: "blur(12px)",
-          WebkitBackdropFilter: "blur(12px)",
-          border: "1px solid rgba(200,200,200,0.4)",
-          borderRadius: "9999px",
-          padding: "14px 36px",
-          boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
-          transform: pressed
-            ? "scale(0.98)"
-            : hovered
-              ? "scale(1.02)"
-              : "scale(1)",
-          transition: "all 0.2s ease",
-          cursor: "pointer",
-          fontFamily: "'Inter', sans-serif",
-          fontWeight: 600,
-          fontSize: "15px",
-          letterSpacing: "0.3px",
-          color: "#1a1a1a",
-          whiteSpace: "nowrap",
-        }}
-      >
-        Connect Now
-      </div>
-    </a>
-  );
-};
-
-const OutlinedButton = () => {
-  const [hovered, setHovered] = useState(false);
-  return (
-    <a
-      href={MAILTO}
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        width: "100%",
-        height: "100%",
-      }}
-    >
-      <div
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
-        style={{
-          backgroundColor: hovered ? "#000000" : "#ffffff",
-          color: hovered ? "#ffffff" : "#000000",
-          border: "2px solid #000000",
-          borderRadius: "0px",
-          padding: "14px 32px",
-          transition: "all 0.2s ease",
-          cursor: "pointer",
-          fontFamily: "'Inter', sans-serif",
-          fontWeight: 700,
-          fontSize: "14px",
-          textTransform: "uppercase",
-          letterSpacing: "2px",
-          whiteSpace: "nowrap",
-        }}
-      >
-        CONNECT_NOW
-      </div>
-    </a>
-  );
-};
-
-const TerminalButton = () => {
-  const [hovered, setHovered] = useState(false);
-  return (
-    <a
-      href={MAILTO}
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        width: "100%",
-        height: "100%",
-      }}
-    >
-      <div
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
-        style={{
-          backgroundColor: "#1a1a1a",
-          border: "2px solid #00FF41",
-          borderRadius: "0px",
-          padding: "14px 32px",
-          boxShadow: hovered ? "0 0 12px #00FF41" : "none",
-          transition: "box-shadow 0.2s ease",
-          cursor: "pointer",
-          fontFamily: "'JetBrains Mono','Fira Code',monospace",
-          fontWeight: 700,
-          fontSize: "13px",
-          textTransform: "lowercase",
-          letterSpacing: "2px",
-          color: "#00FF41",
-          whiteSpace: "nowrap",
-          clipPath:
-            "polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%)",
-        }}
-      >
-        connect now
-      </div>
-    </a>
-  );
-};
-
-const NeonButton = () => {
-  const [hovered, setHovered] = useState(false);
-  return (
-    <a
-      href={MAILTO}
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        width: "100%",
-        height: "100%",
-      }}
-    >
-      <div
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
-        style={{
-          backgroundColor: "#1a0a2e",
-          border: "2px solid #FF00FF",
-          borderRadius: "4px",
-          padding: "14px 32px",
-          boxShadow: hovered
-            ? "0 0 24px #FF00FF, 0 0 48px rgba(255,0,255,0.4), inset 0 0 12px rgba(255,0,255,0.1)"
-            : "0 0 16px #FF00FF, 0 0 32px rgba(255,0,255,0.3)",
-          transition: "box-shadow 0.3s ease",
-          cursor: "pointer",
-          fontFamily: "'JetBrains Mono','Courier New',monospace",
-          fontWeight: 700,
-          fontSize: "13px",
-          textTransform: "uppercase",
-          letterSpacing: "3px",
-          color: "#00FFFF",
-          textShadow: "0 0 8px #00FFFF, 0 0 16px rgba(0,255,255,0.5)",
-          whiteSpace: "nowrap",
-        }}
-      >
-        CONTACT.EXE
-      </div>
-    </a>
-  );
-};
-
-const BUTTON_COMPONENTS = [
-  GlassButton,
-  OutlinedButton,
-  NeonButton,
-  BrutalistButton,
-  TerminalButton,
+// ── Continuous Stop-Motion Frame Shots (Same Subject, Rapid Changing Shell) ──
+const FRAMES = [
+  {
+    id: "brutalist",
+    text: "CONNECT_NOW",
+    style: {
+      backgroundColor: "#FFE600",
+      color: "#000000",
+      border: "2.5px solid #000000",
+      borderRadius: "0px",
+      boxShadow: "4px 4px 0px #000000",
+      fontFamily: "'Inter', sans-serif",
+      fontWeight: 900,
+      fontSize: "14px",
+      letterSpacing: "2px",
+      textTransform: "uppercase",
+      padding: "14px 34px",
+    },
+  },
+  {
+    id: "glass",
+    text: "Connect Now",
+    style: {
+      backgroundColor: "rgba(255, 255, 255, 0.88)",
+      backdropFilter: "blur(16px)",
+      WebkitBackdropFilter: "blur(16px)",
+      color: "#18181b",
+      border: "1px solid rgba(0, 0, 0, 0.14)",
+      borderRadius: "9999px",
+      boxShadow: "0 6px 20px rgba(0, 0, 0, 0.08)",
+      fontFamily: "'Inter', sans-serif",
+      fontWeight: 600,
+      fontSize: "14px",
+      letterSpacing: "0.3px",
+      padding: "14px 36px",
+    },
+  },
+  {
+    id: "neon",
+    text: "CONTACT.EXE",
+    style: {
+      backgroundColor: "#13091f",
+      color: "#00FFFF",
+      border: "2px solid #FF007F",
+      borderRadius: "6px",
+      boxShadow: "0 0 18px rgba(255, 0, 127, 0.45), inset 0 0 8px rgba(0, 255, 255, 0.15)",
+      fontFamily: "'JetBrains Mono', monospace",
+      fontWeight: 800,
+      fontSize: "13px",
+      letterSpacing: "2.5px",
+      textShadow: "0 0 6px #00FFFF",
+      padding: "14px 32px",
+    },
+  },
+  {
+    id: "terminal",
+    text: "$ connect_now",
+    style: {
+      backgroundColor: "#0d0d0d",
+      color: "#00FF66",
+      border: "1.5px solid #00FF66",
+      borderRadius: "4px",
+      boxShadow: "0 0 12px rgba(0, 255, 102, 0.25)",
+      fontFamily: "'JetBrains Mono', 'Fira Code', monospace",
+      fontWeight: 700,
+      fontSize: "13px",
+      letterSpacing: "1px",
+      padding: "14px 32px",
+    },
+  },
 ];
 
 const CyclingButton = () => {
-  const [index, setIndex] = useState(0);
-  const [paused, setPaused] = useState(false);
+  const [frameIndex, setFrameIndex] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
+  const [isPressed, setIsPressed] = useState(false);
 
+  // Rapid stop-motion loop: snaps smoothly frame-by-frame without disappearing
   useEffect(() => {
-    if (paused) return;
-    const timer = setInterval(() => {
-      setIndex((prev) => (prev + 1) % BUTTON_COMPONENTS.length);
-    }, 350);
-    return () => clearInterval(timer);
-  }, [paused]);
+    if (isHovered) return;
+    const interval = setInterval(() => {
+      setFrameIndex((prev) => (prev + 1) % FRAMES.length);
+    }, 280); // ~3.5 fps stop-motion cadence
 
-  const ButtonComponent = BUTTON_COMPONENTS[index];
+    return () => clearInterval(interval);
+  }, [isHovered]);
+
+  const activeFrame = FRAMES[frameIndex];
 
   return (
     <div
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
+      className="relative flex items-center justify-center select-none"
       style={{
         width: "280px",
-        height: "60px",
-        position: "relative",
-        isolation: "isolate",
+        height: "64px",
+      }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => {
+        setIsHovered(false);
+        setIsPressed(false);
       }}
     >
-      <div
-        key={index}
+      <a
+        href={MAILTO}
+        onMouseDown={() => setIsPressed(true)}
+        onMouseUp={() => setIsPressed(false)}
+        className="flex items-center justify-center outline-none select-none transition-transform duration-100"
         style={{
-          position: "absolute",
-          inset: 0,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          animation: "fadeScale 0.25s ease-out",
+          transform: isPressed
+            ? "scale(0.96) translate3d(0, 2px, 0)"
+            : isHovered
+            ? "scale(1.03)"
+            : "scale(1)",
         }}
       >
-        <ButtonComponent />
-      </div>
-      <style>{`
-        @keyframes fadeScale {
-          from { opacity: 0; transform: scale(0.94); }
-          to   { opacity: 1; transform: scale(1); }
-        }
-      `}</style>
+        <div
+          key={activeFrame.id}
+          className="flex items-center justify-center cursor-pointer whitespace-nowrap"
+          style={{
+            ...activeFrame.style,
+            willChange: "transform, background-color, box-shadow",
+            backfaceVisibility: "hidden",
+            WebkitBackfaceVisibility: "hidden",
+          }}
+        >
+          {activeFrame.text}
+        </div>
+      </a>
     </div>
   );
 };
