@@ -108,7 +108,7 @@ const Hero = ({ id }) => {
   return (
     <section
       id={id}
-      className="relative min-h-[92vh] md:min-h-screen w-full bg-white flex flex-col justify-start px-4 sm:px-10 md:px-16 lg:px-24 pt-24 sm:pt-32 pb-16 overflow-hidden"
+      className="relative w-full bg-white flex flex-col justify-start px-4 sm:px-10 md:px-16 lg:px-24 pt-24 sm:pt-32 pb-16 sm:pb-20 md:pb-24 overflow-hidden"
     >
       <GridBackground color="#000" opacity={0.05} size={54} />
 

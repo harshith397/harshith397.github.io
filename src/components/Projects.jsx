@@ -31,7 +31,7 @@ const FeaturedProjectCard = ({ project, index }) => {
       <div className="w-full lg:w-[48%] shrink-0 flex flex-col justify-center">
         <Link
           to={`/project/${project.id}`}
-          className="relative block w-full aspect-[16/10] overflow-hidden rounded-2xl bg-zinc-100 border border-black/[0.05] shadow-inner cursor-pointer"
+          className="relative block w-full aspect-[16/10] overflow-hidden rounded-2xl bg-zinc-100 cursor-pointer"
         >
           <img
             src={project.image || "https://placehold.co/800x500?text=Project"}
@@ -39,8 +39,6 @@ const FeaturedProjectCard = ({ project, index }) => {
             className="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.03]"
             loading="lazy"
           />
-          {/* Subtle gradient vignette on preview */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
         </Link>
       </div>
 
@@ -94,33 +92,17 @@ const FeaturedProjectCard = ({ project, index }) => {
             {project.tagline}
           </p>
 
-          {/* Gowtham-style "Behind the build" notebook note */}
-          {project.id === "sgpa-calculator" && (
+          {/* Data-driven CRM highlight note */}
+          {project.highlight && (
             <div className="p-3.5 rounded-xl lined-notebook mb-4 text-xs sm:text-sm text-zinc-700 leading-relaxed">
               <div className="flex items-center gap-1.5 font-semibold text-zinc-900 mb-1">
                 <Sparkles size={14} className="text-amber-500" />
                 <span style={{ fontFamily: "'Caveat', cursive" }} className="text-base text-zinc-800">
-                  Engineering highlight
+                  {project.highlight.title || "Engineering highlight"}
                 </span>
               </div>
               <p className="text-zinc-600 font-normal text-xs">
-                Zero backend overhead. Automated daily GitHub Actions pipeline extracts syllabus PDFs,
-                slices scheme pages, and parses grades with a Groq vision model to keep data current.
-              </p>
-            </div>
-          )}
-
-          {project.id === "attendance-portal" && (
-            <div className="p-3.5 rounded-xl lined-notebook mb-4 text-xs sm:text-sm text-zinc-700 leading-relaxed">
-              <div className="flex items-center gap-1.5 font-semibold text-zinc-900 mb-1">
-                <Sparkles size={14} className="text-amber-500" />
-                <span style={{ fontFamily: "'Caveat', cursive" }} className="text-base text-zinc-800">
-                  Engineering highlight
-                </span>
-              </div>
-              <p className="text-zinc-600 font-normal text-xs">
-                Reverse-engineered college ERP login flow via a FastAPI proxy service to compute live
-                attendance calculations and structured syllabus data for peers.
+                {project.highlight.description}
               </p>
             </div>
           )}
@@ -168,7 +150,7 @@ const FeaturedProjectCard = ({ project, index }) => {
             to={`/project/${project.id}`}
             className="ml-auto inline-flex items-center gap-1 text-xs font-semibold text-zinc-900 hover:text-black underline underline-offset-4 decoration-zinc-400 hover:decoration-black transition-all group/link"
           >
-            <span>Read Case Study</span>
+            <span>View Project</span>
             <ArrowUpRight
               size={14}
               className="transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"

@@ -228,7 +228,8 @@ const AboutMe = ({ id }) => {
             <div className="mt-2 w-10 h-[1.5px] bg-zinc-200" />
           </div>
 
-          {/* Segmented view pill toggle */}
+          {/* Segmented view pill toggle (commented out as requested; preserved for future use) */}
+          {/*
           <div className="self-start sm:self-auto flex items-center p-1 rounded-full bg-zinc-100/90 border border-zinc-200/80 shadow-inner">
             {viewOptions.map((opt) => {
               const Icon = opt.icon;
@@ -257,6 +258,7 @@ const AboutMe = ({ id }) => {
               );
             })}
           </div>
+          */}
         </div>
 
         {/* Content Area with smooth tab transition */}

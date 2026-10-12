@@ -1,139 +1,163 @@
-import React, { useRef } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
 import { SiGithub } from "@icons-pack/react-simple-icons";
+import { ExternalLink, ArrowUpRight, ArrowLeft, Sparkles } from "lucide-react";
 import projectsData from "../data/projects_data.json";
 import RevealHeading from "../components/RevealHeading";
 
-// ── Single project row ─────────────────────────────────────────
-const ProjectRow = ({ project, index }) => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-10% 0px" });
-
+// ── Gowtham Craft Project Card ─────────────────────────────────────────
+const AllProjectsCard = ({ project, index }) => {
   return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 40 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
+    <motion.article
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
       transition={{
-        duration: 0.6,
-        ease: [0.33, 1, 0.68, 1],
-        delay: index * 0.1,
+        duration: 0.35,
+        ease: "easeOut",
+        delay: Math.min(index * 0.05, 0.2),
       }}
-      className="flex flex-col md:flex-row gap-10 md:gap-16 py-16 md:py-20"
+      className="group relative flex flex-col lg:flex-row gap-8 lg:gap-12 items-stretch p-6 sm:p-8 md:p-10 rounded-3xl bg-white border border-black/[0.07] shadow-[0_2px_10px_rgba(0,0,0,0.03)] hover:shadow-[0_16px_36px_rgba(0,0,0,0.07)] hover:border-black/[0.12] transition-[box-shadow,border-color] duration-200"
     >
-      {/* Left — thumbnail */}
-      <div className="w-full md:w-[55%] shrink-0 overflow-hidden rounded-2xl bg-zinc-100 shadow-md">
-        <img
-          src={project.image}
-          alt={project.title}
-          className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-          style={{ aspectRatio: "16/9" }}
-          onError={(e) => {
-            e.target.src = "https://placehold.co/800x450?text=Project";
-          }}
-        />
+      {/* Visual / Screenshot Side */}
+      <div className="w-full lg:w-[48%] shrink-0 flex flex-col justify-center">
+        <Link
+          to={`/project/${project.id}`}
+          className="relative block w-full aspect-[16/10] overflow-hidden rounded-2xl bg-zinc-100 cursor-pointer"
+        >
+          <img
+            src={project.image || "https://placehold.co/800x500?text=Project"}
+            alt={project.title}
+            className="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+            loading="lazy"
+            onError={(e) => {
+              e.target.src = "https://placehold.co/800x500?text=Project";
+            }}
+          />
+        </Link>
       </div>
 
-      {/* Right — description */}
-      <div className="flex flex-col justify-center gap-4 flex-1">
-        {/* Status badge */}
-        <span
-  className={`self-start flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-full border ${
-    project.tag === "Working"
-      ? "bg-orange-50 text-orange-500 border-orange-200"
-      : project.tag === "Discontinued"
-      ? "bg-zinc-100 text-zinc-500 border-zinc-200"
-      : "bg-emerald-50 text-emerald-600 border-emerald-200"
-  }`}
->
-  <svg
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    width={11}
-    height={11}
-  >
-    <circle cx="12" cy="8" r="4" />
-    <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
-  </svg>
-  {project.tag}
-</span>
-
-
-        {/* Title */}
-        <h2 className="text-2xl md:text-3xl lg:text-4xl font-semibold text-zinc-900 leading-tight">
-          {project.title}
-        </h2>
-
-        {/* Type */}
-        <p className="text-xs font-medium tracking-widest uppercase text-zinc-400">
-          {project.type}
-        </p>
-
-        {/* Tagline */}
-        <p className="text-base md:text-lg text-zinc-500 font-light leading-relaxed max-w-sm">
-          {project.tagline}
-        </p>
-
-        {/* Links */}
-        <div className="flex items-center gap-6 mt-2">
-          <Link
-            to={`/project/${project.id}`}
-            className="text-sm font-semibold text-black underline underline-offset-4 hover:opacity-60 transition-opacity flex items-center gap-1"
-          >
-            View Project
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              width={13}
-              height={13}
+      {/* Narrative & Details Side */}
+      <div className="flex-1 flex flex-col justify-between gap-4">
+        <div>
+          {/* Top meta tags */}
+          <div className="flex flex-wrap items-center gap-2.5 mb-2.5">
+            <span className="text-xs font-semibold tracking-wider uppercase text-zinc-400">
+              {project.type}
+            </span>
+            <span className="text-zinc-300">•</span>
+            <span className="text-xs font-medium text-zinc-500">
+              {project.duration}
+            </span>
+            <span className="text-zinc-300">•</span>
+            <span
+              className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold border ${
+                project.tag === "Completed"
+                  ? "bg-emerald-50 text-emerald-700 border-emerald-200"
+                  : project.tag === "Discontinued"
+                  ? "bg-zinc-100 text-zinc-600 border-zinc-200"
+                  : "bg-amber-50 text-amber-700 border-amber-200"
+              }`}
             >
-              <path d="M7 17L17 7M17 7H7M17 7v10" />
-            </svg>
-          </Link>
-          {project.repo_url && (
-            <a
-              href={project.repo_url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-1.5 text-sm font-medium text-zinc-500 hover:text-black transition-colors"
+              <span
+                className={`h-1.5 w-1.5 rounded-full ${
+                  project.tag === "Completed"
+                    ? "bg-emerald-500"
+                    : project.tag === "Discontinued"
+                    ? "bg-zinc-400"
+                    : "bg-amber-500"
+                }`}
+              />
+              {project.tag}
+            </span>
+          </div>
+
+          {/* Title */}
+          <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-zinc-950 mb-2 group-hover:text-black">
+            <Link
+              to={`/project/${project.id}`}
+              className="hover:underline underline-offset-4 decoration-zinc-300"
             >
-              <SiGithub size={15} />
-              GitHub
-            </a>
+              {project.title}
+            </Link>
+          </h2>
+
+          {/* Tagline */}
+          <p className="text-sm sm:text-base text-zinc-600 font-normal leading-relaxed mb-4">
+            {project.tagline}
+          </p>
+
+          {/* Data-driven CRM highlight note */}
+          {project.highlight && (
+            <div className="p-3.5 rounded-xl lined-notebook mb-4 text-xs sm:text-sm text-zinc-700 leading-relaxed">
+              <div className="flex items-center gap-1.5 font-semibold text-zinc-900 mb-1">
+                <Sparkles size={14} className="text-amber-500" />
+                <span style={{ fontFamily: "'Caveat', cursive" }} className="text-base text-zinc-800">
+                  {project.highlight.title || "Engineering highlight"}
+                </span>
+              </div>
+              <p className="text-zinc-600 font-normal text-xs">
+                {project.highlight.description}
+              </p>
+            </div>
           )}
+
+          {/* Tech stack pills */}
+          <div className="flex flex-wrap gap-1.5 mb-6">
+            {project.tech_stack?.map((tech) => (
+              <span
+                key={tech}
+                className="px-2.5 py-1 rounded-md bg-zinc-100/80 border border-zinc-200/60 text-xs font-medium text-zinc-600 select-none"
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        {/* Action Row — Identical to Home Featured Cards */}
+        <div className="flex flex-wrap items-center gap-4 pt-4 border-t border-zinc-100">
           {project.demo_url && (
             <a
               href={project.demo_url}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1.5 text-sm font-medium text-zinc-500 hover:text-black transition-colors"
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-zinc-900 hover:bg-black text-white text-xs font-semibold shadow-sm transition-all hover:-translate-y-0.5"
             >
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                width={15}
-                height={15}
-              >
-                <circle cx="12" cy="12" r="10" />
-                <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-              </svg>
-              Live
+              <span>Live Site</span>
+              <ExternalLink size={12} />
             </a>
           )}
+
+          {project.repo_url && (
+            <a
+              href={project.repo_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-zinc-100 hover:bg-zinc-200/80 text-zinc-800 text-xs font-medium transition-colors"
+            >
+              <SiGithub size={13} />
+              <span>Source</span>
+            </a>
+          )}
+
+          <Link
+            to={`/project/${project.id}`}
+            className="ml-auto inline-flex items-center gap-1 text-xs font-semibold text-zinc-900 hover:text-black underline underline-offset-4 decoration-zinc-400 hover:decoration-black transition-all group/link"
+          >
+            <span>View Project</span>
+            <ArrowUpRight
+              size={14}
+              className="transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"
+            />
+          </Link>
         </div>
       </div>
-    </motion.div>
+    </motion.article>
   );
 };
 
-// ── Page ───────────────────────────────────────────────────────
+// ── All Projects Page ──────────────────────────────────────────────────
 const AllProjects = () => (
   <div className="w-full min-h-screen bg-white px-6 sm:px-10 md:px-16 lg:px-24 pt-24 pb-24 font-sans">
     <div className="max-w-6xl mx-auto">
@@ -141,11 +165,9 @@ const AllProjects = () => (
       <div className="mb-8">
         <Link
           to="/#Work"
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-zinc-50 hover:bg-zinc-100 border border-zinc-200 text-xs font-semibold text-zinc-700 hover:text-black transition-all hover:-translate-x-0.5 shadow-sm"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-zinc-50 hover:bg-zinc-100 border border-zinc-200 text-xs font-semibold text-zinc-700 hover:text-black transition-all hover:-translate-x-0.5 shadow-xs"
         >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width={13} height={13}>
-            <path d="M19 12H5M12 19l-7-7 7-7" />
-          </svg>
+          <ArrowLeft size={13} />
           <span>Back to overview</span>
         </Link>
       </div>
@@ -156,14 +178,14 @@ const AllProjects = () => (
         <div className="mt-2 w-10 h-[1.5px] bg-zinc-200" />
       </div>
 
-      <p className="text-zinc-500 text-sm font-normal mb-6">
+      <p className="text-zinc-500 text-sm font-normal mb-10">
         Archive of {projectsData.length} personal, hackathon, and production tools
       </p>
 
-      {/* Project rows */}
-      <div className="divide-y divide-zinc-100">
+      {/* Project Cards Grid / Stack */}
+      <div className="flex flex-col gap-10">
         {projectsData.map((project, i) => (
-          <ProjectRow key={project.id} project={project} index={i} />
+          <AllProjectsCard key={project.id} project={project} index={i} />
         ))}
       </div>
     </div>

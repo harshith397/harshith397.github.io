@@ -1,0 +1,265 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   Planetary Skills Selector — Celestial Craft Theme
+   Linear Gowtham Navigation Dock + Concentric Pill Alignment + Tactile Globe
+   ───────────────────────────────────────────────────────────────────────────── */
+
+:root {
+  --planet-bg-surface: #ffffff;
+  --planet-bg-stage: #fafafa;
+  --planet-border-subtle: rgba(0, 0, 0, 0.08);
+  --planet-border-medium: rgba(0, 0, 0, 0.16);
+  --planet-border-strong: rgba(0, 0, 0, 0.28);
+
+  --planet-ink-title: #09090b;
+  --planet-ink-body: #27272a;
+  --planet-ink-muted: #71717a;
+
+  --planet-shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03);
+  --planet-shadow-md: 0 6px 18px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04);
+  --planet-shadow-lg: 0 18px 42px rgba(0, 0, 0, 0.1), 0 4px 10px rgba(0, 0, 0, 0.04);
+}
+
+/* Master container */
+.planetary-container {
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  user-select: none;
+  margin: 0 auto;
+}
+
+/* ── ZONE 1: HEADER NAVIGATION ROW (DYNAMIC EDGE-FADE GRADIENT DOCK) ────── */
+/* 
+   Wrapper applies dynamic gradient masks: disappears when at edges,
+   appears only when there are items to scroll in that direction!
+*/
+.planetary-nav-scroll-wrapper {
+  position: relative;
+  max-width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2.25rem;
+  transition: mask-image 0.25s ease, -webkit-mask-image 0.25s ease;
+}
+
+@media (max-width: 860px) {
+  .planetary-nav-scroll-wrapper {
+    width: 100%;
+    margin-bottom: 1.5rem;
+  }
+}
+
+.planetary-header-zone {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap; /* Single linear row on desktop */
+  gap: 0.25rem;
+  padding: 4px; /* Uniform 4px padding for mathematically concentric caps */
+  background: #f4f4f5;
+  border: 1px solid var(--planet-border-subtle);
+  border-radius: 9999px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.04), inset 0 1px 2px rgba(0, 0, 0, 0.02);
+  max-width: 100%;
+}
+
+@media (max-width: 860px) {
+  .planetary-header-zone {
+    max-width: 96vw;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    justify-content: flex-start;
+    padding: 4px 8px;
+  }
+  .planetary-header-zone::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.planetary-nav-node {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #52525b;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: color 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (min-width: 1024px) {
+  .planetary-nav-node {
+    padding: 0.55rem 1.15rem;
+    font-size: 0.84rem;
+    gap: 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .planetary-nav-node {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.75rem;
+    gap: 0.3rem;
+  }
+}
+
+.planetary-nav-node:hover {
+  color: var(--planet-ink-title);
+}
+
+/* Neutral active state: text color only; background is rendered exclusively by motion.div */
+.planetary-nav-node.is-active {
+  color: var(--planet-ink-title);
+  font-weight: 600;
+  background: transparent;
+}
+
+/* ── ZONE 2: STAGE ZONE (SWIPEABLE/DRAGGABLE STAGE & CELESTIAL ORBIT) ───── */
+.planetary-stage-zone {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  overflow: visible;
+}
+
+@media (max-width: 640px) {
+  .planetary-stage-zone {
+    height: 410px;
+    max-width: 380px;
+  }
+}
+
+@media (max-width: 380px) {
+  .planetary-stage-zone {
+    height: 360px;
+    max-width: 330px;
+  }
+}
+
+/* Gesture drag container for mouse drag and finger swipe */
+.planetary-stage-drag-area {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: grab;
+  touch-action: pan-y; /* Allows vertical scrolling while enabling horizontal swipes */
+}
+
+.planetary-stage-drag-area:active {
+  cursor: grabbing;
+}
+
+/* Orbital track SVG */
+.planetary-orbit-track {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: visible;
+}
+
+/* Central Active Globe */
+.planetary-central-globe {
+  position: relative;
+  z-index: 20;
+  border-radius: 9999px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  user-select: none;
+  cursor: grab;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.planetary-central-globe:active {
+  cursor: grabbing;
+}
+
+/* Outer atmospheric decorative pulse ring around central globe */
+.planetary-globe-pulse-ring {
+  position: absolute;
+  inset: -10px;
+  border-radius: 9999px;
+  border: 1.5px dashed var(--globe-border-color, rgba(0, 0, 0, 0.15));
+  opacity: 0.65;
+  pointer-events: none;
+  animation: pulse-aura 3.5s ease-in-out infinite;
+}
+
+@media (max-width: 480px) {
+  .planetary-globe-pulse-ring {
+    inset: -8px;
+  }
+}
+
+@keyframes pulse-aura {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.65;
+  }
+  50% {
+    transform: scale(1.04);
+    opacity: 0.95;
+  }
+}
+
+/* ── SATELLITE SKILL BADGES ─────────────────────────────────────────────── */
+.planetary-satellite-badge {
+  position: absolute;
+  z-index: 30;
+  display: inline-flex;
+  align-items: center;
+  border-radius: 9999px;
+  background: #ffffff;
+  border: 1.5px solid var(--planet-border-subtle);
+  box-shadow: var(--planet-shadow-sm);
+  font-weight: 600;
+  color: var(--planet-ink-title);
+  white-space: nowrap;
+  user-select: none;
+  cursor: pointer;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.planetary-satellite-badge:hover {
+  border-color: var(--planet-border-strong);
+  box-shadow: var(--planet-shadow-md);
+  background-color: #ffffff;
+}
+
+/* Icon Container Chip on Satellite Badge */
+.planetary-skill-icon-chip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.planetary-satellite-badge:hover .planetary-skill-icon-chip {
+  transform: scale(1.1);
+}

@@ -16,17 +16,21 @@ const HighlightText = ({ text }) => {
         if (part.startsWith("**===") && part.endsWith("===**")) {
           const content = part.slice(5, -5);
           return (
-            <strong key={i} className="font-black text-zinc-700">
-              <MarkerSpan>{content}</MarkerSpan>
-            </strong>
+            <MarkerSpan key={i}>
+              <strong className="font-semibold text-zinc-900">{content}</strong>
+            </MarkerSpan>
           );
         }
         if (part.startsWith("===") && part.endsWith("===")) {
-          return <MarkerSpan key={i}>{part.slice(3, -3)}</MarkerSpan>;
+          return (
+            <MarkerSpan key={i}>
+              <span className="font-semibold text-zinc-900">{part.slice(3, -3)}</span>
+            </MarkerSpan>
+          );
         }
         if (part.startsWith("**") && part.endsWith("**")) {
           return (
-            <strong key={i} className="font-bold text-black">
+            <strong key={i} className="font-semibold text-zinc-900">
               {part.slice(2, -2)}
             </strong>
           );

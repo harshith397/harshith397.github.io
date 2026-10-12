@@ -10,12 +10,16 @@
     "featured": true,
     "duration": "1 Week",
     "role": "Solo Developer",
-    "screenshotType": "mobile",
-    "screenshots": [
+    "previewType": "mobile",
+    "previews": [
       "/sgpa-screen-1.png",
       "/sgpa-screen-2.png",
       "/sgpa-screen-3.png"
     ],
+    "highlight": {
+      "title": "Engineering highlight",
+      "description": "Zero backend overhead. Automated daily GitHub Actions pipeline extracts syllabus PDFs, slices scheme pages, and parses grades with a Groq vision model to keep data current."
+    },
     "problem": "VCE students had no dedicated tool to simulate SGPA. Generic calculators require manual subject entry every time, and the college portal exposes no grade simulation — making it tedious to plan grades before results.",
     "solution": "Built a fully static React app that auto-populates subjects per semester from a local syllabus JSON. Uses a one-time O(N) flatten on load and an O(1) hashmap for grade slider updates — zero UI blocking. Cascading state invalidation prevents data collisions across dropdowns. A GitHub Actions pipeline keeps syllabus data current by downloading PDFs from the college portal, slicing scheme pages into images, and parsing them with a Groq vision model — fully automated, no manual updates.",
     "results": [
@@ -44,14 +48,18 @@
     "featured": true,
     "duration": "1 Month",
     "role": "Solo Developer",
-    "screenshotType": "web",
-    "screenshots": [
+    "previewType": "web",
+    "previews": [
       "/clg-screen-1.png",
       "/clg-screen-2.png",
       "/clg-screen-3.png",
       "/clg-screen-4.png",
       "/clg-screen-5.png"
     ],
+    "highlight": {
+      "title": "Engineering highlight",
+      "description": "Reverse-engineered college ERP login flow via a FastAPI proxy service to compute live attendance calculations and structured syllabus data for peers."
+    },
     "problem": "The college ERP portal had no way to calculate attendance percentage or view syllabus in a usable format. Students had to manually count classes from raw HTML tables.",
     "solution": "Built a FastAPI proxy that scraped the ERP login flow, parsed attendance HTML, and served it to a React frontend. Syllabus PDFs were manually extracted via DeepSeek page by page into JSON and served as structured data.",
     "results": [
@@ -83,11 +91,15 @@
     "featured": false,
     "duration": "24 Hours",
     "role": "Solo Developer",
-    "screenshotType": "web",
-    "screenshots": [
+    "previewType": "web",
+    "previews": [
       "/email-screen-1.png",
       "/email-screen-2.png"
     ],
+    "highlight": {
+      "title": "Engineering highlight",
+      "description": "End-to-end full stack architecture integrating React with Flask and Groq LLM API, deployed live in 24 hours during a college hackathon."
+    },
     "problem": "Writing a professional email from scratch takes longer than it should. Getting the tone right, structuring it properly, adding a CTA — it's a lot of small decisions that slow you down, especially when you're in a hurry.",
     "solution": "Built at a college hackathon — a single-dashboard app where you fill in a guided form with recipient details, subject, purpose, tone, CTA, and signature. That data goes to a Flask backend which builds a prompt and calls the Groq LLM API. The generated email shows up inline with a copy-to-clipboard button. Vite proxies frontend requests to Flask in dev, and Flask serves the built frontend in production.",
     "results": [
