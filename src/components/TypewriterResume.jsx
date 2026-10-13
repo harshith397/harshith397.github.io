@@ -345,6 +345,56 @@ const KEYBOARD_ROWS = [
   ["Z", "X", "C", "V", "B", "N", "M", ",", "."],
 ];
 
+// Two shadow states with the same shape, so framer-motion can animate between them
+const CAP_RAISED =
+  "0 1px 0 #2a2b31, 0 2px 0 #131417, 0 3px 0 #050506, 0 6px 6px rgba(0,0,0,0.6)";
+const CAP_PRESSED =
+  "0 0px 0 #2a2b31, 0 0px 0 #131417, 0 1px 0 #050506, 0 1px 2px rgba(0,0,0,0.6)";
+
+const CAP_FACE_BLACK =
+  "radial-gradient(circle at 35% 28%, #55565d 0%, #2b2c31 45%, #111215 100%)";
+const CAP_FACE_RED =
+  "radial-gradient(circle at 35% 28%, #ff6b5e 0%, #e11d1d 45%, #8f0f0f 100%)";
+const CAP_DISH =
+  "radial-gradient(circle at 60% 70%, rgba(255,255,255,0.08), rgba(0,0,0,0.35))";
+
+// A round keycap: dark socket underneath, cap that travels down when pressed
+const Keycap = ({ label, isDown, onPress, red = false, sizeClass, radiusClass = "rounded-full" }) => (
+  <button
+    type="button"
+    onClick={() => onPress(label)}
+    className={`relative shrink-0 h-6 sm:h-8 ${sizeClass || "w-6 sm:w-8"}`}
+  >
+    <span
+      className={`absolute inset-0 ${radiusClass} bg-black`}
+      style={{ boxShadow: "inset 0 2px 3px #000, 0 1px 0 rgba(255,255,255,0.08)" }}
+    />
+    <motion.span
+      className={`absolute inset-0 flex items-center justify-center ${radiusClass}`}
+      style={{ background: red ? CAP_FACE_RED : CAP_FACE_BLACK }}
+      initial={false}
+      animate={{ y: isDown ? 0 : -3, boxShadow: isDown ? CAP_PRESSED : CAP_RAISED }}
+      transition={{ duration: 0.07 }}
+    >
+      {/* concave dish on top of the cap */}
+      <span
+        className={`absolute inset-[3px] ${radiusClass}`}
+        style={{
+          background: CAP_DISH,
+          boxShadow:
+            "inset 0 2px 3px rgba(0,0,0,0.65), inset 0 -1px 1px rgba(255,255,255,0.14)",
+        }}
+      />
+      <span
+        className="relative font-mono font-bold text-[9px] sm:text-xs text-zinc-100"
+        style={{ textShadow: "0 1px 1px rgba(0,0,0,0.9)" }}
+      >
+        {label}
+      </span>
+    </motion.span>
+  </button>
+);
+
 const TypewriterResume = ({ resumeUrl = "/Resume.pdf" }) => {
   // States: "idle" | "typing" | "ready" | "closing"
   const [state, setState] = useState("idle");
@@ -728,7 +778,25 @@ const TypewriterResume = ({ resumeUrl = "/Resume.pdf" }) => {
               Black Carriage, and Stepped Keyboard with Red TAB Key!
               ─────────────────────────────────────────────────────────────────
             */}
-            <div className="relative w-full z-20 bg-gradient-to-b from-[#f8f5ee] via-[#f1ebe0] to-[#e4ded0] rounded-3xl border border-[#d8d1c0] shadow-[0_22px_55px_rgba(0,0,0,0.22),0_4px_12px_rgba(0,0,0,0.08),inset_0_2px_2px_rgba(255,255,255,0.9)] p-3 sm:p-4 flex flex-col items-center select-none">
+            <div
+              className="relative w-full z-20 rounded-3xl p-3 sm:p-4 flex flex-col items-center select-none"
+              style={{
+                background:
+                  "radial-gradient(120% 70% at 20% 0%, #ffffff 0%, rgba(255,255,255,0) 60%), linear-gradient(180deg,#f8f5ee,#efe9dc 55%,#ddd6c5)",
+                boxShadow: [
+                  "inset 0 2px 2px rgba(255,255,255,0.95)",
+                  "inset 8px 0 14px rgba(255,255,255,0.35)",
+                  "inset 0 -10px 18px rgba(0,0,0,0.08)",
+                  "0 3px 0 #d3ccb9", // cream side wall
+                  "0 7px 0 #17181b", // black base plate
+                  "0 9px 0 #0a0a0b",
+                  "0 28px 40px -6px rgba(0,0,0,0.4)",
+                ].join(","),
+                transform: "perspective(900px) rotateX(10deg)",
+                transformOrigin: "50% 0%",
+                marginBottom: 20,
+              }}
+            >
               
               {/* Carriage Assembly: Knobs + Roller + Return Lever */}
               <div className="w-full relative flex items-center justify-between mb-2 px-0.5">
@@ -869,7 +937,7 @@ const TypewriterResume = ({ resumeUrl = "/Resume.pdf" }) => {
               {/* 
                 ── ROVER 5000 de luxe Nameplate Badge Strip ──
               */}
-              <div className="w-full bg-[#141416] rounded-sm py-1.5 px-3 border border-[#27272a] shadow-inner flex items-center justify-between mb-2.5">
+              <div className="w-full bg-[#141416] rounded-sm py-1.5 px-3 border border-[#27272a] shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_2px_3px_rgba(0,0,0,0.5),0_1px_0_rgba(255,255,255,0.8)] flex items-center justify-between mb-2.5">
                 <div className="flex items-center gap-1.5">
                   <span className="text-[#f97316] text-xs">✤</span>
                   <span className="font-mono font-black text-xs sm:text-[13px] tracking-widest text-[#f97316]">
@@ -883,58 +951,45 @@ const TypewriterResume = ({ resumeUrl = "/Resume.pdf" }) => {
 
               {/* 
                 ── SECTION 3: ROVER 5000 RETRO STEPPED KEYBOARD ──
-                Authentic vintage dark charcoal keycaps with the signature red TAB key
+                Round dished keycaps with travel, staggered rows, recessed tray
               */}
-              <div className="w-full bg-[#121316] p-1.5 sm:p-2.5 rounded-xl border border-zinc-800 shadow-[inset_0_3px_8px_rgba(0,0,0,0.8)] flex flex-col items-center gap-1 sm:gap-1.5 overflow-hidden">
+              <div
+                className="w-full rounded-xl p-2 sm:p-3 flex flex-col items-center gap-2 sm:gap-3"
+                style={{
+                  background: "linear-gradient(180deg,#0a0a0c,#17181b)",
+                  boxShadow:
+                    "inset 0 6px 12px rgba(0,0,0,0.95), inset 0 -2px 4px rgba(0,0,0,0.6), 0 1px 0 rgba(255,255,255,0.75)",
+                }}
+              >
                 {KEYBOARD_ROWS.map((row, rowIndex) => (
                   <div
                     key={`keyboard-row-${rowIndex}`}
-                    className="flex items-center justify-center gap-0.5 xs:gap-1 sm:gap-1.5 w-full"
+                    className="flex items-center justify-center gap-0.5 sm:gap-1.5 w-full"
+                    style={{ transform: `translateX(${(rowIndex - 1.5) * 6}px)` }} // row stagger
                   >
-                    {row.map((char) => {
-                      const isDepressed = activeKey === char;
-                      const isRedTab = char === "TAB";
-                      return (
-                        <motion.button
-                          key={char}
-                          type="button"
-                          onClick={() => handleUserKeyPress(char)}
-                          animate={
-                            isDepressed
-                              ? { y: 2, scale: 0.94 }
-                              : { y: 0, scale: 1 }
-                          }
-                          transition={{ duration: 0.08 }}
-                          className={`relative rounded-md ${
-                            isRedTab
-                              ? "px-1.5 sm:px-2 min-w-[28px]"
-                              : "w-[26px] h-[26px] xs:w-7 xs:h-7 sm:w-8 sm:h-8"
-                          } shrink-0 flex items-center justify-center font-mono font-bold text-[9px] xs:text-[10px] sm:text-xs transition-colors ${
-                            isRedTab
-                              ? isDepressed
-                                ? "bg-red-700 text-white shadow-[inset_0_1px_3px_rgba(0,0,0,0.4)]"
-                                : "bg-[#dc2626] text-white border-t border-red-400 border-b border-red-950 shadow-[0_2.5px_0_#991b1b,0_3px_5px_rgba(0,0,0,0.4)] hover:bg-[#ef4444]"
-                              : isDepressed
-                              ? "bg-[#3f3f46] text-amber-300 border-amber-500 shadow-[inset_0_1px_3px_rgba(0,0,0,0.4)]"
-                              : "bg-[#232429] text-zinc-100 border-t border-zinc-600/40 border-b border-black shadow-[0_2.5px_0_#0f1013,0_3px_5px_rgba(0,0,0,0.4)] hover:bg-[#2c2d33] hover:text-white"
-                          }`}
-                        >
-                          <span>{char}</span>
-                        </motion.button>
-                      );
-                    })}
+                    {row.map((char) => (
+                      <Keycap
+                        key={char}
+                        label={char}
+                        isDown={activeKey === char}
+                        onPress={handleUserKeyPress}
+                        red={char === "TAB"}
+                        sizeClass={char === "TAB" ? "w-8 sm:w-11" : undefined}
+                        radiusClass={char === "TAB" ? "rounded-xl" : "rounded-full"}
+                      />
+                    ))}
                   </div>
                 ))}
 
-                {/* Rover 5000 Wide Spacebar Bar */}
-                <div className="flex items-center justify-center w-full pt-1 pb-0.5">
-                  <button
-                    type="button"
-                    onClick={() => handleUserKeyPress("SPACE")}
-                    className="w-full max-w-[220px] sm:max-w-[260px] h-6 sm:h-7 rounded-md bg-[#232429] border-t border-zinc-600/40 border-b border-black text-zinc-400 text-[9px] font-mono tracking-widest shadow-[0_2.5px_0_#0f1013,0_3px_5px_rgba(0,0,0,0.4)] hover:bg-[#2c2d33] hover:text-zinc-200 active:translate-y-0.5 transition-all"
-                  >
-                    SPACE
-                  </button>
+                {/* Rover 5000 Wide Spacebar */}
+                <div className="flex justify-center w-full">
+                  <Keycap
+                    label="SPACE"
+                    isDown={activeKey === "SPACE"}
+                    onPress={handleUserKeyPress}
+                    sizeClass="w-full max-w-[220px] sm:max-w-[260px]"
+                    radiusClass="rounded-xl"
+                  />
                 </div>
               </div>
             </div>
