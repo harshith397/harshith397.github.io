@@ -39,7 +39,7 @@ import {
   Code2,
   Orbit,
 } from "lucide-react";
-import { PLANETARY_SKILLS_DATA } from "../data/planetarySkillsData";
+import { PLANETARY_SKILLS_DATA } from "../data/skills";
 import "../styles/planetarySkills.css";
 
 // ── Official Chroma DB Vector Icon ─────────────────────────────────────────
