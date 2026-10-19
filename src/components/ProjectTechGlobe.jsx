@@ -272,61 +272,61 @@ const ProjectTechGlobe = ({
           </svg>
 
           {/* 
-            ── SINGLE ACTIVE CENTRAL GLOBE ──
-            Dedicated 2D globe representing the project stack (dot-free)
+          {/* 
+            ── SINGLE ACTIVE CENTRAL GLOBE (APPLE HIG SPECULAR MATERIAL) ──
+            Dedicated 2D specular glass globe representing project stack
           */}
           <motion.div
             initial={{ scale: 0.88, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
+            whileHover={{ scale: 1.03 }}
             transition={{
               type: "spring",
-              stiffness: 320,
-              damping: 26,
+              stiffness: 340,
+              damping: 24,
               duration: 0.35,
             }}
             style={{
-              background: `radial-gradient(circle at 32% 28%, #ffffff 0%, ${theme.bgLight} 55%, #eef0f3 100%)`,
-              borderColor: theme.border,
-              borderWidth: "2px",
-              boxShadow: `0 0 34px ${theme.glow}, 0 14px 32px rgba(0, 0, 0, 0.08), inset 0 2px 4px rgba(255, 255, 255, 0.95)`,
+              background: `radial-gradient(circle at 35% 25%, rgba(255, 255, 255, 0.98) 0%, rgba(255, 255, 255, 0.78) 55%, ${theme.bgLight} 100%)`,
+              boxShadow: `inset 0 2px 4px 0 rgba(255, 255, 255, 0.98), inset 0 -2px 4px 0 rgba(0, 0, 0, 0.035), 0 20px 45px -10px rgba(0, 0, 0, 0.08), 0 6px 18px -4px rgba(0, 0, 0, 0.04), 0 0 34px ${theme.glow}`,
             }}
             className={`planetary-central-globe ${
               isTinyScreen
-                ? "w-[114px] h-[114px] p-2"
+                ? "w-[110px] h-[110px] p-2"
                 : isMobile
-                ? "w-[128px] h-[128px] p-3"
-                : "w-[152px] h-[152px] p-4"
+                ? "w-[124px] h-[124px] p-3"
+                : "w-[144px] h-[144px] p-4"
             }`}
           >
-            {/* Outer atmospheric pulse ring */}
+            {/* Outer atmospheric decorative orbit ring */}
             <div
               className="planetary-globe-pulse-ring"
               style={{ borderColor: theme.border }}
             />
 
-            {/* Central Icon Badge */}
+            {/* Native SF Symbol Vector Icon */}
             <div
-              className={`rounded-full mb-1.5 shadow-xs transition-transform ${
-                isTinyScreen ? "p-1.5" : isMobile ? "p-2" : "p-2.5"
-              }`}
+              className="transition-transform duration-300 flex items-center justify-center mb-1"
               style={{
-                backgroundColor: "#ffffff",
-                border: `1.5px solid ${theme.border}`,
                 color: theme.accent,
-                boxShadow: `0 2px 8px ${theme.glow}`,
               }}
             >
-              <Layers size={isTinyScreen ? 16 : isMobile ? 19 : 22} />
+              <Layers
+                size={isTinyScreen ? 20 : isMobile ? 24 : 26}
+                strokeWidth={2}
+                className="transition-transform duration-300 group-hover:scale-110"
+              />
             </div>
 
-            {/* Globe Title & Count */}
-            <h3
-              className={`font-bold text-zinc-950 leading-tight tracking-tight ${
-                isTinyScreen ? "text-xs" : isMobile ? "text-xs" : "text-sm"
+            {/* Globe Title & Count — Apple HIG Typography */}
+            <span
+              className={`font-semibold text-zinc-900 leading-tight tracking-tight text-center select-none ${
+                isTinyScreen ? "text-xs" : isMobile ? "text-[13px]" : "text-sm"
               }`}
+              style={{ letterSpacing: "-0.2px" }}
             >
               Tech Stack
-            </h3>
+            </span>
             <span className="text-[10px] text-zinc-500 font-medium mt-0.5">
               {techStack.length} {techStack.length === 1 ? "Technology" : "Technologies"}
             </span>

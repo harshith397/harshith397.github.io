@@ -462,37 +462,36 @@ const PlanetarySkillsPortfolio = ({
           </svg>
 
           {/* 
-            ── ACTIVE CENTRAL GLOBE (LARGER TACTILE CELESTIAL HUB) ──
-            Increased diameter on mobile screens for confident visual presence
-            (Completely dot-free)
+          {/* 
+            ── ACTIVE CENTRAL GLOBE (APPLE HIG SPECULAR MATERIAL GLASSMORPHISM) ──
+            Pure frosted glass with specular ambient rim, SF symbol icon & typography
           */}
           <AnimatePresence mode="wait">
             <motion.div
               key={activeCategory?.id}
-              initial={{ scale: 0.86, opacity: 0 }}
+              initial={{ scale: 0.88, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.86, opacity: 0 }}
+              exit={{ scale: 0.88, opacity: 0 }}
+              whileHover={{ scale: 1.03 }}
               transition={{
                 type: "spring",
-                stiffness: 320,
-                damping: 26,
+                stiffness: 340,
+                damping: 24,
                 duration: 0.35,
               }}
               style={{
-                background: `radial-gradient(circle at 32% 28%, #ffffff 0%, ${activeTheme.bgLight} 55%, #eef0f3 100%)`,
-                borderColor: activeTheme.border,
-                borderWidth: "2px",
-                boxShadow: `0 0 38px ${activeTheme.glow}, 0 16px 36px rgba(0, 0, 0, 0.08), inset 0 2px 4px rgba(255, 255, 255, 0.95)`,
+                background: `radial-gradient(circle at 35% 25%, rgba(255, 255, 255, 0.98) 0%, rgba(255, 255, 255, 0.78) 55%, ${activeTheme.bgLight} 100%)`,
+                boxShadow: `inset 0 2px 4px 0 rgba(255, 255, 255, 0.98), inset 0 -2px 4px 0 rgba(0, 0, 0, 0.035), 0 20px 45px -10px rgba(0, 0, 0, 0.08), 0 6px 18px -4px rgba(0, 0, 0, 0.04), 0 0 38px ${activeTheme.glow}`,
               }}
               className={`planetary-central-globe ${
                 isTinyScreen
-                  ? "w-[118px] h-[118px] p-2.5"
+                  ? "w-[110px] h-[110px] p-2"
                   : isMobile
-                  ? "w-[136px] h-[136px] p-3.5"
-                  : "w-[164px] h-[164px] p-4"
+                  ? "w-[126px] h-[126px] p-3"
+                  : "w-[144px] h-[144px] p-4"
               }`}
             >
-              {/* Outer atmospheric pulse ring */}
+              {/* Outer atmospheric decorative orbit ring */}
               <div
                 className="planetary-globe-pulse-ring"
                 style={{
@@ -500,33 +499,35 @@ const PlanetarySkillsPortfolio = ({
                 }}
               />
 
-              {/* Category Icon Badge */}
+              {/* Native SF Symbol Vector Icon */}
               <div
-                className={`rounded-full mb-1.5 sm:mb-2 shadow-xs transition-transform ${
-                  isTinyScreen ? "p-2" : isMobile ? "p-2.5" : "p-3"
-                }`}
+                className="transition-transform duration-300 flex items-center justify-center mb-1.5"
                 style={{
-                  backgroundColor: "#ffffff",
-                  border: `1.5px solid ${activeTheme.border}`,
                   color: activeTheme.accent,
-                  boxShadow: `0 2px 8px ${activeTheme.glow}`,
                 }}
               >
-                <CategoryIcon size={isTinyScreen ? 18 : isMobile ? 20 : 24} />
+                <CategoryIcon
+                  size={isTinyScreen ? 22 : isMobile ? 25 : 28}
+                  strokeWidth={2}
+                  className="transition-transform duration-300 group-hover:scale-110"
+                />
               </div>
 
-              {/* Category Name - Clean, bold & prominent */}
-              <h3
-                className={`font-bold text-zinc-950 leading-tight tracking-tight ${
+              {/* Category Title — Apple HIG Typography */}
+              <span
+                className={`font-semibold text-zinc-900 leading-tight tracking-tight text-center select-none ${
                   isTinyScreen
-                    ? "text-xs max-w-[90px]"
+                    ? "text-xs max-w-[85px]"
                     : isMobile
-                    ? "text-sm max-w-[105px]"
-                    : "text-base max-w-[130px]"
+                    ? "text-[13px] max-w-[100px]"
+                    : "text-[15px] max-w-[120px]"
                 }`}
+                style={{
+                  letterSpacing: "-0.2px",
+                }}
               >
                 {activeCategory?.name}
-              </h3>
+              </span>
             </motion.div>
           </AnimatePresence>
 
