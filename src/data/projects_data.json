@@ -28,7 +28,7 @@
       "Clean period-by-period day cards (Periods 1 to 7) and subject-wise breakdown replace pinch-zooming clunky desktop HTML tables on phones"
     ],
     "architecture_url": null,
-    "demo_url": null,
+    "demo_url": "https://harshith397.github.io/vce-app/",
     "repo_url": "https://github.com/harshith397/vce-app.git",
     "tech_stack": [
       "React Native",
