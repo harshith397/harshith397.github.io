@@ -18,7 +18,7 @@
 
 ---
 
-## ✦ Overview
+## 🧭 Overview
 
 This repository houses the source code for my personal developer portfolio, live at **[harshith397.github.io](https://harshith397.github.io)**. 
 
@@ -26,7 +26,7 @@ Built with a focus on tactile micro-interactions, clean Apple HIG-inspired typog
 
 ---
 
-## ✦ Key Features
+## ⚡ Key Features
 
 ### 1. 🖨️ Interactive Vintage Typewriter Resume
 - **Tactile Sound & Feel:** Simulates a mechanical typewriter with physical carriage returns, keystroke acoustics, and paper slide transitions.
@@ -42,14 +42,14 @@ Built with a focus on tactile micro-interactions, clean Apple HIG-inspired typog
 - Structured project breakdowns highlighting real-world engineering trade-offs (e.g., bypassing ERP Cloudflare/reCAPTCHA using on-device WebView bridges, automated PDF scraping pipelines using Groq vision models).
 - Interactive media previews, architecture highlights, and problem-solution journals.
 
-### 4. ⚡ Modern Motion & Polish
+### 4. 💫 Modern Motion & Polish
 - **Lenis Smooth Scroll:** Butter-smooth 60fps momentum scroll.
 - **Tailwind CSS v4:** Zero-runtime overhead stylesheet with modern OKLCH color palettes and glassmorphism utilities.
 - **Framer Motion:** Cohesive entrance transitions and spring-based interactions.
 
 ---
 
-## ✦ Tech Stack
+## 🛠️ Tech Stack
 
 | Category | Technologies |
 |---|---|
@@ -62,7 +62,7 @@ Built with a focus on tactile micro-interactions, clean Apple HIG-inspired typog
 
 ---
 
-## ✦ Project Structure
+## 📂 Project Structure
 
 ```text
 ├── .github/
@@ -96,7 +96,7 @@ Built with a focus on tactile micro-interactions, clean Apple HIG-inspired typog
 
 ---
 
-## ✦ Getting Started Locally
+## 💻 Getting Started Locally
 
 ### Prerequisites
 - **Node.js** (v18 or higher recommended)
@@ -129,7 +129,7 @@ Built with a focus on tactile micro-interactions, clean Apple HIG-inspired typog
 
 ---
 
-## ✦ CI/CD Pipeline
+## 🚀 CI/CD Pipeline
 
 The portfolio is deployed automatically via **GitHub Actions** (`.github/workflows/deploy.yml`):
 
@@ -147,7 +147,7 @@ Every push to the `main` branch triggers an automated build and deploy to GitHub
 
 ---
 
-## ✦ Connect With Me
+## 📬 Connect With Me
 
 - **Portfolio:** [harshith397.github.io](https://harshith397.github.io)
 - **LinkedIn:** [harshith-medichelme](https://www.linkedin.com/in/harshith-medichelme/)
