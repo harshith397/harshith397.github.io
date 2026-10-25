@@ -1,0 +1,381 @@
+/**
+ * ─────────────────────────────────────────────────────────────────────────────
+ * 3D Orbital Skills Data Model — Section 20 Specification
+ * ─────────────────────────────────────────────────────────────────────────────
+ * Transparent Glass Central Category Spheres + Authentic Brand Logo Spheres
+ * Official Color Palettes (Section 20.4) & Brand Colors for every technology
+ */
+
+export const CATEGORY_COLORS = {
+  aiml: {
+    accent: "#8B79C6",
+    tint: "#EAE5F7",
+  },
+  backend: {
+    accent: "#4E83B8",
+    tint: "#E0ECF7",
+  },
+  databases: {
+    accent: "#3F9285",
+    tint: "#DDF0EB",
+  },
+  languages: {
+    accent: "#D09A52",
+    tint: "#F8EBD8",
+  },
+  frontend: {
+    accent: "#3F83C5",
+    tint: "#E1EFFB",
+  },
+  devops: {
+    accent: "#B96578",
+    tint: "#F5E4E9",
+  },
+  systems: {
+    accent: "#778A9E",
+    tint: "#E7ECF1",
+  },
+};
+
+export const ORBITAL_SKILLS_DATA = [
+  {
+    id: "languages",
+    name: "Languages",
+    fullName: "Programming Languages",
+    color: CATEGORY_COLORS.languages.accent, // #D09A52
+    tint: CATEGORY_COLORS.languages.tint,     // #F8EBD8
+    skills: [
+      {
+        id: "python",
+        name: "Python",
+        icon: "SiPython",
+        brandColor: "#3776AB",
+        sphereBg: "#2B5B84",
+        logoColor: "#FFD43B",
+        description: "Core language for backend proxies, automation pipelines, AI scrapers, and data engineering.",
+        evidence: "Engineered FastAPI proxy for VCE Student Portal and automated syllabus PDF parser using vision models.",
+        projectIds: ["vce-companion", "attendance-portal", "ai-email-generator"],
+      },
+      {
+        id: "typescript",
+        name: "TypeScript",
+        icon: "SiTypescript",
+        brandColor: "#3178C6",
+        sphereBg: "#235A97",
+        logoColor: "#FFFFFF",
+        description: "Type-safe architecture across React SPAs, robust interfaces, and full-stack API contracts.",
+        evidence: "Used in VCE Student Portal and client-side application state management.",
+        projectIds: ["attendance-portal"],
+      },
+      {
+        id: "javascript",
+        name: "JavaScript",
+        icon: "SiJavascript",
+        brandColor: "#F7DF1E",
+        sphereBg: "#D4BE14",
+        logoColor: "#000000",
+        description: "Client-side DOM injection parsers, asynchronous state workflows, and React Native bridge scripting.",
+        evidence: "Wrote custom injected DOM scripts in VCE Companion (dashboard, dayWiseAttendance, and marks parsers).",
+        projectIds: ["vce-companion", "sgpa-calculator"],
+      },
+      {
+        id: "c",
+        name: "C",
+        icon: "SiC",
+        brandColor: "#283593",
+        sphereBg: "#1C2566",
+        logoColor: "#64B5F6",
+        description: "Low-level systems programming, memory management models, pointer arithmetic, and algorithmic foundations.",
+        evidence: "Academic coursework and foundational computer science data structures.",
+        projectIds: [],
+      },
+      {
+        id: "java",
+        name: "Java",
+        icon: "SiJava",
+        brandColor: "#E76F00",
+        sphereBg: "#B35600",
+        logoColor: "#FFFFFF",
+        description: "Object-oriented software engineering, multithreading, and design patterns.",
+        evidence: "Core enterprise architectures and computational problem solving.",
+        projectIds: [],
+      },
+      {
+        id: "golang",
+        name: "GoLang",
+        icon: "SiGo",
+        brandColor: "#00ADD8",
+        sphereBg: "#0086A8",
+        logoColor: "#FFFFFF",
+        description: "High-throughput concurrent network tooling, goroutines, and lightweight microservice proxies.",
+        evidence: "Exploration of concurrent scraper utilities and microservice proxies.",
+        projectIds: [],
+      },
+    ],
+  },
+  {
+    id: "frontend",
+    name: "Frontend",
+    fullName: "Frontend Engineering",
+    color: CATEGORY_COLORS.frontend.accent, // #3F83C5
+    tint: CATEGORY_COLORS.frontend.tint,     // #E1EFFB
+    skills: [
+      {
+        id: "react",
+        name: "React",
+        icon: "SiReact",
+        brandColor: "#61DAFB",
+        sphereBg: "#1E293B",
+        logoColor: "#61DAFB",
+        description: "Component-driven SPA architectures, reactive custom hooks, and zero-blocking state optimization.",
+        evidence: "Engineered SGPA Calculator with O(N) tree flatten and O(1) grade lookups; AI Email Generator dashboard.",
+        projectIds: ["sgpa-calculator", "ai-email-generator", "attendance-portal"],
+      },
+      {
+        id: "react-native",
+        name: "React Native",
+        icon: "SiExpo",
+        brandColor: "#000020",
+        sphereBg: "#0F172A",
+        logoColor: "#00D8FF",
+        description: "Cross-platform mobile engineering with on-device WebView bridges and native navigation.",
+        evidence: "Built VCE Companion app from scratch with live attendance calculations and period-by-period timetables.",
+        projectIds: ["vce-companion"],
+      },
+      {
+        id: "tailwind",
+        name: "Tailwind CSS",
+        icon: "SiTailwindcss",
+        brandColor: "#06B6D4",
+        sphereBg: "#0F172A",
+        logoColor: "#38BDF8",
+        description: "Utility-first design systems, responsive micro-interactions, dark/light themes, and tactile UI craft.",
+        evidence: "Designed polished Apple-inspired interfaces for SGPA Calculator and personal portfolio.",
+        projectIds: ["sgpa-calculator", "ai-email-generator"],
+      },
+    ],
+  },
+  {
+    id: "backend",
+    name: "Backend",
+    fullName: "Backend Engineering",
+    color: CATEGORY_COLORS.backend.accent, // #4E83B8
+    tint: CATEGORY_COLORS.backend.tint,     // #E0ECF7
+    skills: [
+      {
+        id: "fastapi",
+        name: "FastAPI",
+        icon: "SiFastapi",
+        brandColor: "#009688",
+        sphereBg: "#00796B",
+        logoColor: "#FFFFFF",
+        description: "Asynchronous Python REST APIs, Pydantic type validation, background tasks, and proxy services.",
+        evidence: "Engineered FastAPI proxy service to scrape college ERP login flow and compute live attendance.",
+        projectIds: ["attendance-portal"],
+      },
+      {
+        id: "express",
+        name: "Express.js",
+        icon: "SiExpress",
+        brandColor: "#18181B",
+        sphereBg: "#27272A",
+        logoColor: "#FFFFFF",
+        description: "Node.js REST microservices, modular middleware, request authentication, and JSON handling.",
+        evidence: "Backend REST endpoints and microservice utilities.",
+        projectIds: [],
+      },
+    ],
+  },
+  {
+    id: "aiml",
+    name: "AI & ML",
+    fullName: "AI & Machine Learning",
+    color: CATEGORY_COLORS.aiml.accent, // #8B79C6
+    tint: CATEGORY_COLORS.aiml.tint,     // #EAE5F7
+    skills: [
+      {
+        id: "pytorch",
+        name: "PyTorch",
+        icon: "SiPytorch",
+        brandColor: "#EE4C2C",
+        sphereBg: "#C43519",
+        logoColor: "#FFFFFF",
+        description: "Deep learning tensor computation, neural network model experimentation, and computer vision architectures.",
+        evidence: "Deep learning research and academic computer vision projects.",
+        projectIds: [],
+      },
+      {
+        id: "ollama",
+        name: "Ollama",
+        icon: "SiOllama",
+        brandColor: "#18181B",
+        sphereBg: "#27272A",
+        logoColor: "#FFFFFF",
+        description: "Local large language model deployment, private inference pipelines, and quantization.",
+        evidence: "Local developer workflows and private RAG evaluation environments.",
+        projectIds: [],
+      },
+      {
+        id: "huggingface",
+        name: "Hugging Face",
+        icon: "SiHuggingface",
+        brandColor: "#FFD21E",
+        sphereBg: "#D4AC0D",
+        logoColor: "#000000",
+        description: "Transformers library, open-source model fine-tuning, tokenization, and pipeline integration.",
+        evidence: "Text generation, embeddings extraction, and semantic search pipelines.",
+        projectIds: [],
+      },
+      {
+        id: "groq-api",
+        name: "Groq LLM",
+        icon: "SiPython",
+        brandColor: "#F55036",
+        sphereBg: "#D13A23",
+        logoColor: "#FFFFFF",
+        description: "High-speed LPU inference API, vision model parsing for PDF document scheme extraction.",
+        evidence: "Automated daily GitHub Actions syllabus extraction pipeline using Groq vision model; AI Email Generator.",
+        projectIds: ["sgpa-calculator", "ai-email-generator"],
+      },
+    ],
+  },
+  {
+    id: "databases",
+    name: "Databases",
+    fullName: "Databases & Data Engineering",
+    color: CATEGORY_COLORS.databases.accent, // #3F9285
+    tint: CATEGORY_COLORS.databases.tint,     // #DDF0EB
+    skills: [
+      {
+        id: "postgresql",
+        name: "PostgreSQL",
+        icon: "SiPostgresql",
+        brandColor: "#0064a5",
+        sphereBg: "#004B7C",
+        logoColor: "#FFFFFF",
+        description: "Relational schema design, ACID transactions, complex queries, and indexing strategies.",
+        evidence: "Used for relational student records and syllabus persistence in VCE Student Portal.",
+        projectIds: ["attendance-portal"],
+      },
+      {
+        id: "redis",
+        name: "Redis",
+        icon: "SiRedis",
+        brandColor: "#DC382D",
+        sphereBg: "#B3281E",
+        logoColor: "#FFFFFF",
+        description: "In-memory key-value caching, sub-millisecond retrieval, session management, and rate limiting.",
+        evidence: "Engineered session caching layer for FastAPI proxy to avoid redundant college ERP requests.",
+        projectIds: ["attendance-portal"],
+      },
+      {
+        id: "chroma",
+        name: "Chroma DB",
+        icon: "SiChroma",
+        brandColor: "#FF6446",
+        sphereBg: "#1E293B",
+        logoColor: "#FF6446",
+        description: "Vector embedding database for semantic nearest-neighbor search, chunking, and RAG architectures.",
+        evidence: "Semantic retrieval and document embedding indexing experiments.",
+        projectIds: [],
+      },
+      {
+        id: "sqlite",
+        name: "SQLite",
+        icon: "SiSqlite",
+        brandColor: "#003B57",
+        sphereBg: "#00283B",
+        logoColor: "#FFFFFF",
+        description: "Lightweight embedded SQL storage, zero-configuration local databases, and offline caches.",
+        evidence: "Local persistence and cached syllabus data storage.",
+        projectIds: [],
+      },
+    ],
+  },
+  {
+    id: "devops",
+    name: "DevOps",
+    fullName: "DevOps & Infrastructure",
+    color: CATEGORY_COLORS.devops.accent, // #B96578
+    tint: CATEGORY_COLORS.devops.tint,     // #F5E4E9
+    skills: [
+      {
+        id: "docker",
+        name: "Docker",
+        icon: "SiDocker",
+        brandColor: "#2496ED",
+        sphereBg: "#1679C4",
+        logoColor: "#FFFFFF",
+        description: "Containerization, reproducible multi-stage Dockerfiles, and isolated deployment environments.",
+        evidence: "Containerized microservice architecture for FastAPI and Redis backend services.",
+        projectIds: ["attendance-portal"],
+      },
+      {
+        id: "github-actions",
+        name: "Actions",
+        icon: "SiGithubactions",
+        brandColor: "#2088FF",
+        sphereBg: "#116EE0",
+        logoColor: "#FFFFFF",
+        description: "Automated CI/CD pipelines, scheduled cron scraping workflows, and automated git bot releases.",
+        evidence: "Engineered daily automated syllabus synchronization pipeline with Discord notifications.",
+        projectIds: ["sgpa-calculator"],
+      },
+      {
+        id: "git",
+        name: "Git & Linux",
+        icon: "SiGit",
+        brandColor: "#F05032",
+        sphereBg: "#C4381D",
+        logoColor: "#FFFFFF",
+        description: "Version control branching workflows, remote repositories, SSH management, and Bash automation.",
+        evidence: "Daily developer workflow across all open-source repositories and server deployments.",
+        projectIds: ["vce-companion", "sgpa-calculator"],
+      },
+    ],
+  },
+  {
+    id: "systems",
+    name: "Systems",
+    fullName: "Systems & IoT",
+    color: CATEGORY_COLORS.systems.accent, // #778A9E
+    tint: CATEGORY_COLORS.systems.tint,     // #E7ECF1
+    skills: [
+      {
+        id: "mqtt",
+        name: "MQTT",
+        icon: "SiMqtt",
+        brandColor: "#660066",
+        sphereBg: "#4D004D",
+        logoColor: "#FFFFFF",
+        description: "Lightweight publish/subscribe telemetry messaging protocol for constrained IoT sensor networks.",
+        evidence: "Telemetry message broker pipelines for sensor networks.",
+        projectIds: [],
+      },
+      {
+        id: "arduino",
+        name: "Arduino",
+        icon: "SiArduino",
+        brandColor: "#00979D",
+        sphereBg: "#007A7F",
+        logoColor: "#FFFFFF",
+        description: "Embedded C/C++ microcontroller firmware, hardware timers, and digital/analog sensor interfaces.",
+        evidence: "Microcontroller circuit prototyping and hardware sensor integration.",
+        projectIds: [],
+      },
+      {
+        id: "raspberry-pi",
+        name: "Raspberry Pi",
+        icon: "SiRaspberrypi",
+        brandColor: "#C51A4A",
+        sphereBg: "#9E143A",
+        logoColor: "#FFFFFF",
+        description: "Single-board Linux computing, headless servers, GPIO pin programming, and edge automation.",
+        evidence: "Headless Linux server environments and hardware automation experimentation.",
+        projectIds: [],
+      },
+    ],
+  },
+];
+
+export default ORBITAL_SKILLS_DATA;

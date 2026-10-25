@@ -1,0 +1,235 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   3D Orbital Skills Portfolio — Section 20 Specification
+   • Transparent Glass Central Category Sphere + Title Inside
+   • Technology-Logo Spheres + Authentic Brand Logos + Titles Under Spheres
+   • Fully Responsive, Zero Bottom-Clipping on Desktop & Mobile
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* Native transparent container */
+.orbital-skills-container {
+  position: relative;
+  width: 100%;
+  background: transparent;
+  overflow: visible;
+  user-select: none;
+}
+
+/* Three.js Canvas Wrapper — Calibrated Height to Prevent Any Desktop/Mobile Clipping */
+.orbital-canvas-wrapper {
+  position: relative;
+  width: 100%;
+  height: 680px;
+  cursor: grab;
+  touch-action: pan-y;
+  background: transparent;
+  overflow: visible;
+}
+
+@media (max-width: 1024px) {
+  .orbital-canvas-wrapper {
+    height: 600px;
+  }
+}
+
+@media (max-width: 640px) {
+  .orbital-canvas-wrapper {
+    height: 520px;
+  }
+}
+
+.orbital-canvas-wrapper:active {
+  cursor: grabbing;
+}
+
+/* 2D HTML Floating Labels Layer (Never clipped) */
+.orbital-labels-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: visible;
+}
+
+/* ── 1. MAIN CATEGORY PLANET LABELS (OVERVIEW STATE) ── */
+.orbital-planet-label {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.8125rem;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.75), 0 2px 10px rgba(0, 0, 0, 0.45);
+  user-select: none;
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+  will-change: transform;
+  max-width: 110px;
+}
+
+@media (max-width: 640px) {
+  .orbital-planet-label {
+    font-size: 0.72rem;
+    max-width: 85px;
+  }
+}
+
+.orbital-planet-icon {
+  margin-bottom: 2px;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.6));
+}
+
+/* ── 2. TECHNOLOGY-LOGO SPHERE NODES (LOGO ON SPHERE + TITLE UNDERNEATH) ── */
+.orbital-tech-logo-node {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: translate(-50%, -50%);
+  pointer-events: auto;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+/* Authentic Brand Logo centered directly on the 3D sphere */
+.orbital-tech-sphere-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.35));
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Technology title placed cleanly directly under the sphere */
+.orbital-tech-sphere-title {
+  margin-top: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #1d1d1f;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  padding: 0.2rem 0.6rem;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 9999px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  pointer-events: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+@media (max-width: 640px) {
+  .orbital-tech-sphere-title {
+    margin-top: 8px;
+    font-size: 0.66rem;
+    padding: 0.15rem 0.5rem;
+  }
+}
+
+.orbital-tech-logo-node:hover .orbital-tech-sphere-logo {
+  transform: scale(1.15);
+}
+
+.orbital-tech-logo-node:hover .orbital-tech-sphere-title {
+  color: #000000;
+  border-color: rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  transform: translateY(1px);
+}
+
+/* ── 4. TOP FLOATING NAVIGATION BAR ── */
+.orbital-nav-bar {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.5rem;
+  right: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: none;
+  z-index: 25;
+}
+
+.orbital-back-button {
+  pointer-events: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 9999px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #1d1d1f;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.orbital-back-button:hover {
+  background: #ffffff;
+  border-color: rgba(0, 0, 0, 0.25);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+}
+
+.orbital-view-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.8rem;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #52525b;
+}
+
+/* ── 5. SLIDE-OVER SKILL DETAILS PANEL ── */
+.orbital-details-panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  max-width: 420px;
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(32px);
+  -webkit-backdrop-filter: blur(32px);
+  border-left: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: -10px 0 35px rgba(0, 0, 0, 0.08);
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  user-select: text;
+}
+
+@media (max-width: 640px) {
+  .orbital-details-panel {
+    max-width: 100%;
+    border-left: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+  }
+}
