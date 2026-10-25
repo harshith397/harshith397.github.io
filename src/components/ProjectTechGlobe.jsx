@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useMemo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useEffect, useRef, useState, useCallback, useMemo } from "react";
+import * as THREE from "three";
+import { gsap } from "gsap";
 import {
   SiReact,
   SiFastapi,
@@ -19,27 +20,27 @@ import {
   SiLinux,
   SiGithubactions,
   SiSqlite,
-  SiPython,
   SiVite,
-  SiRaspberrypi,
-  SiJavascript,
   SiExpress,
   SiMilvus,
   SiPytorch,
   SiExpo,
+  SiC,
+  SiGo,
+  SiOllama,
 } from "@icons-pack/react-simple-icons";
 import { Layers, Sparkles, Code2, Cpu } from "lucide-react";
-import "../styles/planetarySkills.css";
+import "../styles/projectTechGlobe.css";
 
-// ── Official Chroma DB Vector Icon ─────────────────────────────────────────
-const SiChroma = ({ size = 20, className = "", style, ...props }) => (
+// ── Official Multi-Color SVG Components ─────────────────────────────────────
+
+// Official Chroma DB Vector Icon
+const SiChroma = ({ size = 26, className = "" }) => (
   <svg
     viewBox="17.36 -11.81 221.29 141.62"
     width={size}
     height={size}
     className={className}
-    style={style}
-    {...props}
   >
     <g transform="matrix(0.86440678,0,0,0.86440678,17.355932,-11.812063)">
       <ellipse fill="#ffde2d" cx="170.66679" cy="81.919838" rx="85.333206" ry="81.919838" />
@@ -52,365 +53,831 @@ const SiChroma = ({ size = 20, className = "", style, ...props }) => (
   </svg>
 );
 
-// ── Simple Icon Registry ───────────────────────────────────────────────────
-const TECH_ICON_MAP = {
-  React: { icon: SiReact, color: "#61DAFB" },
-  "React Native": { icon: SiReact, color: "#61DAFB" },
-  Expo: { icon: SiExpo, color: "#000020" },
-  "React Native + Expo": { icon: SiExpo, color: "#000020" },
-  FastAPI: { icon: SiFastapi, color: "#009688" },
-  Docker: { icon: SiDocker, color: "#2496ED" },
-  PostgreSQL: { icon: SiPostgresql, color: "#4169E1" },
-  Redis: { icon: SiRedis, color: "#DC382D" },
-  "Chroma DB": { icon: SiChroma, color: "#FF6446" },
-  Chroma: { icon: SiChroma, color: "#FF6446" },
-  ChromaDB: { icon: SiChroma, color: "#FF6446" },
-  MongoDB: { icon: SiMongodb, color: "#47A248" },
-  "Tailwind CSS": { icon: SiTailwindcss, color: "#06B6D4" },
-  Flask: { icon: SiFlask, color: "#18181b" },
-  "Node.js": { icon: SiNodedotjs, color: "#339933" },
-  Express: { icon: SiExpress, color: "#000000" },
-  "Express.js": { icon: SiExpress, color: "#000000" },
-  JavaScript: { icon: SiJavascript, color: "#F7DF1E" },
-  JS: { icon: SiJavascript, color: "#F7DF1E" },
-  TypeScript: { icon: SiTypescript, color: "#3178C6" },
-  LangChain: { icon: SiLangchain, color: "#1C3C3C" },
-  "Hugging Face": { icon: SiHuggingface, color: "#FFD21E" },
-  PyTorch: { icon: SiPytorch, color: "#EE4C2C" },
-  Milvus: { icon: SiMilvus, color: "#00A1EA" },
-  "Milvus (Vector DB)": { icon: SiMilvus, color: "#00A1EA" },
-  MQTT: { icon: SiMqtt, color: "#660066" },
-  Arduino: { icon: SiArduino, color: "#00979D" },
-  "Raspberry Pi": { icon: SiRaspberrypi, color: "#C51A4A" },
-  "Raspberry Pi 3": { icon: SiRaspberrypi, color: "#C51A4A" },
-  Git: { icon: SiGit, color: "#F05032" },
-  Linux: { icon: SiLinux, color: "#FCC624" },
-  "GitHub Actions": { icon: SiGithubactions, color: "#2088FF" },
-  SQLite: { icon: SiSqlite, color: "#003B57" },
-  Python: { icon: SiPython, color: "#3776AB" },
-  Vite: { icon: SiVite, color: "#646CFF" },
-  "Groq API": { icon: Sparkles, color: "#F59E0B" },
+// Authentic Multi-Color Python Logo (Blue top snake + Yellow bottom snake + White eyes)
+const OfficialPython = ({ size = 26, className = "" }) => (
+  <svg viewBox="0 0 24 24" width={size} height={size} className={className}>
+    <path
+      fill="#387eb8"
+      d="M11.914 0C5.766 0 6.13 2.668 6.13 2.668l.006 2.766h5.882v.834H3.84s-3.84.436-3.84 6.146 3.35 6.01 3.35 6.01h2.003v-2.825s-.11-3.353 3.303-3.353h5.688s3.21.053 3.21-3.15V3.208S18.062 0 11.914 0zm-3.15 1.832a1.07 1.07 0 1 1 0 2.14 1.07 1.07 0 0 1 0-2.14z"
+    />
+    <path
+      fill="#ffe052"
+      d="M12.086 24c6.148 0 5.784-2.668 5.784-2.668l-.006-2.766H11.98v-.834h8.177s3.84-.436 3.84-6.146-3.35-6.01-3.35-6.01h-2.003v2.825s.11 3.353-3.303 3.353H9.646s-3.21-.053-3.21 3.15v5.884S5.938 24 12.086 24zm3.15-1.832a1.07 1.07 0 1 1 0-2.14 1.07 1.07 0 0 1 0 2.14z"
+    />
+  </svg>
+);
+
+// Authentic Multi-Color Raspberry Pi Logo (Green leaves + Magenta/red berry)
+const OfficialRaspberryPi = ({ size = 26, className = "" }) => (
+  <svg viewBox="0 0 24 24" width={size} height={size} className={className}>
+    <path
+      fill="#78c043"
+      d="M8.547 3.966c.46-.867 1.458-1.572 2.37-1.572.242 0 .445.05.586.136-.347.535-.745 1.343-.745 2.115 0 .227.034.423.091.59-.79-.052-1.748-.485-2.302-1.269zm6.906 0c-.554.784-1.512 1.217-2.302 1.269.057-.167.091-.363.091-.59 0-.772-.398-1.58-.745-2.115.141-.086.344-.136.586-.136.912 0 1.91.705 2.37 1.572zM12 4.675c.44-.45 1.09-.76 1.76-.76.71 0 1.33.35 1.62.88-.69.25-1.56.76-2.05 1.44-.27-.58-.75-1.12-1.33-1.56zm0 0c-.58.44-1.06.98-1.33 1.56-.49-.68-1.36-1.19-2.05-1.44.29-.53.91-.88 1.62-.88.67 0 1.32.31 1.76.76z"
+    />
+    <path
+      fill="#c51a4a"
+      d="M12 7.037c-.77 0-1.47.27-2.02.73.55.46 1.25.73 2.02.73s1.47-.27 2.02-.73c-.55-.46-1.25-.73-2.02-.73zm-3.53 1.38c-.73 0-1.38.31-1.84.82.52.41 1.17.65 1.88.65.65 0 1.25-.2 1.75-.55-.47-.56-1.1-1.23-1.79-1.23zm7.06 0c-.69 0-1.32.67-1.79 1.23.5.35 1.1.55 1.75.55.71 0 1.36-.24 1.88-.65-.46-.51-1.11-.82-1.84-.82zm-8.82 2.65c-.77 0-1.41.44-1.71 1.08.57.34 1.24.54 1.95.54.49 0 .95-.1 1.37-.28-.39-.75-.98-1.34-1.61-1.34zm10.58 0c-.63 0-1.22.59-1.61 1.34.42.18.88.28 1.37.28.71 0 1.38-.2 1.95-.54-.3-.64-.94-1.08-1.71-1.08zm-7.06.82c-.85 0-1.57.48-1.92 1.19.57.41 1.26.66 2.01.66.71 0 1.37-.22 1.92-.6-.44-.73-1.15-1.25-2.01-1.25zm3.54 0c-.86 0-1.57.52-2.01 1.25.55.38 1.21.6 1.92.6.75 0 1.44-.25 2.01-.66-.35-.71-1.07-1.19-1.92-1.19zm-3.54 2.89c-.83 0-1.53.44-1.89 1.1.56.36 1.23.58 1.95.58.7 0 1.34-.21 1.88-.56-.44-.67-1.13-1.12-1.94-1.12zm-3.4 1.18c-.73 0-1.34.45-1.6 1.09.52.33 1.13.52 1.79.52.39 0 .76-.07 1.1-.2-.36-.8-.82-1.41-1.29-1.41zm6.8 0c-.47 0-.93.61-1.29 1.41.34.13.71.2 1.1.2.66 0 1.27-.19 1.79-.52-.26-.64-.87-1.09-1.6-1.09zm-3.4 2.15c-.88 0-1.6.57-1.87 1.37.54.27 1.15.42 1.8.42.63 0 1.22-.14 1.75-.39-.27-.8-.99-1.4-1.68-1.4zm0 2.66c-.63 0-1.17.37-1.43.91.43.14.89.22 1.37.22.46 0 .9-.08 1.32-.21-.26-.55-.77-.92-1.26-.92z"
+    />
+  </svg>
+);
+
+// Authentic Multi-Color JavaScript Logo (Yellow tile + Black JS text)
+const OfficialJavaScript = ({ size = 26, className = "" }) => (
+  <svg viewBox="0 0 24 24" width={size} height={size} className={className}>
+    <rect width="24" height="24" rx="3" fill="#F7DF1E" />
+    <path
+      fill="#000000"
+      d="M6.25 18.5c.5.85 1.3 1.45 2.5 1.45 1.3 0 2.1-.65 2.1-2.15v-7.3H8.8v7.3c0 .6-.25.9-.75.9-.55 0-.85-.35-1.1-.8l-.7.6zm8.15.05c.7.9 1.8 1.4 3.05 1.4 1.95 0 3.2-1 3.2-2.6 0-1.7-1.15-2.3-2.65-2.95l-.65-.3c-.85-.35-1.3-.7-1.3-1.35 0-.6.5-1.1 1.4-1.1.8 0 1.4.35 1.85.95l1.6-1.05c-.8-1.3-2-1.75-3.45-1.75-2 0-3.3 1.15-3.3 2.7 0 1.5 1 2.25 2.45 2.85l.65.25c.95.4 1.5.75 1.5 1.5 0 .7-.65 1.2-1.65 1.2-.95 0-1.7-.5-2.2-1.35l-1.5 1.1z"
+    />
+  </svg>
+);
+
+// Authentic Multi-Color Java Logo (Blue steam + Orange cup)
+const OfficialJava = ({ size = 26, className = "" }) => (
+  <svg viewBox="0 0 24 24" width={size} height={size} className={className}>
+    <path
+      fill="#5382A1"
+      d="M8.85 16.35s-.75.45-1.65.55c-1.35.15-2.1-.45-2.1-.45s.6.3 1.5.3c1.05 0 2.25-.4 2.25-.4zm-1.05-2.25s-1.05.6-2.1.6c-1.5 0-2.25-.6-2.25-.6s.75.4 1.8.4c1.2 0 2.55-.4 2.55-.4zm1.8 4.2s-1.2.75-2.85.9c-2.1.15-3.6-.6-3.6-.6s1.05.4 2.55.4c1.8 0 3.9-.7 3.9-.7zm-1.95-6.9s.75-1.35 1.8-2.55c1.05-1.2 1.35-2.1 1.35-2.1s-.45.9-1.2 1.95c-.9 1.2-1.95 2.7-1.95 2.7zm4.35 6.9s.75-.45 1.65-.6c.9-.15 1.5-.45 1.5-.45s-.45.3-1.2.45c-.9.15-1.95.6-1.95.6zm1.05-2.25s1.2-.6 2.4-.6c1.2 0 1.8-.4 1.8-.4s-.6.3-1.65.4c-1.2.1-2.55.6-2.55.6z"
+    />
+    <path
+      fill="#E76F00"
+      d="M17.4 17.55s1.05-.3 1.5-.75c.45-.45.6-.9.6-.9s-.3.45-.9.75c-.75.3-1.2.9-1.2.9zm-4.35-14.7s2.55 2.55 1.05 5.55c-1.2 2.4-2.85 3.6-2.85 5.55 0 1.5 1.05 2.55 2.1 2.85-.9-.45-1.5-1.2-1.5-2.1 0-1.5 1.2-2.7 2.4-4.2 1.5-1.95 1.2-4.2-1.2-7.65zm3.15 3.75s1.95 1.95.6 4.35c-1.05 1.95-2.4 2.85-2.4 4.5 0 1.2.9 2.1 1.8 2.25-.75-.3-1.2-.9-1.2-1.65 0-1.2.9-2.25 1.95-3.45 1.35-1.65.9-3.45-.75-6zm2.4 9.45c-.45.3-.9.6-1.5.75.9-.15 1.65-.45 2.1-.9.6-.6.6-1.35.6-1.35s0 .9-1.2 1.5z"
+    />
+  </svg>
+);
+
+// ── Complete Technology Configuration Registry ─────────────────────────────
+const TECH_REGISTRY = {
+  // Frontend
+  React: {
+    icon: SiReact,
+    brandColor: "#61DAFB",
+    sphereBg: "#1E293B",
+    logoColor: "#61DAFB",
+  },
+  "React Native": {
+    icon: SiExpo,
+    brandColor: "#61DAFB",
+    sphereBg: "#0F172A",
+    logoColor: "#61DAFB",
+  },
+  Expo: {
+    icon: SiExpo,
+    brandColor: "#000020",
+    sphereBg: "#0F172A",
+    logoColor: "#FFFFFF",
+  },
+  "React Native + Expo": {
+    icon: SiExpo,
+    brandColor: "#000020",
+    sphereBg: "#0F172A",
+    logoColor: "#FFFFFF",
+  },
+  "Tailwind CSS": {
+    icon: SiTailwindcss,
+    brandColor: "#06B6D4",
+    sphereBg: "#0F172A",
+    logoColor: "#38BDF8",
+  },
+  Vite: {
+    icon: SiVite,
+    brandColor: "#646CFF",
+    sphereBg: "#4B51C6",
+    logoColor: "#FFFFFF",
+  },
+
+  // Languages
+  JavaScript: {
+    icon: OfficialJavaScript,
+    brandColor: "#F7DF1E",
+    sphereBg: "#D4BE14",
+    logoColor: "#000000",
+  },
+  JS: {
+    icon: OfficialJavaScript,
+    brandColor: "#F7DF1E",
+    sphereBg: "#D4BE14",
+    logoColor: "#000000",
+  },
+  TypeScript: {
+    icon: SiTypescript,
+    brandColor: "#3178C6",
+    sphereBg: "#235A97",
+    logoColor: "#FFFFFF",
+  },
+  Python: {
+    icon: OfficialPython,
+    brandColor: "#3776AB",
+    sphereBg: "#2B5B84",
+    logoColor: "#FFD43B",
+  },
+  Java: {
+    icon: OfficialJava,
+    brandColor: "#E76F00",
+    sphereBg: "#B35600",
+    logoColor: "#FFFFFF",
+  },
+  OpenJDK: {
+    icon: OfficialJava,
+    brandColor: "#E76F00",
+    sphereBg: "#B35600",
+    logoColor: "#FFFFFF",
+  },
+  C: {
+    icon: SiC,
+    brandColor: "#283593",
+    sphereBg: "#1C2566",
+    logoColor: "#64B5F6",
+  },
+  Go: {
+    icon: SiGo,
+    brandColor: "#00ADD8",
+    sphereBg: "#0086A8",
+    logoColor: "#FFFFFF",
+  },
+  GoLang: {
+    icon: SiGo,
+    brandColor: "#00ADD8",
+    sphereBg: "#0086A8",
+    logoColor: "#FFFFFF",
+  },
+
+  // Backend
+  FastAPI: {
+    icon: SiFastapi,
+    brandColor: "#009688",
+    sphereBg: "#00796B",
+    logoColor: "#FFFFFF",
+  },
+  Flask: {
+    icon: SiFlask,
+    brandColor: "#18181B",
+    sphereBg: "#27272A",
+    logoColor: "#FFFFFF",
+  },
+  "Node.js": {
+    icon: SiNodedotjs,
+    brandColor: "#339933",
+    sphereBg: "#1E5A1E",
+    logoColor: "#FFFFFF",
+  },
+  Express: {
+    icon: SiExpress,
+    brandColor: "#18181B",
+    sphereBg: "#27272A",
+    logoColor: "#FFFFFF",
+  },
+  "Express.js": {
+    icon: SiExpress,
+    brandColor: "#18181B",
+    sphereBg: "#27272A",
+    logoColor: "#FFFFFF",
+  },
+
+  // Databases
+  PostgreSQL: {
+    icon: SiPostgresql,
+    brandColor: "#0064a5",
+    sphereBg: "#004B7C",
+    logoColor: "#FFFFFF",
+  },
+  Redis: {
+    icon: SiRedis,
+    brandColor: "#DC382D",
+    sphereBg: "#B3281E",
+    logoColor: "#FFFFFF",
+  },
+  "Chroma DB": {
+    icon: SiChroma,
+    brandColor: "#FF6446",
+    sphereBg: "#1E293B",
+    logoColor: "#FF6446",
+  },
+  Chroma: {
+    icon: SiChroma,
+    brandColor: "#FF6446",
+    sphereBg: "#1E293B",
+    logoColor: "#FF6446",
+  },
+  ChromaDB: {
+    icon: SiChroma,
+    brandColor: "#FF6446",
+    sphereBg: "#1E293B",
+    logoColor: "#FF6446",
+  },
+  MongoDB: {
+    icon: SiMongodb,
+    brandColor: "#47A248",
+    sphereBg: "#2E6B2E",
+    logoColor: "#FFFFFF",
+  },
+  SQLite: {
+    icon: SiSqlite,
+    brandColor: "#003B57",
+    sphereBg: "#00283B",
+    logoColor: "#FFFFFF",
+  },
+  Milvus: {
+    icon: SiMilvus,
+    brandColor: "#00A1EA",
+    sphereBg: "#0073A8",
+    logoColor: "#FFFFFF",
+  },
+  "Milvus (Vector DB)": {
+    icon: SiMilvus,
+    brandColor: "#00A1EA",
+    sphereBg: "#0073A8",
+    logoColor: "#FFFFFF",
+  },
+
+  // AI & ML
+  "Groq API": {
+    icon: Sparkles,
+    brandColor: "#F55036",
+    sphereBg: "#D13A23",
+    logoColor: "#FFFFFF",
+  },
+  "Groq LLM": {
+    icon: Sparkles,
+    brandColor: "#F55036",
+    sphereBg: "#D13A23",
+    logoColor: "#FFFFFF",
+  },
+  PyTorch: {
+    icon: SiPytorch,
+    brandColor: "#EE4C2C",
+    sphereBg: "#C43519",
+    logoColor: "#FFFFFF",
+  },
+  "Hugging Face": {
+    icon: SiHuggingface,
+    brandColor: "#FFD21E",
+    sphereBg: "#D4AC0D",
+    logoColor: "#000000",
+  },
+  LangChain: {
+    icon: SiLangchain,
+    brandColor: "#1C3C3C",
+    sphereBg: "#142929",
+    logoColor: "#FFFFFF",
+  },
+  Ollama: {
+    icon: SiOllama,
+    brandColor: "#18181B",
+    sphereBg: "#27272A",
+    logoColor: "#FFFFFF",
+  },
+
+  // DevOps & Hardware
+  Docker: {
+    icon: SiDocker,
+    brandColor: "#2496ED",
+    sphereBg: "#1679C4",
+    logoColor: "#FFFFFF",
+  },
+  Git: {
+    icon: SiGit,
+    brandColor: "#F05032",
+    sphereBg: "#C4381D",
+    logoColor: "#FFFFFF",
+  },
+  Linux: {
+    icon: SiLinux,
+    brandColor: "#FCC624",
+    sphereBg: "#A17D16",
+    logoColor: "#000000",
+  },
+  "GitHub Actions": {
+    icon: SiGithubactions,
+    brandColor: "#2088FF",
+    sphereBg: "#116EE0",
+    logoColor: "#FFFFFF",
+  },
+  Actions: {
+    icon: SiGithubactions,
+    brandColor: "#2088FF",
+    sphereBg: "#116EE0",
+    logoColor: "#FFFFFF",
+  },
+  "Raspberry Pi": {
+    icon: OfficialRaspberryPi,
+    brandColor: "#C51A4A",
+    sphereBg: "#9E143A",
+    logoColor: "#FFFFFF",
+  },
+  "Raspberry Pi 3": {
+    icon: OfficialRaspberryPi,
+    brandColor: "#C51A4A",
+    sphereBg: "#9E143A",
+    logoColor: "#FFFFFF",
+  },
+  Arduino: {
+    icon: SiArduino,
+    brandColor: "#00979D",
+    sphereBg: "#007A7F",
+    logoColor: "#FFFFFF",
+  },
+  MQTT: {
+    icon: SiMqtt,
+    brandColor: "#660066",
+    sphereBg: "#4D004D",
+    logoColor: "#FFFFFF",
+  },
+};
+
+const getTechConfig = (name) => {
+  if (TECH_REGISTRY[name]) return TECH_REGISTRY[name];
+  const lower = name.toLowerCase();
+  for (const [key, val] of Object.entries(TECH_REGISTRY)) {
+    if (key.toLowerCase() === lower) return val;
+  }
+  return {
+    icon: Code2,
+    brandColor: "#4B5563",
+    sphereBg: "#374151",
+    logoColor: "#FFFFFF",
+  };
 };
 
 /**
- * 2D Planetary / Orbital Tech Stack Globe for Project Page
+ * 3D Orbital Tech Stack Globe for Project Details Page
  * Architecture:
- * - Single Central Globe representing the project stack (no category row)
- * - Equidistant circular orbital satellite ring for each technology
- * - Trigonometric coordinate distribution (θ = 2π * i / N - π/2)
- * - Themed dashed celestial orbit and gravitational connecting beams
+ * - 3D Central Globe representing the Project (Theme-curated matte finish, Apple HIG typography)
+ * - Equidistant 3D Satellite Spheres revolving in the camera plane (Z = 0)
+ * - Authentic Multi-Color SVGs (Python, JavaScript, Raspberry Pi, Java, Chroma, etc.)
+ * - Technology Title carved cleanly INSIDE the sphere (No external pills)
+ * - Aspect-ratio-aware mathematical camera framing (Zero cutoff on desktop and mobile)
+ * - Clean guide orbit trajectory (No dummy lines or edge-on shadow lines)
  */
 const ProjectTechGlobe = ({
   techStack = [],
   projectTitle = "Project",
   projectTag = "Completed",
 }) => {
-  const [hoveredTech, setHoveredTech] = useState(null);
-  const [windowWidth, setWindowWidth] = useState(
-    typeof window !== "undefined" ? window.innerWidth : 1024
-  );
+  const mountRef = useRef(null);
 
-  useEffect(() => {
-    const handleResize = () => setWindowWidth(window.innerWidth);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  // Three.js Core Refs
+  const sceneRef = useRef(null);
+  const cameraRef = useRef(null);
+  const rendererRef = useRef(null);
+  const animFrameIdRef = useRef(null);
 
-  const isTinyScreen = windowWidth < 380;
-  const isMobile = windowWidth < 640;
+  const centerMeshRef = useRef(null);
+  const satelliteMeshesRef = useRef(new Map());
 
-  // Curated theme based on project status
+  const centerLabelRef = useRef(null);
+  const satelliteLabelRefs = useRef(new Map());
+
+  const isHoveredRef = useRef(false);
+  const hoveredIdRef = useRef(null);
+  const raycasterRef = useRef(new THREE.Raycaster());
+  const mouseRef = useRef(new THREE.Vector2(-9999, -9999));
+
+  const pointerDownPosRef = useRef({ x: 0, y: 0 });
+  const lastWidthRef = useRef(0);
+  const lastHeightRef = useRef(0);
+  const currentOrbitConfigRef = useRef(null);
+
+  // Status Theme (Apple HIG Ceramic Palette)
   const theme = useMemo(() => {
     if (projectTag === "Completed") {
       return {
         accent: "#059669",
-        border: "#6ee7b7",
-        bgLight: "#ecfdf5",
-        glow: "rgba(5, 150, 105, 0.22)",
+        sphereColor: "#059669",
+        ringColor: "#10b981",
+        glow: "rgba(5, 150, 105, 0.25)",
       };
     }
     if (projectTag === "Discontinued") {
       return {
         accent: "#6366f1",
-        border: "#a5b4fc",
-        bgLight: "#eef2ff",
-        glow: "rgba(99, 102, 241, 0.22)",
+        sphereColor: "#4f46e5",
+        ringColor: "#818cf8",
+        glow: "rgba(99, 102, 241, 0.25)",
       };
     }
     return {
       accent: "#d97706",
-      border: "#fbbf24",
-      bgLight: "#fffbeb",
-      glow: "rgba(217, 119, 6, 0.22)",
+      sphereColor: "#d97706",
+      ringColor: "#fbbf24",
+      glow: "rgba(217, 119, 6, 0.25)",
     };
   }, [projectTag]);
 
-  // Dynamic Responsive Orbit Radius
-  const orbitRadius = useMemo(() => {
-    if (isTinyScreen) return 110;
-    if (isMobile) return 126;
-    return 164;
-  }, [isTinyScreen, isMobile]);
+  // Calibrated Viewport & Circular Orbit Configuration (Guarantees zero cutoff)
+  const getOrbitConfig = useCallback((customWidth, customHeight) => {
+    const container = mountRef.current;
+    const width =
+      customWidth ||
+      container?.clientWidth ||
+      (typeof window !== "undefined" ? window.innerWidth : 900);
+    const height =
+      customHeight || container?.clientHeight || 560;
+    const aspect = width / height;
 
-  // Trigonometric distribution of tech badges around central globe
-  const orbitalBadges = useMemo(() => {
+    const isMobile = width < 640;
+    const isTablet = width < 1024 && !isMobile;
+
+    const centerRadius = isMobile ? 1.35 : isTablet ? 1.55 : 1.75;
+    const orbitRadius = isMobile ? 3.6 : isTablet ? 4.3 : 5.0;
+    const techRadius = isMobile ? 0.85 : isTablet ? 1.0 : 1.15;
+
+    // Zero-cutoff bounds calculation
+    // Camera FOV = 40 deg, half-FOV = 20 deg
+    const halfFovRad = 20 * (Math.PI / 180);
+    const yRequired = orbitRadius + techRadius + (isMobile ? 1.2 : 1.5);
+    const xRequired = orbitRadius + techRadius + (isMobile ? 1.1 : 1.4);
+
+    const zForY = yRequired / Math.tan(halfFovRad);
+    const zForX = xRequired / (Math.tan(halfFovRad) * aspect);
+    const camZ = Math.max(zForY, zForX);
+
+    return {
+      width,
+      height,
+      aspect,
+      centerRadius,
+      orbitRadius,
+      techRadius,
+      camZ,
+    };
+  }, []);
+
+  // Prepared data list for rendering 2D labels
+  const activeTechList = useMemo(() => {
     if (!techStack || techStack.length === 0) return [];
-    const total = techStack.length;
-
     return techStack.map((name, index) => {
-      const match = TECH_ICON_MAP[name];
-      const Icon = match?.icon || Code2;
-      const color = match?.color || "#18181b";
-
-      const angle = (2 * Math.PI * index) / total - Math.PI / 2;
-      const x = Math.round(orbitRadius * Math.cos(angle));
-      const y = Math.round(orbitRadius * Math.sin(angle));
-
+      const config = getTechConfig(name);
       return {
+        id: `tech-${index}-${name}`,
         name,
-        Icon,
-        color,
         index,
-        x,
-        y,
-        angle,
+        ...config,
       };
     });
-  }, [techStack, orbitRadius]);
+  }, [techStack]);
 
-  const satelliteVariants = {
-    initial: {
-      x: 0,
-      y: 0,
-      opacity: 0,
-      scale: 0.2,
-    },
-    animate: (custom) => ({
-      x: custom.x,
-      y: custom.y,
-      opacity: 1,
-      scale: 1,
-      transition: {
-        type: "spring",
-        stiffness: 280,
-        damping: 24,
-        delay: custom.index * 0.05,
-      },
-    }),
+  // ── SETUP THREE.JS 3D SCENE ───────────────────────────────────────────────
+  useEffect(() => {
+    const container = mountRef.current;
+    if (!container || !techStack || techStack.length === 0) return;
+
+    const width = container.clientWidth;
+    const height = container.clientHeight;
+    lastWidthRef.current = width;
+    lastHeightRef.current = height;
+
+    const orbitConfig = getOrbitConfig(width, height);
+    currentOrbitConfigRef.current = orbitConfig;
+
+    // 1. Scene
+    const scene = new THREE.Scene();
+    sceneRef.current = scene;
+
+    // 2. Camera (Centered at (0, 0, camZ) facing origin (0, 0, 0))
+    const camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 1000);
+    camera.position.set(0, 0, orbitConfig.camZ);
+    camera.lookAt(0, 0, 0);
+    cameraRef.current = camera;
+
+    // 3. WebGL Renderer
+    const renderer = new THREE.WebGLRenderer({
+      antialias: true,
+      alpha: true,
+      powerPreference: "high-performance",
+    });
+    renderer.setSize(width, height);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.05;
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    container.appendChild(renderer.domElement);
+    rendererRef.current = renderer;
+
+    // 4. Soft Diffuse Studio Lighting (No harsh hotspots)
+    const ambientLight = new THREE.AmbientLight(0xffffff, 1.15);
+    scene.add(ambientLight);
+
+    const hemiLight = new THREE.HemisphereLight(0xffffff, 0xf1f5f9, 0.75);
+    scene.add(hemiLight);
+
+    const softFillLight = new THREE.DirectionalLight(0xffffff, 0.4);
+    softFillLight.position.set(6, 14, 12);
+    scene.add(softFillLight);
+
+    // 5. Central Project Globe Mesh (Matte ceramic finish)
+    const centerGeo = new THREE.SphereGeometry(orbitConfig.centerRadius, 64, 64);
+    const centerMat = new THREE.MeshStandardMaterial({
+      color: new THREE.Color(theme.sphereColor),
+      roughness: 0.62,
+      metalness: 0.0,
+      transparent: true,
+      opacity: 1.0,
+    });
+    const centerMesh = new THREE.Mesh(centerGeo, centerMat);
+    centerMesh.position.set(0, 0, 0);
+    centerMesh.userData = {
+      type: "center",
+      id: "project-center-globe",
+    };
+    scene.add(centerMesh);
+    centerMeshRef.current = centerMesh;
+
+    // 7. Technology Satellite Meshes (Outward burst entrance)
+    const satelliteMeshes = new Map();
+    const total = techStack.length;
+
+    techStack.forEach((name, index) => {
+      const config = getTechConfig(name);
+      const initialAngle = (index / total) * Math.PI * 2 - Math.PI / 2;
+      const itemId = `tech-${index}-${name}`;
+
+      const geo = new THREE.SphereGeometry(orbitConfig.techRadius, 32, 32);
+      const mat = new THREE.MeshStandardMaterial({
+        color: new THREE.Color(config.sphereBg),
+        roughness: 0.6,
+        metalness: 0.0,
+        transparent: true,
+        opacity: 0,
+      });
+
+      const mesh = new THREE.Mesh(geo, mat);
+      mesh.position.set(0, 0, 0);
+      mesh.scale.set(0.01, 0.01, 0.01);
+      mesh.userData = {
+        type: "tech",
+        id: itemId,
+        name,
+        config,
+        initialAngle,
+      };
+      scene.add(mesh);
+
+      const item = {
+        mesh,
+        name,
+        config,
+        initialAngle,
+        currentRadius: 0,
+      };
+      satelliteMeshes.set(itemId, item);
+
+      // Smooth outward burst animation
+      gsap.to(item, {
+        currentRadius: orbitConfig.orbitRadius,
+        duration: 0.75,
+        ease: "back.out(1.4)",
+        delay: index * 0.06,
+      });
+      gsap.to(mesh.scale, {
+        x: 1.0,
+        y: 1.0,
+        z: 1.0,
+        duration: 0.75,
+        ease: "back.out(1.4)",
+        delay: index * 0.06,
+      });
+      gsap.to(mat, {
+        opacity: 1.0,
+        duration: 0.45,
+        delay: index * 0.06,
+      });
+    });
+
+    satelliteMeshesRef.current = satelliteMeshes;
+
+    // ── 8. 60 FPS ANIMATION LOOP (DIRECT GPU TRANSFORMS) ─────────────────────
+    let orbitAngle = 0;
+    const tempV = new THREE.Vector3();
+
+    const animate = () => {
+      animFrameIdRef.current = requestAnimationFrame(animate);
+
+      const curWidth = container.clientWidth;
+      const curHeight = container.clientHeight;
+
+      // Smooth rotation: slows down on hover so user can easily inspect
+      const step = isHoveredRef.current ? 0.0008 : 0.0032;
+      orbitAngle += step;
+
+      // Update central globe label position
+      if (centerLabelRef.current) {
+        tempV.set(0, 0, 0).project(camera);
+        if (tempV.z < 1.0) {
+          const screenX = (tempV.x * 0.5 + 0.5) * curWidth;
+          const screenY = (-(tempV.y * 0.5) + 0.5) * curHeight;
+          centerLabelRef.current.style.transform = `translate3d(${screenX}px, ${screenY}px, 0) translate(-50%, -50%)`;
+          centerLabelRef.current.style.opacity = "1";
+        }
+      }
+
+      // Update tech satellites along the orbit in the camera plane (Z = 0)
+      satelliteMeshes.forEach((item) => {
+        const { mesh, initialAngle, currentRadius } = item;
+        const angle = initialAngle + orbitAngle;
+
+        const x = Math.cos(angle) * currentRadius;
+        const y = Math.sin(angle) * currentRadius;
+        mesh.position.set(x, y, 0);
+
+        const labelEl = satelliteLabelRefs.current.get(mesh.userData.id);
+        if (labelEl) {
+          tempV.setFromMatrixPosition(mesh.matrixWorld).project(camera);
+          if (tempV.z < 1.0) {
+            const screenX = (tempV.x * 0.5 + 0.5) * curWidth;
+            const screenY = (-(tempV.y * 0.5) + 0.5) * curHeight;
+            labelEl.style.transform = `translate3d(${screenX}px, ${screenY}px, 0) translate(-50%, -50%)`;
+            labelEl.style.opacity = `${mesh.material.opacity}`;
+          } else {
+            labelEl.style.opacity = "0";
+          }
+        }
+      });
+
+      camera.lookAt(0, 0, 0);
+      renderer.render(scene, camera);
+    };
+
+    animFrameIdRef.current = requestAnimationFrame(animate);
+
+    // ── 9. RESPONSIVE RESIZE LISTENER ────────────────────────────────────────
+    const handleResize = () => {
+      if (!container || !renderer || !camera) return;
+      const newWidth = container.clientWidth;
+      const newHeight = container.clientHeight;
+
+      if (
+        Math.abs(newWidth - lastWidthRef.current) > 2 ||
+        Math.abs(newHeight - lastHeightRef.current) > 2
+      ) {
+        lastWidthRef.current = newWidth;
+        lastHeightRef.current = newHeight;
+        const newConfig = getOrbitConfig(newWidth, newHeight);
+        currentOrbitConfigRef.current = newConfig;
+
+        camera.aspect = newWidth / newHeight;
+        camera.updateProjectionMatrix();
+        camera.position.set(0, 0, newConfig.camZ);
+        renderer.setSize(newWidth, newHeight);
+
+        // Update satellites orbit radius
+        satelliteMeshes.forEach((item) => {
+          item.currentRadius = newConfig.orbitRadius;
+        });
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      if (animFrameIdRef.current) cancelAnimationFrame(animFrameIdRef.current);
+
+      scene.traverse((obj) => {
+        if (obj.geometry) obj.geometry.dispose();
+        if (obj.material) {
+          if (Array.isArray(obj.material)) obj.material.forEach((m) => m.dispose());
+          else obj.material.dispose();
+        }
+      });
+
+      if (renderer.domElement && container.contains(renderer.domElement)) {
+        container.removeChild(renderer.domElement);
+      }
+      renderer.dispose();
+    };
+  }, [techStack, theme, getOrbitConfig]);
+
+  // ── POINTER & HOVER INTERACTIONS ──────────────────────────────────────────
+  const handlePointerDown = (e) => {
+    pointerDownPosRef.current = { x: e.clientX, y: e.clientY };
   };
 
+  const handlePointerMove = (e) => {
+    const container = mountRef.current;
+    if (!container || !cameraRef.current) return;
+
+    const rect = container.getBoundingClientRect();
+    mouseRef.current.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+    mouseRef.current.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+
+    raycasterRef.current.setFromCamera(mouseRef.current, cameraRef.current);
+
+    const satelliteMeshList = Array.from(
+      satelliteMeshesRef.current.values()
+    ).map((v) => v.mesh);
+    const intersects = raycasterRef.current.intersectObjects(satelliteMeshList);
+
+    if (intersects.length > 0) {
+      const hit = intersects[0].object;
+      const hitId = hit.userData.id;
+      if (hoveredIdRef.current !== hitId) {
+        if (hoveredIdRef.current) {
+          const prev = satelliteMeshesRef.current.get(hoveredIdRef.current);
+          if (prev) {
+            gsap.to(prev.mesh.scale, { x: 1.0, y: 1.0, z: 1.0, duration: 0.2 });
+          }
+        }
+        hoveredIdRef.current = hitId;
+        isHoveredRef.current = true;
+        gsap.to(hit.scale, { x: 1.18, y: 1.18, z: 1.18, duration: 0.25 });
+      }
+    } else if (hoveredIdRef.current) {
+      const prev = satelliteMeshesRef.current.get(hoveredIdRef.current);
+      if (prev) {
+        gsap.to(prev.mesh.scale, { x: 1.0, y: 1.0, z: 1.0, duration: 0.2 });
+      }
+      hoveredIdRef.current = null;
+      isHoveredRef.current = false;
+    }
+  };
+
+  const handlePointerLeave = () => {
+    if (hoveredIdRef.current) {
+      const prev = satelliteMeshesRef.current.get(hoveredIdRef.current);
+      if (prev) {
+        gsap.to(prev.mesh.scale, { x: 1.0, y: 1.0, z: 1.0, duration: 0.2 });
+      }
+      hoveredIdRef.current = null;
+    }
+    isHoveredRef.current = false;
+  };
+
+  // Helper for DOM label hovering
+  const handleItemHover = (id, isEntering) => {
+    const item = satelliteMeshesRef.current.get(id);
+    if (!item) return;
+
+    if (isEntering) {
+      hoveredIdRef.current = id;
+      isHoveredRef.current = true;
+      gsap.to(item.mesh.scale, { x: 1.18, y: 1.18, z: 1.18, duration: 0.25 });
+    } else {
+      if (hoveredIdRef.current === id) {
+        hoveredIdRef.current = null;
+        isHoveredRef.current = false;
+        gsap.to(item.mesh.scale, { x: 1.0, y: 1.0, z: 1.0, duration: 0.2 });
+      }
+    }
+  };
+
+  if (!techStack || techStack.length === 0) {
+    return null;
+  }
+
   return (
-    <div
-      className="w-full flex justify-center items-center py-4 select-none"
-      style={{
-        "--globe-border-color": theme.border,
-        "--globe-bg-light": theme.bgLight,
-        "--globe-glow": theme.glow,
-      }}
-    >
+    <div className="project-tech-globe-container">
       <div
-        className="planetary-stage-zone"
-        style={{
-          height: isTinyScreen ? "350px" : isMobile ? "390px" : "450px",
-          maxWidth: isTinyScreen ? "320px" : isMobile ? "360px" : "500px",
-        }}
+        ref={mountRef}
+        className="project-tech-globe-wrapper"
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerLeave={handlePointerLeave}
       >
-        <div className="relative w-full h-full flex items-center justify-center">
-          {/* 
-            ── ORBITAL TRACK & GRAVITATIONAL CONNECTING BEAMS ──
-            Pure dotted/dashed themed orbital trajectory without underlying solid track
-          */}
-          <svg
-            className="planetary-orbit-track"
-            viewBox="-250 -250 500 500"
-            preserveAspectRatio="xMidYMid meet"
+        {/* ── 2D LABELS & BRAND LOGOS OVERLAY (DIRECT GPU TRANSFORMS) ── */}
+        <div className="project-tech-globe-labels">
+          {/* 1. Central Project Globe Label */}
+          <div
+            ref={centerLabelRef}
+            className="project-central-globe-label"
+            style={{ opacity: 0 }}
           >
-            {/* Themed dashed orbital ring */}
-            <circle
-              cx="0"
-              cy="0"
-              r={orbitRadius}
-              fill="none"
-              stroke={theme.accent}
-              strokeWidth="1.75"
-              strokeDasharray="6 6"
-              opacity="0.75"
-            />
-
-            {/* Inner concentric subtle guide ring */}
-            <circle
-              cx="0"
-              cy="0"
-              r={isTinyScreen ? 56 : isMobile ? 66 : 84}
-              fill="none"
-              stroke="rgba(0, 0, 0, 0.06)"
-              strokeWidth="1"
-              strokeDasharray="4 6"
-            />
-
-            {/* Gravitational Connecting Beams from Central Globe to Active Tech Badges */}
-            {orbitalBadges.map((badge) => {
-              const isHovered = hoveredTech === badge.name;
-              return (
-                <line
-                  key={`ray-${badge.name}`}
-                  x1="0"
-                  y1="0"
-                  x2={badge.x}
-                  y2={badge.y}
-                  stroke={isHovered ? badge.color : "rgba(0, 0, 0, 0.12)"}
-                  strokeWidth={isHovered ? "2.5" : "1.5"}
-                  strokeDasharray={isHovered ? "none" : "3 4"}
-                  opacity={isHovered ? 0.9 : 0.6}
-                  style={{
-                    transition:
-                      "stroke 0.25s ease, stroke-width 0.25s ease, opacity 0.25s ease",
-                  }}
-                />
-              );
-            })}
-          </svg>
-
-          {/* 
-          {/* 
-            ── SINGLE ACTIVE CENTRAL GLOBE (APPLE HIG SPECULAR MATERIAL) ──
-            Dedicated 2D specular glass globe representing project stack
-          */}
-          <motion.div
-            initial={{ scale: 0.88, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            whileHover={{ scale: 1.03 }}
-            transition={{
-              type: "spring",
-              stiffness: 340,
-              damping: 24,
-              duration: 0.35,
-            }}
-            style={{
-              background: `radial-gradient(circle at 35% 25%, rgba(255, 255, 255, 0.98) 0%, rgba(255, 255, 255, 0.78) 55%, ${theme.bgLight} 100%)`,
-              boxShadow: `inset 0 2px 4px 0 rgba(255, 255, 255, 0.98), inset 0 -2px 4px 0 rgba(0, 0, 0, 0.035), 0 20px 45px -10px rgba(0, 0, 0, 0.08), 0 6px 18px -4px rgba(0, 0, 0, 0.04), 0 0 34px ${theme.glow}`,
-            }}
-            className={`planetary-central-globe ${
-              isTinyScreen
-                ? "w-[110px] h-[110px] p-2"
-                : isMobile
-                ? "w-[124px] h-[124px] p-3"
-                : "w-[144px] h-[144px] p-4"
-            }`}
-          >
-            {/* Outer atmospheric decorative orbit ring */}
-            <div
-              className="planetary-globe-pulse-ring"
-              style={{ borderColor: theme.border }}
-            />
-
-            {/* Native SF Symbol Vector Icon */}
-            <div
-              className="transition-transform duration-300 flex items-center justify-center mb-1"
-              style={{
-                color: theme.accent,
-              }}
-            >
-              <Layers
-                size={isTinyScreen ? 20 : isMobile ? 24 : 26}
-                strokeWidth={2}
-                className="transition-transform duration-300 group-hover:scale-110"
-              />
-            </div>
-
-            {/* Globe Title & Count — Apple HIG Typography */}
-            <span
-              className={`font-semibold text-zinc-900 leading-tight tracking-tight text-center select-none ${
-                isTinyScreen ? "text-xs" : isMobile ? "text-[13px]" : "text-sm"
-              }`}
-              style={{ letterSpacing: "-0.2px" }}
-            >
-              Tech Stack
-            </span>
-            <span className="text-[10px] text-zinc-500 font-medium mt-0.5">
-              {techStack.length} {techStack.length === 1 ? "Technology" : "Technologies"}
-            </span>
-          </motion.div>
-
-          {/* 
-            ── SATELLITE TECH BADGES ──
-            Equidistant orbital ring displaying brand icons and tech names
-          */}
-          <div className="absolute inset-0 pointer-events-none">
-            {orbitalBadges.map((badge) => {
-              const { Icon } = badge;
-              const isHovered = hoveredTech === badge.name;
-
-              return (
-                <motion.div
-                  key={badge.name}
-                  custom={badge}
-                  variants={satelliteVariants}
-                  initial="initial"
-                  animate="animate"
-                  style={{
-                    position: "absolute",
-                    left: "50%",
-                    top: "50%",
-                    pointerEvents: "auto",
-                  }}
-                  className="origin-center"
-                >
-                  <motion.div
-                    whileHover={{ scale: 1.08, y: -2 }}
-                    whileTap={{ scale: 0.96 }}
-                    onMouseEnter={() => setHoveredTech(badge.name)}
-                    onMouseLeave={() => setHoveredTech(null)}
-                    style={{
-                      borderColor: isHovered
-                        ? badge.color
-                        : "rgba(0, 0, 0, 0.12)",
-                      borderWidth: "1.5px",
-                      boxShadow: isHovered
-                        ? `0 12px 28px ${badge.color}28, 0 3px 8px rgba(0, 0, 0, 0.06)`
-                        : "0 3px 12px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.03)",
-                    }}
-                    className={`planetary-satellite-badge -translate-x-1/2 -translate-y-1/2 ${
-                      isTinyScreen
-                        ? "px-2 py-1 gap-1.5 text-[11px]"
-                        : isMobile
-                        ? "px-2.5 py-1 gap-2 text-xs"
-                        : "px-3.5 py-1.5 gap-2.5 text-sm"
-                    }`}
-                  >
-                    {/* Brand Icon Chip */}
-                    <div
-                      className={`planetary-skill-icon-chip ${
-                        isTinyScreen
-                          ? "w-5 h-5"
-                          : isMobile
-                          ? "w-6 h-6"
-                          : "w-7 h-7"
-                      }`}
-                      style={{
-                        backgroundColor: `${badge.color}15`,
-                        border: `1px solid ${badge.color}35`,
-                      }}
-                    >
-                      <Icon
-                        size={isTinyScreen ? 11 : isMobile ? 13 : 15}
-                        color={
-                          badge.color !== "currentColor"
-                            ? badge.color
-                            : undefined
-                        }
-                      />
-                    </div>
-
-                    {/* Tech Name */}
-                    <span className="font-semibold text-zinc-900 leading-none">
-                      {badge.name}
-                    </span>
-                  </motion.div>
-                </motion.div>
-              );
-            })}
+            <span className="project-central-title">Tech stack</span>
           </div>
+
+          {/* 2. Technology Satellites: Authentic Brand SVG + Title INSIDE Sphere (No External Pills) */}
+          {activeTechList.map((item) => {
+            const IconComponent = item.icon || Code2;
+            const isMobile =
+              typeof window !== "undefined" && window.innerWidth < 640;
+
+            return (
+              <div
+                key={item.id}
+                ref={(el) => {
+                  if (el) satelliteLabelRefs.current.set(item.id, el);
+                  else satelliteLabelRefs.current.delete(item.id);
+                }}
+                className="project-tech-satellite-node"
+                style={{ opacity: 0 }}
+                onMouseEnter={() => handleItemHover(item.id, true)}
+                onMouseLeave={() => handleItemHover(item.id, false)}
+              >
+                {/* Authentic Brand SVG Logo carved directly on sphere */}
+                <div className="project-tech-satellite-icon">
+                  <IconComponent
+                    size={isMobile ? 22 : 28}
+                    color={item.logoColor || "#FFFFFF"}
+                  />
+                </div>
+
+                {/* Technology Title INSIDE the Sphere (No External Pill!) */}
+                <div className="project-tech-satellite-name">
+                  <span>{item.name}</span>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>

@@ -19,11 +19,11 @@ const Skills = ({ id }) => {
     <section
       id={id}
       ref={sectionRef}
-      className="w-full px-4 xs:px-6 sm:px-10 md:px-16 lg:px-24 py-20 sm:py-28 md:py-32 bg-white border-t border-black/[0.05]"
+      className="w-full px-3 xs:px-6 sm:px-10 md:px-16 lg:px-24 py-16 sm:py-24 md:py-28 bg-white border-t border-black/[0.05]"
     >
       <div className="max-w-6xl mx-auto flex flex-col items-center">
         {/* Section Header */}
-        <div className="w-full flex flex-col items-start mb-8 sm:mb-12 pb-4 border-b border-zinc-100">
+        <div className="w-full flex flex-col items-start mb-6 sm:mb-10 pb-4 border-b border-zinc-100">
           <RevealHeading text="Skills" />
           <div className="mt-2 w-10 h-[1.5px] bg-zinc-200" />
         </div>

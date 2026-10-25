@@ -1,0 +1,156 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   3D Project Tech Globe — Section 20 Specification
+   • 3D Central Project Globe with status theme & Apple HIG typography
+   • Revolving authentic multi-color brand satellites (title + logo inside sphere)
+   • Zero cutoff, aspect-ratio-aware mathematical framing
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.project-tech-globe-container {
+  position: relative;
+  width: 100%;
+  background: transparent;
+  overflow: visible;
+  user-select: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.project-tech-globe-wrapper {
+  position: relative;
+  width: 100%;
+  height: 560px;
+  background: transparent;
+  overflow: visible;
+  touch-action: pan-y;
+  cursor: default;
+}
+
+@media (min-width: 1280px) {
+  .project-tech-globe-wrapper {
+    height: 600px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .project-tech-globe-wrapper {
+    height: 520px;
+  }
+}
+
+@media (max-width: 640px) {
+  .project-tech-globe-wrapper {
+    height: 440px;
+  }
+}
+
+@media (max-width: 380px) {
+  .project-tech-globe-wrapper {
+    height: 400px;
+  }
+}
+
+/* 2D HTML Floating Labels Layer (Never clipped, direct GPU transforms) */
+.project-tech-globe-labels {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: visible;
+}
+
+/* Central Project Globe Label */
+.project-central-globe-label {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #ffffff;
+  font-weight: 700;
+  user-select: none;
+  will-change: transform;
+  max-width: 140px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8), 0 2px 10px rgba(0, 0, 0, 0.55);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (max-width: 640px) {
+  .project-central-globe-label {
+    max-width: 100px;
+  }
+}
+
+.project-central-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+@media (max-width: 640px) {
+  .project-central-title {
+    font-size: 0.88rem;
+  }
+}
+
+/* Satellite labels (title + authentic brand logo INSIDE sphere, no external pill) */
+.project-tech-satellite-node {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: translate(-50%, -50%);
+  pointer-events: auto;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  user-select: none;
+  will-change: transform;
+  max-width: 105px;
+  padding: 4px;
+}
+
+@media (max-width: 640px) {
+  .project-tech-satellite-node {
+    max-width: 78px;
+    padding: 2px;
+  }
+}
+
+.project-tech-satellite-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 3px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.45));
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.project-tech-satellite-name {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85), 0 2px 8px rgba(0, 0, 0, 0.6);
+  text-align: center;
+  white-space: normal;
+  pointer-events: none;
+  transition: transform 0.2s ease, text-shadow 0.2s ease;
+}
+
+@media (max-width: 640px) {
+  .project-tech-satellite-name {
+    font-size: 0.66rem;
+    line-height: 1.1;
+  }
+  .project-tech-satellite-icon {
+    margin-bottom: 2px;
+  }
+}

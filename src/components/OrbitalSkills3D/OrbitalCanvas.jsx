@@ -29,8 +29,8 @@ import {
 } from "@icons-pack/react-simple-icons";
 import { Orbit, Sparkles, Layers, Terminal, Database, Wrench, Cpu, Code2 } from "lucide-react";
 
-// Official Chroma SVG Component
-const SiChroma = ({ size = 20, className = "" }) => (
+// Official Multi-Color Chroma SVG Component
+const SiChroma = ({ size = 26, className = "" }) => (
   <svg
     viewBox="17.36 -11.81 221.29 141.62"
     width={size}
@@ -48,8 +48,61 @@ const SiChroma = ({ size = 20, className = "" }) => (
   </svg>
 );
 
+// Authentic Multi-Color Python Logo (Blue top snake + Yellow bottom snake + White eyes)
+const OfficialPython = ({ size = 26, className = "" }) => (
+  <svg viewBox="0 0 24 24" width={size} height={size} className={className}>
+    <path
+      fill="#387eb8"
+      d="M11.914 0C5.766 0 6.13 2.668 6.13 2.668l.006 2.766h5.882v.834H3.84s-3.84.436-3.84 6.146 3.35 6.01 3.35 6.01h2.003v-2.825s-.11-3.353 3.303-3.353h5.688s3.21.053 3.21-3.15V3.208S18.062 0 11.914 0zm-3.15 1.832a1.07 1.07 0 1 1 0 2.14 1.07 1.07 0 0 1 0-2.14z"
+    />
+    <path
+      fill="#ffe052"
+      d="M12.086 24c6.148 0 5.784-2.668 5.784-2.668l-.006-2.766H11.98v-.834h8.177s3.84-.436 3.84-6.146-3.35-6.01-3.35-6.01h-2.003v2.825s.11 3.353-3.303 3.353H9.646s-3.21-.053-3.21 3.15v5.884S5.938 24 12.086 24zm3.15-1.832a1.07 1.07 0 1 1 0-2.14 1.07 1.07 0 0 1 0 2.14z"
+    />
+  </svg>
+);
+
+// Authentic Multi-Color Raspberry Pi Logo (Green leaves + Magenta/red berry)
+const OfficialRaspberryPi = ({ size = 26, className = "" }) => (
+  <svg viewBox="0 0 24 24" width={size} height={size} className={className}>
+    <path
+      fill="#78c043"
+      d="M8.547 3.966c.46-.867 1.458-1.572 2.37-1.572.242 0 .445.05.586.136-.347.535-.745 1.343-.745 2.115 0 .227.034.423.091.59-.79-.052-1.748-.485-2.302-1.269zm6.906 0c-.554.784-1.512 1.217-2.302 1.269.057-.167.091-.363.091-.59 0-.772-.398-1.58-.745-2.115.141-.086.344-.136.586-.136.912 0 1.91.705 2.37 1.572zM12 4.675c.44-.45 1.09-.76 1.76-.76.71 0 1.33.35 1.62.88-.69.25-1.56.76-2.05 1.44-.27-.58-.75-1.12-1.33-1.56zm0 0c-.58.44-1.06.98-1.33 1.56-.49-.68-1.36-1.19-2.05-1.44.29-.53.91-.88 1.62-.88.67 0 1.32.31 1.76.76z"
+    />
+    <path
+      fill="#c51a4a"
+      d="M12 7.037c-.77 0-1.47.27-2.02.73.55.46 1.25.73 2.02.73s1.47-.27 2.02-.73c-.55-.46-1.25-.73-2.02-.73zm-3.53 1.38c-.73 0-1.38.31-1.84.82.52.41 1.17.65 1.88.65.65 0 1.25-.2 1.75-.55-.47-.56-1.1-1.23-1.79-1.23zm7.06 0c-.69 0-1.32.67-1.79 1.23.5.35 1.1.55 1.75.55.71 0 1.36-.24 1.88-.65-.46-.51-1.11-.82-1.84-.82zm-8.82 2.65c-.77 0-1.41.44-1.71 1.08.57.34 1.24.54 1.95.54.49 0 .95-.1 1.37-.28-.39-.75-.98-1.34-1.61-1.34zm10.58 0c-.63 0-1.22.59-1.61 1.34.42.18.88.28 1.37.28.71 0 1.38-.2 1.95-.54-.3-.64-.94-1.08-1.71-1.08zm-7.06.82c-.85 0-1.57.48-1.92 1.19.57.41 1.26.66 2.01.66.71 0 1.37-.22 1.92-.6-.44-.73-1.15-1.25-2.01-1.25zm3.54 0c-.86 0-1.57.52-2.01 1.25.55.38 1.21.6 1.92.6.75 0 1.44-.25 2.01-.66-.35-.71-1.07-1.19-1.92-1.19zm-3.54 2.89c-.83 0-1.53.44-1.89 1.1.56.36 1.23.58 1.95.58.7 0 1.34-.21 1.88-.56-.44-.67-1.13-1.12-1.94-1.12zm-3.4 1.18c-.73 0-1.34.45-1.6 1.09.52.33 1.13.52 1.79.52.39 0 .76-.07 1.1-.2-.36-.8-.82-1.41-1.29-1.41zm6.8 0c-.47 0-.93.61-1.29 1.41.34.13.71.2 1.1.2.66 0 1.27-.19 1.79-.52-.26-.64-.87-1.09-1.6-1.09zm-3.4 2.15c-.88 0-1.6.57-1.87 1.37.54.27 1.15.42 1.8.42.63 0 1.22-.14 1.75-.39-.27-.8-.99-1.4-1.68-1.4zm0 2.66c-.63 0-1.17.37-1.43.91.43.14.89.22 1.37.22.46 0 .9-.08 1.32-.21-.26-.55-.77-.92-1.26-.92z"
+    />
+  </svg>
+);
+
+// Authentic Multi-Color JavaScript Logo (Official Yellow square + Black JS text)
+const OfficialJavaScript = ({ size = 26, className = "" }) => (
+  <svg viewBox="0 0 24 24" width={size} height={size} className={className}>
+    <rect width="24" height="24" rx="3" fill="#F7DF1E" />
+    <path
+      fill="#000000"
+      d="M6.25 18.5c.5.85 1.3 1.45 2.5 1.45 1.3 0 2.1-.65 2.1-2.15v-7.3H8.8v7.3c0 .6-.25.9-.75.9-.55 0-.85-.35-1.1-.8l-.7.6zm8.15.05c.7.9 1.8 1.4 3.05 1.4 1.95 0 3.2-1 3.2-2.6 0-1.7-1.15-2.3-2.65-2.95l-.65-.3c-.85-.35-1.3-.7-1.3-1.35 0-.6.5-1.1 1.4-1.1.8 0 1.4.35 1.85.95l1.6-1.05c-.8-1.3-2-1.75-3.45-1.75-2 0-3.3 1.15-3.3 2.7 0 1.5 1 2.25 2.45 2.85l.65.25c.95.4 1.5.75 1.5 1.5 0 .7-.65 1.2-1.65 1.2-.95 0-1.7-.5-2.2-1.35l-1.5 1.1z"
+    />
+  </svg>
+);
+
+// Authentic Multi-Color Java Coffee Cup Logo (Blue steam + Orange/red cup base)
+const OfficialJava = ({ size = 26, className = "" }) => (
+  <svg viewBox="0 0 24 24" width={size} height={size} className={className}>
+    <path
+      fill="#5382A1"
+      d="M8.85 16.35s-.75.45-1.65.55c-1.35.15-2.1-.45-2.1-.45s.6.3 1.5.3c1.05 0 2.25-.4 2.25-.4zm-1.05-2.25s-1.05.6-2.1.6c-1.5 0-2.25-.6-2.25-.6s.75.4 1.8.4c1.2 0 2.55-.4 2.55-.4zm1.8 4.2s-1.2.75-2.85.9c-2.1.15-3.6-.6-3.6-.6s1.05.4 2.55.4c1.8 0 3.9-.7 3.9-.7zm-1.95-6.9s.75-1.35 1.8-2.55c1.05-1.2 1.35-2.1 1.35-2.1s-.45.9-1.2 1.95c-.9 1.2-1.95 2.7-1.95 2.7zm4.35 6.9s.75-.45 1.65-.6c.9-.15 1.5-.45 1.5-.45s-.45.3-1.2.45c-.9.15-1.95.6-1.95.6zm1.05-2.25s1.2-.6 2.4-.6c1.2 0 1.8-.4 1.8-.4s-.6.3-1.65.4c-1.2.1-2.55.6-2.55.6z"
+    />
+    <path
+      fill="#E76F00"
+      d="M17.4 17.55s1.05-.3 1.5-.75c.45-.45.6-.9.6-.9s-.3.45-.9.75c-.75.3-1.2.9-1.2.9zm-4.35-14.7s2.55 2.55 1.05 5.55c-1.2 2.4-2.85 3.6-2.85 5.55 0 1.5 1.05 2.55 2.1 2.85-.9-.45-1.5-1.2-1.5-2.1 0-1.5 1.2-2.7 2.4-4.2 1.5-1.95 1.2-4.2-1.2-7.65zm3.15 3.75s1.95 1.95.6 4.35c-1.05 1.95-2.4 2.85-2.4 4.5 0 1.2.9 2.1 1.8 2.25-.75-.3-1.2-.9-1.2-1.65 0-1.2.9-2.25 1.95-3.45 1.35-1.65.9-3.45-.75-6zm2.4 9.45c-.45.3-.9.6-1.5.75.9-.15 1.65-.45 2.1-.9.6-.6.6-1.35.6-1.35s0 .9-1.2 1.5z"
+    />
+  </svg>
+);
+
 export const ICON_MAP = {
-  SiPython,
+  SiPython: OfficialPython,
   SiReact,
   SiTypescript,
   SiTailwindcss,
@@ -63,14 +116,14 @@ export const ICON_MAP = {
   SiGit,
   SiGithubactions,
   SiC,
-  SiJava: SiOpenjdk,
-  SiOpenjdk,
+  SiJava: OfficialJava,
+  SiOpenjdk: OfficialJava,
   SiGo,
   SiMqtt,
   SiArduino,
   SiOllama,
-  SiRaspberrypi,
-  SiJavascript,
+  SiRaspberrypi: OfficialRaspberryPi,
+  SiJavascript: OfficialJavaScript,
   SiExpress,
   SiPytorch,
   SiExpo,
@@ -139,6 +192,8 @@ const OrbitalCanvas = ({
   // Pointer drag/tap tracking to avoid accidental click while scrolling on mobile
   const pointerDownPosRef = useRef({ x: 0, y: 0 });
   const lastWidthRef = useRef(0);
+  const lastHeightRef = useRef(0);
+  const currentOrbitConfigRef = useRef(null);
 
   // DIRECT DOM REFERENCES for 60fps transform updates (Zero React Re-renders!)
   const categoryLabelRefs = useRef(new Map());
@@ -152,25 +207,64 @@ const OrbitalCanvas = ({
   const hoveredIdRef = useRef(null);
 
   // Calibrated Viewport & Circular Orbit Configuration
-  // Target shifted slightly downward in 3D space to eliminate bottom clipping
-  const getOrbitConfig = useCallback(() => {
-    const isMobile = window.innerWidth < 640;
-    const isTablet = window.innerWidth < 1024;
+  // Dynamically computes camera distances and orbit radii to ensure 100% visible bounds without desktop or mobile clipping
+  const getOrbitConfig = useCallback((customWidth, customHeight) => {
+    const container = mountRef.current;
+    const width = customWidth || container?.clientWidth || (typeof window !== "undefined" ? window.innerWidth : 1200);
+    const height = customHeight || container?.clientHeight || 740;
+    const aspect = width / height;
 
-    const radius = isMobile ? 6.0 : isTablet ? 7.4 : 8.5;
+    const isMobile = width < 640;
+    const isTablet = width < 1024 && !isMobile;
+
+    // Overview orbit setup: Prominent, grand, properly-sized globes
+    const radius = isMobile ? 5.6 : isTablet ? 7.2 : 8.4;
+    const categoryRadius = isMobile ? 1.35 : isTablet ? 1.55 : 1.75;
+
+    // Camera vertical FOV is 40 degrees, half-FOV = 20 degrees
+    const fov = 40;
+    const halfFovRad = 20 * (Math.PI / 180); // tan(20 deg) ≈ 0.36397
+
+    // In overview, scale camera distance on narrow screens so horizontal bounds never clip
+    let overviewCamPos;
+    if (isMobile) {
+      const mobilePullBack = Math.max(1, 0.72 / Math.max(aspect, 0.45));
+      overviewCamPos = new THREE.Vector3(0, 19.5 * mobilePullBack, 33.5 * mobilePullBack);
+    } else if (isTablet) {
+      overviewCamPos = new THREE.Vector3(0, 17.5, 29.5);
+    } else {
+      overviewCamPos = new THREE.Vector3(0, 16.5, 27.5);
+    }
+
+    // Category / Focused Skill Area configuration
+    // Sizable satellites with room for both logo and title inside!
+    const childOrbitRadius = isMobile ? 3.6 : isTablet ? 4.3 : 5.0;
+    const skillRadius = isMobile ? 0.82 : isTablet ? 1.0 : 1.15;
+
+    // Required bounds in world units to prevent ANY cutoff:
+    // With title INSIDE the sphere (no external hanging pill!), bounds are determined directly by the satellite sphere
+    const yRequired = childOrbitRadius + skillRadius + (isMobile ? 1.3 : 1.6);
+    const xRequired = childOrbitRadius + skillRadius + (isMobile ? 1.2 : 1.4);
+
+    // Compute required camera Z distance:
+    // Z_y guarantees vertical clearance (stops top/bottom cutoff on desktop)
+    // Z_x guarantees horizontal clearance (stops left/right cutoff on mobile)
+    const zForY = yRequired / Math.tan(halfFovRad);
+    const zForX = xRequired / (Math.tan(halfFovRad) * aspect);
+    const categoryCamZ = Math.max(zForY, zForX);
 
     return {
+      width,
+      height,
+      aspect,
       radius,
       inclination: 0.35, // ~20 deg subtle 3D tilt
-      cameraPos: isMobile
-        ? new THREE.Vector3(0, 18.0, 30.0)
-        : isTablet
-        ? new THREE.Vector3(0, 16.5, 27.0)
-        : new THREE.Vector3(0, 15.5, 25.5),
+      cameraPos: overviewCamPos,
       cameraTarget: new THREE.Vector3(0, -0.6, 0),
-      categoryRadius: isMobile ? 1.3 : 1.55,
-      childOrbitRadius: isMobile ? 4.2 : 5.2,
-      skillRadius: isMobile ? 0.72 : 0.85,
+      categoryRadius,
+      childOrbitRadius,
+      skillRadius,
+      categoryCamZ,
     };
   }, []);
 
@@ -186,7 +280,9 @@ const OrbitalCanvas = ({
     const width = container.clientWidth;
     const height = container.clientHeight;
     lastWidthRef.current = width;
-    const orbitConfig = getOrbitConfig();
+    lastHeightRef.current = height;
+    const orbitConfig = getOrbitConfig(width, height);
+    currentOrbitConfigRef.current = orbitConfig;
 
     // Scene
     const scene = new THREE.Scene();
@@ -326,18 +422,20 @@ const OrbitalCanvas = ({
       }
 
       // 2. Category Planets Update
+      const curConfig = currentOrbitConfigRef.current || orbitConfig;
+
       categoryMeshes.forEach((item) => {
         const { mesh, shadow } = item;
 
         if (isOrbitingRef.current) {
           const currentAngle = mesh.userData.baseAngle + globalAngleRef.current;
-          const x = Math.cos(currentAngle) * orbitConfig.radius;
-          const z = Math.sin(currentAngle) * orbitConfig.radius;
+          const x = Math.cos(currentAngle) * curConfig.radius;
+          const z = Math.sin(currentAngle) * curConfig.radius;
           const pos = new THREE.Vector3(x, 0, z);
-          pos.applyAxisAngle(new THREE.Vector3(1, 0, 0), orbitConfig.inclination);
+          pos.applyAxisAngle(new THREE.Vector3(1, 0, 0), curConfig.inclination);
 
           mesh.position.copy(pos);
-          shadow.position.set(pos.x, pos.y - orbitConfig.categoryRadius - 0.04, pos.z);
+          shadow.position.set(pos.x, pos.y - curConfig.categoryRadius - 0.04, pos.z);
         }
 
         // Direct GPU Transform for Category Labels (Centered on the sphere)
@@ -367,7 +465,7 @@ const OrbitalCanvas = ({
         childSkillAngle += 0.0035;
 
         skillMeshesRef.current.forEach((item) => {
-          const { mesh, shadow, initialAngle, radius } = item;
+          const { mesh, initialAngle, radius } = item;
           const angle = initialAngle + childSkillAngle;
 
           // Pure 2D Circle in Camera-Facing Plane (Z = 0)
@@ -376,7 +474,6 @@ const OrbitalCanvas = ({
           const localZ = 0; // Strictly in front/around the central category globe
 
           mesh.position.set(localX, localY, localZ);
-          shadow.position.set(localX, localY - 0.85 - 0.03, localZ);
 
           // Update Tech Logo & Title Position Directly via GPU Transform
           const labelEl = skillLabelRefs.current.get(mesh.userData.id);
@@ -403,15 +500,17 @@ const OrbitalCanvas = ({
 
     animFrameIdRef.current = requestAnimationFrame(animate);
 
-    // ── STABLE RESIZE HANDLER (IGNORES IPHONE ADDRESS BAR HEIGHT SHIFTS) ────
+    // ── STABLE RESIZE HANDLER (RESPONSIVE CAMERA & ORBIT ADAPTATION) ────
     const handleResize = () => {
       if (!container || !renderer || !camera) return;
       const newWidth = container.clientWidth;
       const newHeight = container.clientHeight;
 
-      if (Math.abs(newWidth - lastWidthRef.current) > 2) {
+      if (Math.abs(newWidth - lastWidthRef.current) > 2 || Math.abs(newHeight - lastHeightRef.current) > 2) {
         lastWidthRef.current = newWidth;
-        const newConfig = getOrbitConfig();
+        lastHeightRef.current = newHeight;
+        const newConfig = getOrbitConfig(newWidth, newHeight);
+        currentOrbitConfigRef.current = newConfig;
 
         camera.aspect = newWidth / newHeight;
         camera.updateProjectionMatrix();
@@ -420,6 +519,26 @@ const OrbitalCanvas = ({
         if (isOrbitingRef.current) {
           camera.position.copy(newConfig.cameraPos);
           cameraTargetRef.current.copy(newConfig.cameraTarget);
+        } else {
+          camera.position.set(0, 0, newConfig.categoryCamZ);
+          cameraTargetRef.current.set(0, 0, 0);
+        }
+
+        // Update overview orbit line geometry on resize
+        if (mainOrbitLineRef.current) {
+          const points = [];
+          const segments = 160;
+          for (let i = 0; i <= segments; i++) {
+            const theta = (i / segments) * Math.PI * 2;
+            const x = Math.cos(theta) * newConfig.radius;
+            const z = Math.sin(theta) * newConfig.radius;
+            const pt = new THREE.Vector3(x, 0, z);
+            pt.applyAxisAngle(new THREE.Vector3(1, 0, 0), newConfig.inclination);
+            points.push(pt);
+          }
+          mainOrbitLineRef.current.geometry.dispose();
+          mainOrbitLineRef.current.geometry = new THREE.BufferGeometry().setFromPoints(points);
+          mainOrbitLineRef.current.visible = isOrbitingRef.current;
         }
       }
     };
@@ -465,21 +584,54 @@ const OrbitalCanvas = ({
       gsap.killTweensOf(camera.position);
       gsap.killTweensOf(cameraTargetRef.current);
 
-      // Fade out other categories
+      // Fade out and hide other categories completely
       categoryMeshesRef.current.forEach((entry) => {
         if (entry.category.id !== selectedCategory.id) {
-          gsap.to(entry.mesh.material, { opacity: 0, duration: 0.45 });
-          gsap.to(entry.shadow.material, { opacity: 0, duration: 0.45 });
+          gsap.to(entry.mesh.material, {
+            opacity: 0,
+            duration: 0.45,
+            onComplete: () => {
+              entry.mesh.visible = false;
+            },
+          });
+          gsap.to(entry.shadow.material, {
+            opacity: 0,
+            duration: 0.45,
+            onComplete: () => {
+              entry.shadow.visible = false;
+            },
+          });
           gsap.to(entry.mesh.scale, { x: 0.01, y: 0.01, z: 0.01, duration: 0.45 });
         }
       });
 
-      // Fade out main orbit line
+      // Hide main overview orbit line completely in domain view (eliminates dummy background line)
       if (mainOrbitLineRef.current) {
-        gsap.to(mainOrbitLineRef.current.material, { opacity: 0, duration: 0.45 });
+        gsap.to(mainOrbitLineRef.current.material, {
+          opacity: 0,
+          duration: 0.35,
+          onComplete: () => {
+            if (mainOrbitLineRef.current) {
+              mainOrbitLineRef.current.visible = false;
+            }
+          },
+        });
+      }
+
+      // Hide central globe's ground shadow in 2D frontal camera view to prevent edge-on line artifact
+      if (targetShadow) {
+        gsap.to(targetShadow.material, {
+          opacity: 0,
+          duration: 0.45,
+          onComplete: () => {
+            targetShadow.visible = false;
+          },
+        });
       }
 
       // DO NOT CHANGE MATERIAL OR COLOR: Keeps the exact same style, color, and logo!
+      const orbitConfig = currentOrbitConfigRef.current || getOrbitConfig();
+
       const tl = gsap.timeline({
         onComplete: () => {
           spawnChildSkillPlanets(selectedCategory);
@@ -501,37 +653,24 @@ const OrbitalCanvas = ({
       );
 
       tl.to(
-        targetShadow.position,
-        {
-          x: 0,
-          y: -targetMesh.userData.radius * 1.3 - 0.04,
-          z: 0,
-          duration: 0.9,
-          ease: "power3.inOut",
-        },
-        0
-      );
-
-      tl.to(
         targetMesh.scale,
         {
-          x: 1.32,
-          y: 1.32,
-          z: 1.32,
+          x: 1.25,
+          y: 1.25,
+          z: 1.25,
           duration: 0.9,
           ease: "power3.inOut",
         },
         0
       );
 
-      // Camera smoothly frames the centered category globe
-      const camDestZ = isMobile ? 18.0 : 14.5;
+      // Camera smoothly frames the centered category globe with dynamic clearance
       tl.to(
         camera.position,
         {
           x: 0,
           y: 0,
-          z: camDestZ,
+          z: orbitConfig.categoryCamZ,
           duration: 0.9,
           ease: "power3.inOut",
         },
@@ -553,7 +692,7 @@ const OrbitalCanvas = ({
 
     // ── REVERSE TRANSITION: RESTORE OVERVIEW ─────────────────────────────────
     if (appState === "transitioning-to-overview") {
-      const orbitConfig = getOrbitConfig();
+      const orbitConfig = currentOrbitConfigRef.current || getOrbitConfig();
 
       despawnChildSkills(() => {
         if (selectedCategory) {
@@ -573,6 +712,7 @@ const OrbitalCanvas = ({
               ease: "power3.inOut",
             });
 
+            entry.shadow.visible = true;
             gsap.to(entry.shadow.position, {
               x: origPos.x,
               y: origPos.y - orbitConfig.categoryRadius - 0.04,
@@ -580,6 +720,7 @@ const OrbitalCanvas = ({
               duration: 0.8,
               ease: "power3.inOut",
             });
+            gsap.to(entry.shadow.material, { opacity: 0.65, duration: 0.8 });
 
             gsap.to(entry.mesh.scale, {
               x: 1.0,
@@ -592,12 +733,15 @@ const OrbitalCanvas = ({
         }
 
         categoryMeshesRef.current.forEach((entry) => {
+          entry.mesh.visible = true;
+          entry.shadow.visible = true;
           gsap.to(entry.mesh.material, { opacity: 1.0, duration: 0.8 });
           gsap.to(entry.shadow.material, { opacity: 0.65, duration: 0.8 });
           gsap.to(entry.mesh.scale, { x: 1.0, y: 1.0, z: 1.0, duration: 0.8 });
         });
 
         if (mainOrbitLineRef.current) {
+          mainOrbitLineRef.current.visible = true;
           gsap.to(mainOrbitLineRef.current.material, { opacity: 0.55, duration: 0.8 });
         }
 
@@ -639,7 +783,7 @@ const OrbitalCanvas = ({
   const spawnChildSkillPlanets = (category) => {
     const scene = sceneRef.current;
     if (!scene || !category.skills) return;
-    const orbitConfig = getOrbitConfig();
+    const orbitConfig = currentOrbitConfigRef.current || getOrbitConfig();
 
     cleanChildSkillMeshes();
 
@@ -650,23 +794,7 @@ const OrbitalCanvas = ({
 
     setActiveSkillList(skills);
 
-    // Create 2D circular orbit ring in camera-facing plane (XY, Z = 0)
-    const circlePoints = [];
-    for (let i = 0; i <= 64; i++) {
-      const theta = (i / 64) * Math.PI * 2;
-      circlePoints.push(new THREE.Vector3(Math.cos(theta) * radius, Math.sin(theta) * radius, 0));
-    }
-    const childOrbitGeo = new THREE.BufferGeometry().setFromPoints(circlePoints);
-    const childOrbitMat = new THREE.LineBasicMaterial({
-      color: new THREE.Color(category.color),
-      transparent: true,
-      opacity: 0,
-    });
-    const childOrbit = new THREE.LineLoop(childOrbitGeo, childOrbitMat);
-    scene.add(childOrbit);
-    childOrbitLineRef.current = childOrbit;
-
-    gsap.to(childOrbitMat, { opacity: 0.35, duration: 0.5 });
+    // Pure floating satellites: No dummy wireframe lines or edge-on ground shadow planes!
 
     // Spawn each child skill sphere with its familiar brand color & matte finish
     skills.forEach((skill, index) => {
@@ -693,23 +821,10 @@ const OrbitalCanvas = ({
         radius: orbitConfig.skillRadius,
       };
 
-      const shadowGeo = new THREE.PlaneGeometry(1.6, 1.6);
-      const shadowMat = new THREE.MeshBasicMaterial({
-        map: shadowTextureRef.current,
-        transparent: true,
-        opacity: 0,
-        depthWrite: false,
-      });
-      const shadow = new THREE.Mesh(shadowGeo, shadowMat);
-      shadow.rotation.x = -Math.PI / 2;
-      shadow.position.set(0, -0.85, 0);
-
       scene.add(mesh);
-      scene.add(shadow);
 
       const item = {
         mesh,
-        shadow,
         skill,
         initialAngle,
         radius: 0,
@@ -739,12 +854,6 @@ const OrbitalCanvas = ({
         duration: 0.45,
         delay: index * 0.05,
       });
-
-      gsap.to(shadowMat, {
-        opacity: 0.55,
-        duration: 0.45,
-        delay: index * 0.05,
-      });
     });
 
     skillMeshesRef.current = newSkillMeshes;
@@ -763,11 +872,13 @@ const OrbitalCanvas = ({
 
     skillMeshesRef.current.forEach((item) => {
       scene.remove(item.mesh);
-      scene.remove(item.shadow);
+      if (item.shadow) {
+        scene.remove(item.shadow);
+        item.shadow.geometry.dispose();
+        item.shadow.material.dispose();
+      }
       item.mesh.geometry.dispose();
       item.mesh.material.dispose();
-      item.shadow.geometry.dispose();
-      item.shadow.material.dispose();
     });
     skillMeshesRef.current.clear();
     setActiveSkillList([]);
@@ -926,6 +1037,8 @@ const OrbitalCanvas = ({
         {/* 1. Main Category Planet Labels (EXACT SAME STYLE & ICON IN ORBITS & WHEN CENTERED) */}
         {activeCategoryList.map((item) => {
           const CategoryIcon = CATEGORY_ICONS[item.id] || Orbit;
+          const isMobile = typeof window !== "undefined" && window.innerWidth < 640;
+
           return (
             <div
               key={`planet-label-${item.id}`}
@@ -936,15 +1049,15 @@ const OrbitalCanvas = ({
               className="orbital-planet-label"
               style={{ opacity: 0 }}
             >
-              <CategoryIcon size={16} className="orbital-planet-icon" />
+              <CategoryIcon size={isMobile ? 18 : 22} className="orbital-planet-icon" />
               <span>{item.name}</span>
             </div>
           );
         })}
 
-        {/* 2. Technology-Logo Spheres: Official 3D Brand Logo + Title Directly Underneath */}
+        {/* 2. Technology Satellites: Authentic Brand Logo + Title INSIDE Sphere (No External Pill, exactly like Domain Globes) */}
         {activeSkillList.map((item) => {
-          const IconComponent = item.icon === "SiChroma" ? SiChroma : ICON_MAP[item.icon];
+          const IconComponent = ICON_MAP[item.icon] || (item.icon === "SiChroma" ? SiChroma : null);
           const isMobile = typeof window !== "undefined" && window.innerWidth < 640;
 
           return (
@@ -954,30 +1067,27 @@ const OrbitalCanvas = ({
                 if (el) skillLabelRefs.current.set(item.id, el);
                 else skillLabelRefs.current.delete(item.id);
               }}
-              className="orbital-tech-logo-node"
+              className="orbital-tech-satellite-label orbital-tech-logo-node"
               style={{ opacity: 0 }}
               onClick={() => {
                 const targetSkill = selectedCategory?.skills?.find((s) => s.id === item.id);
                 if (targetSkill) onSelectSkill(targetSkill);
               }}
             >
-              {/* Authentic Brand SVG Logo Embedded on Sphere Face */}
-              <div
-                className="orbital-tech-sphere-logo"
-                style={{ color: item.logoColor || "#FFFFFF" }}
-              >
+              {/* Authentic Brand SVG Logo Embedded Directly on Sphere Face */}
+              <div className="orbital-tech-satellite-icon">
                 {IconComponent ? (
                   <IconComponent
-                    size={isMobile ? 22 : 26}
+                    size={isMobile ? 22 : 30}
                     color={item.logoColor || "#FFFFFF"}
                   />
                 ) : (
-                  <span className="text-sm font-bold">{item.name.charAt(0)}</span>
+                  <span className="text-sm font-bold text-white">{item.name.charAt(0)}</span>
                 )}
               </div>
 
-              {/* Technology Title Cleanly Underneath Sphere */}
-              <div className="orbital-tech-sphere-title">
+              {/* Technology Title INSIDE the Sphere (No External Pill!) */}
+              <div className="orbital-tech-satellite-name">
                 <span>{item.name}</span>
               </div>
             </div>

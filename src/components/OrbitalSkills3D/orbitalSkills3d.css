@@ -18,22 +18,34 @@
 .orbital-canvas-wrapper {
   position: relative;
   width: 100%;
-  height: 680px;
+  height: 740px;
   cursor: grab;
   touch-action: pan-y;
   background: transparent;
   overflow: visible;
 }
 
+@media (min-width: 1280px) {
+  .orbital-canvas-wrapper {
+    height: 780px;
+  }
+}
+
 @media (max-width: 1024px) {
   .orbital-canvas-wrapper {
-    height: 600px;
+    height: 680px;
   }
 }
 
 @media (max-width: 640px) {
   .orbital-canvas-wrapper {
-    height: 520px;
+    height: 580px;
+  }
+}
+
+@media (max-width: 380px) {
+  .orbital-canvas-wrapper {
+    height: 540px;
   }
 }
 
@@ -68,7 +80,7 @@
   line-height: 1.15;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.75), 0 2px 10px rgba(0, 0, 0, 0.45);
   user-select: none;
-  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+  transition: opacity 0.3s ease;
   will-change: transform;
   max-width: 110px;
 }
@@ -85,7 +97,8 @@
   filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.6));
 }
 
-/* ── 2. TECHNOLOGY-LOGO SPHERE NODES (LOGO ON SPHERE + TITLE UNDERNEATH) ── */
+/* ── 2. TECHNOLOGY SATELLITE NODES (LOGO + TITLE INSIDE SPHERE, MATCHING DOMAIN GLOBES) ── */
+.orbital-tech-satellite-label,
 .orbital-tech-logo-node {
   position: absolute;
   left: 0;
@@ -97,60 +110,65 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  text-align: center;
   user-select: none;
-  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: transform;
+  max-width: 105px;
+  padding: 4px;
 }
 
-/* Authentic Brand Logo centered directly on the 3D sphere */
+@media (max-width: 640px) {
+  .orbital-tech-satellite-label,
+  .orbital-tech-logo-node {
+    max-width: 78px;
+    padding: 2px;
+  }
+}
+
+/* Authentic Brand Logo centered inside the 3D sphere */
+.orbital-tech-satellite-icon,
 .orbital-tech-sphere-logo {
   display: flex;
   align-items: center;
   justify-content: center;
-  pointer-events: none;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.35));
+  margin-bottom: 3px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.45));
   transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Technology title placed cleanly directly under the sphere */
-.orbital-tech-sphere-title {
-  margin-top: 12px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.72rem;
-  font-weight: 600;
-  color: #1d1d1f;
-  letter-spacing: -0.01em;
-  white-space: nowrap;
-  padding: 0.2rem 0.6rem;
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  border-radius: 9999px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+/* Technology title placed cleanly INSIDE the sphere (NO external pill!) */
+.orbital-tech-satellite-name {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85), 0 2px 8px rgba(0, 0, 0, 0.6);
+  text-align: center;
+  white-space: normal;
   pointer-events: none;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  transition: transform 0.2s ease, text-shadow 0.2s ease;
 }
 
 @media (max-width: 640px) {
-  .orbital-tech-sphere-title {
-    margin-top: 8px;
+  .orbital-tech-satellite-name {
     font-size: 0.66rem;
-    padding: 0.15rem 0.5rem;
+    line-height: 1.1;
+  }
+  .orbital-tech-satellite-icon,
+  .orbital-tech-sphere-logo {
+    margin-bottom: 2px;
   }
 }
 
+.orbital-tech-satellite-label:hover .orbital-tech-satellite-icon,
 .orbital-tech-logo-node:hover .orbital-tech-sphere-logo {
   transform: scale(1.15);
 }
 
-.orbital-tech-logo-node:hover .orbital-tech-sphere-title {
-  color: #000000;
-  border-color: rgba(0, 0, 0, 0.2);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+.orbital-tech-satellite-label:hover .orbital-tech-satellite-name {
   transform: translateY(1px);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.95), 0 3px 12px rgba(0, 0, 0, 0.8);
 }
 
 /* ── 4. TOP FLOATING NAVIGATION BAR ── */
@@ -164,6 +182,14 @@
   justify-content: space-between;
   pointer-events: none;
   z-index: 25;
+}
+
+@media (max-width: 640px) {
+  .orbital-nav-bar {
+    top: 0.5rem;
+    left: 0.25rem;
+    right: 0.25rem;
+  }
 }
 
 .orbital-back-button {
